@@ -80,7 +80,7 @@ export default function StorefrontPage() {
       }
       return [...prev, { product, qty: quantity }];
     });
-    showToast(`🌱 ${product.title} lades till i korgen!`);
+    showToast(`${product.title} lades till i korgen!`);
   };
 
   const removeFromCart = (productId: string) => {
@@ -106,7 +106,7 @@ export default function StorefrontPage() {
     selectedItems.forEach((item) => {
       addToCart(item, 1);
     });
-    showToast("🌸 Bukettpaketet lades till i varukorgen!");
+    showToast("Bukettpaketet lades till i varukorgen!");
     setIsCartOpen(true);
   };
 
@@ -166,7 +166,7 @@ export default function StorefrontPage() {
       {/* Top Notice Bar */}
       <div className="bg-pine text-oat text-xs py-2 px-4 text-center tracking-wide font-sans border-b border-pine-light">
         <span>
-          🌾 <strong>Öhlunds Brygga vid Ljusnan (Ljusdal, Zon 5):</strong> Handpackade kulturarvsfröer & snittblommor • Brevfrakt 29 kr (Fri frakt över 350 kr) • EU-växtpass
+          <strong>Öhlunds Brygga vid Ljusnan (Ljusdal, Zon 5):</strong> Handpackade kulturarvsfröer & snittblommor • Brevfrakt 29 kr (Fri frakt över 350 kr) • EU-växtpass
         </span>
       </div>
 
@@ -240,7 +240,7 @@ export default function StorefrontPage() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 bg-sand-light/15 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase mb-6 border border-sand/30 text-sand-light">
-              <span>🌱 Från odlingarna vid Stugan i Hälsingland</span>
+              <span>Från odlingarna vid Stugan i Hälsingland</span>
             </div>
             
             <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.12] mb-6 tracking-tight">
@@ -296,11 +296,6 @@ export default function StorefrontPage() {
                 fill
                 className="object-cover group-hover/img:scale-105 transition-transform duration-300"
               />
-              <div className="absolute inset-0 bg-bark/0 group-hover/img:bg-bark/15 transition-colors flex items-center justify-center pointer-events-none">
-                <span className="opacity-0 group-hover/img:opacity-100 transition-all duration-200 bg-pine/90 text-oat text-xs font-medium px-3.5 py-2 rounded-full shadow-lg flex items-center gap-1.5 backdrop-blur-xs transform translate-y-1 group-hover/img:translate-y-0">
-                  🔍 Förstora bukettbild
-                </span>
-              </div>
               <div className="absolute top-4 left-4 bg-pine/90 text-oat text-xs font-semibold px-3 py-1.5 rounded-full backdrop-blur-sm tracking-wider uppercase pointer-events-none">
                 Bukettrecept #1
               </div>
@@ -379,7 +374,7 @@ export default function StorefrontPage() {
                   disabled={selectedBundleComponents.length === 0}
                   className="bg-pine hover:bg-pine-light disabled:opacity-50 text-oat px-8 py-3.5 rounded-full font-sans font-semibold text-sm transition-all shadow-md hover:shadow-lg inline-flex items-center gap-2"
                 >
-                  🛒 Lägg till hela buketten i varukorgen ({bundleFinalPrice} kr)
+                  Lägg till buketten i varukorgen ({bundleFinalPrice} kr)
                 </button>
               </div>
             </div>
@@ -508,13 +503,6 @@ export default function StorefrontPage() {
                     className="object-cover group-hover/img:scale-105 transition-transform duration-300"
                   />
 
-                  {/* Zoom Hover Badge */}
-                  <div className="absolute inset-0 bg-bark/0 group-hover/img:bg-bark/15 transition-colors flex items-center justify-center pointer-events-none">
-                    <span className="opacity-0 group-hover/img:opacity-100 transition-all duration-200 bg-pine/90 text-oat text-[11px] font-medium px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5 backdrop-blur-xs transform translate-y-1 group-hover/img:translate-y-0">
-                      🔍 Förstora bild
-                    </span>
-                  </div>
-
                   {/* Shipping badge */}
                   <div className="absolute top-3 left-3 pointer-events-none">
                     <span
@@ -524,7 +512,7 @@ export default function StorefrontPage() {
                           : "bg-terracotta/95 text-white"
                       }`}
                     >
-                      {isLetter ? "✉️ Brev 29 kr" : "📦 Paket 79 kr"}
+                      {isLetter ? "Brev 29 kr" : "Paket 79 kr"}
                     </span>
                   </div>
 
@@ -574,9 +562,9 @@ export default function StorefrontPage() {
                   {/* Mobile Garden Guide & QR code preview */}
                   <button
                     onClick={() => setActiveGuideProduct(p)}
-                    className="text-xs text-pine font-medium underline text-left hover:text-terracotta mb-4 flex items-center gap-1.5"
+                    className="text-xs text-pine font-medium underline text-left hover:text-terracotta mb-4 flex items-center gap-1.5 py-1"
                   >
-                    <span>📱 Se odlingsguide & QR-kod</span>
+                    <span>Se odlingsguide & QR-kod</span>
                   </button>
 
                   {/* Footer & Action button */}
@@ -588,16 +576,16 @@ export default function StorefrontPage() {
                     {p.inStock ? (
                       <button
                         onClick={() => addToCart(p, 1)}
-                        className="bg-sand hover:bg-pine hover:text-white text-pine text-xs font-semibold px-4 py-2 rounded-full transition-all"
+                        className="bg-sand hover:bg-pine hover:text-white text-pine text-xs font-semibold px-4 py-2.5 min-h-[44px] rounded-full transition-all flex items-center justify-center"
                       >
                         Köp fröer
                       </button>
                     ) : (
                       <button
                         onClick={() => setActiveNotifyProduct(p)}
-                        className="bg-sand/70 hover:bg-sand text-terracotta text-xs font-semibold px-3 py-2 rounded-full transition-all flex items-center gap-1"
+                        className="bg-sand/70 hover:bg-sand text-terracotta text-xs font-semibold px-4 py-2.5 min-h-[44px] rounded-full transition-all flex items-center justify-center"
                       >
-                        🔔 Bevaka
+                        Bevaka
                       </button>
                     )}
                   </div>
@@ -668,7 +656,6 @@ export default function StorefrontPage() {
               rel="noopener noreferrer"
               className="bg-white hover:bg-sand text-pine border border-sand px-5 py-3 rounded-full text-xs font-semibold transition-all inline-flex items-center gap-2"
             >
-              <span>📸</span>
               <span>Följ @ohlunds_brygga på Instagram</span>
             </a>
           </div>
@@ -707,7 +694,7 @@ export default function StorefrontPage() {
                     {hasBulkyParcel
                       ? "Paketfrakt till ombud (skrymmande)"
                       : isFreeShipping
-                      ? "🎉 Du har kvalificerat dig för FRI FRAKT!"
+                      ? "Du har kvalificerat dig för FRI FRAKT!"
                       : `Handla för ${FREE_SHIPPING_LIMIT - cartSubtotal} kr till för fri frakt`}
                   </span>
                   <span className="text-bark/60">Gräns: 350 kr</span>
@@ -730,18 +717,12 @@ export default function StorefrontPage() {
               {cart.length > 0 && (
                 <div className="px-4 pt-3">
                   {hasBulkyParcel ? (
-                    <div className="bg-terracotta/10 border border-terracotta/30 text-clay rounded-xl p-3 text-xs leading-relaxed flex items-start gap-2">
-                      <span>📦</span>
-                      <div>
-                        <strong>Paketfrakt (79 kr):</strong> Din order innehåller skrymmande vara (t.ex. vas/knöl) och skickas till PostNord-ombud.
-                      </div>
+                    <div className="bg-terracotta/10 border border-terracotta/30 text-clay rounded-xl p-3 text-xs leading-relaxed">
+                      <strong>Paketfrakt (79 kr):</strong> Din order innehåller skrymmande vara (t.ex. vas/knöl) och skickas till PostNord-ombud.
                     </div>
                   ) : (
-                    <div className="bg-pine/10 border border-pine/20 text-pine rounded-xl p-3 text-xs leading-relaxed flex items-start gap-2">
-                      <span>✉️</span>
-                      <div>
-                        <strong>Brevfrakt (29 kr):</strong> Din order är lätt och platt och levereras direkt i din brevlåda!
-                      </div>
+                    <div className="bg-pine/10 border border-pine/20 text-pine rounded-xl p-3 text-xs leading-relaxed">
+                      <strong>Brevfrakt (29 kr):</strong> Din order är lätt och platt och levereras direkt i din brevlåda!
                     </div>
                   )}
                 </div>
@@ -781,7 +762,7 @@ export default function StorefrontPage() {
               {cart.length > 0 && !hasBulkyParcel && (
                 <div className="p-4 bg-sand-light border-t border-sand">
                   <div className="text-[11px] font-bold uppercase tracking-wider text-terracotta mb-2 flex justify-between">
-                    <span>🌿 Fraktsmart tips</span>
+                    <span>Fraktsmart tips</span>
                     <span className="font-normal normal-case text-bark/60">(Samma låga brevfrakt)</span>
                   </div>
                   <div className="bg-white p-3 rounded-xl border border-sand flex items-center justify-between">
@@ -822,9 +803,9 @@ export default function StorefrontPage() {
                     alert(`[Stripe Checkout Mockup]\n\nTotalt belopp: ${cartTotal} kr\nBetalsätt: Swish, Klarna, Kort\n\nI det skarpa systemet initieras en Stripe Checkout Session med 30 minuters TTL och atomisk reservation i Firestore.`);
                   }}
                   disabled={cart.length === 0}
-                  className="w-full bg-pine hover:bg-pine-light disabled:opacity-50 text-oat py-3.5 rounded-full font-semibold text-sm transition-all shadow-md text-center block"
+                  className="w-full bg-pine hover:bg-pine-light disabled:opacity-50 text-oat py-3.5 min-h-[44px] rounded-full font-semibold text-sm transition-all shadow-md text-center block"
                 >
-                  🔒 Gå till Kassan ({cartTotal} kr)
+                  Gå till Kassan ({cartTotal} kr)
                 </button>
 
                 <div className="flex justify-center gap-3 text-[11px] text-bark/50 pt-1">
@@ -877,12 +858,12 @@ export default function StorefrontPage() {
             {/* Quick Specs */}
             {activeGuideProduct.specs && (
               <div className="bg-sand-light rounded-xl p-4 text-xs space-y-2 mb-6">
-                <div>🌱 <strong>Sådjup:</strong> {activeGuideProduct.specs.depthCm || "0.5"} cm</div>
-                <div>📏 <strong>Plantavstånd:</strong> {activeGuideProduct.specs.spacingCm || "25"} cm</div>
-                <div>⏱️ <strong>Groddtid:</strong> {activeGuideProduct.specs.germinationDays || "7-14 dagar"}</div>
+                <div><strong>Sådjup:</strong> {activeGuideProduct.specs.depthCm || "0.5"} cm</div>
+                <div><strong>Plantavstånd:</strong> {activeGuideProduct.specs.spacingCm || "25"} cm</div>
+                <div><strong>Groddtid:</strong> {activeGuideProduct.specs.germinationDays || "7-14 dagar"}</div>
                 {activeGuideProduct.specs.growerAdviceZone5 && (
                   <div className="pt-2 border-t border-sand text-pine">
-                    ⭐ <strong>Jessicas råd för Zon 5 / Ljusdal:</strong> {activeGuideProduct.specs.growerAdviceZone5}
+                    <strong>Jessicas råd för Zon 5 / Ljusdal:</strong> {activeGuideProduct.specs.growerAdviceZone5}
                   </div>
                 )}
               </div>
@@ -891,7 +872,7 @@ export default function StorefrontPage() {
             <div className="text-center">
               <button
                 onClick={() => setActiveGuideProduct(null)}
-                className="bg-sand hover:bg-pine hover:text-white text-pine px-6 py-2.5 rounded-full text-xs font-semibold transition-all"
+                className="bg-sand hover:bg-pine hover:text-white text-pine px-6 py-2.5 min-h-[44px] rounded-full text-xs font-semibold transition-all"
               >
                 Stäng guiden
               </button>
@@ -927,7 +908,7 @@ export default function StorefrontPage() {
               onSubmit={(e) => {
                 e.preventDefault();
                 if (notifyEmail) {
-                  showToast(`🔔 Tack! Vi meddelar ${notifyEmail} vid inleverans.`);
+                  showToast(`Tack! Vi meddelar ${notifyEmail} vid inleverans.`);
                   setActiveNotifyProduct(null);
                   setNotifyEmail("");
                 }
@@ -944,7 +925,7 @@ export default function StorefrontPage() {
               />
               <button
                 type="submit"
-                className="w-full bg-terracotta hover:bg-clay text-white py-3 rounded-full text-sm font-semibold transition-all"
+                className="w-full bg-terracotta hover:bg-clay text-white py-3 min-h-[44px] rounded-full text-sm font-semibold transition-all"
               >
                 Meddela mig när den finns i lager
               </button>
@@ -1029,7 +1010,7 @@ export default function StorefrontPage() {
                   }`}
                   title={isZoomMagnified ? "Återställ förstoring" : "Zooma in 2x för detaljer"}
                 >
-                  <span>{isZoomMagnified ? "🔍 1x Normal" : "🔍 2x Detaljzoom"}</span>
+                  <span>{isZoomMagnified ? "Återställ (1x)" : "Detaljzoom (2x)"}</span>
                 </button>
 
                 {/* Close Button */}
@@ -1073,10 +1054,10 @@ export default function StorefrontPage() {
               <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 pointer-events-none">
                 <span className="bg-bark/75 text-oat text-[11px] font-medium px-3.5 py-1.5 rounded-full backdrop-blur-xs shadow-md">
                   {zoomActiveSide === "back"
-                    ? "Baksida: Skanningsbar QR-kod & EU-växtpass (Klicka för 2x zoom)"
+                    ? "Baksida: Skanningsbar QR-kod & EU-växtpass"
                     : isZoomMagnified
                     ? "Klicka för att zooma ut"
-                    : "Klicka på bilden för att zooma in 2x"}
+                    : "Klicka på bilden för att förstora 2x"}
                 </span>
               </div>
             </div>
@@ -1098,8 +1079,8 @@ export default function StorefrontPage() {
                     }`}
                   >
                     {activeZoomProduct.shippingClass === "FLAT_LETTER"
-                      ? "✉️ Brevfrakt (29 kr)"
-                      : "📦 Paketfrakt (79 kr)"}
+                      ? "Brevfrakt (29 kr)"
+                      : "Paketfrakt (79 kr)"}
                   </span>
                 )}
               </div>
@@ -1112,9 +1093,9 @@ export default function StorefrontPage() {
                       setActiveZoomProduct(null);
                       setActiveGuideProduct(p);
                     }}
-                    className="text-xs text-pine font-medium underline hover:text-terracotta px-2 py-1"
+                    className="text-xs text-pine font-medium underline hover:text-terracotta px-2 py-2 min-h-[44px] flex items-center"
                   >
-                    📱 Se odlingsguide & QR-kod
+                    Se odlingsguide & QR-kod
                   </button>
                 )}
 
@@ -1125,9 +1106,9 @@ export default function StorefrontPage() {
                       setActiveZoomProduct(null);
                       setIsCartOpen(true);
                     }}
-                    className="bg-pine hover:bg-pine-light text-oat text-xs font-semibold px-5 py-2.5 rounded-full transition-all shadow-sm hover:shadow flex items-center gap-1.5"
+                    className="bg-pine hover:bg-pine-light text-oat text-xs font-semibold px-5 py-2.5 min-h-[44px] rounded-full transition-all shadow-sm hover:shadow flex items-center justify-center"
                   >
-                    <span>🛒 Lägg i varukorg</span>
+                    <span>Lägg i varukorg</span>
                   </button>
                 )}
 
@@ -1138,15 +1119,15 @@ export default function StorefrontPage() {
                       setActiveZoomProduct(null);
                       setActiveNotifyProduct(p);
                     }}
-                    className="bg-sand hover:bg-sand-dark text-terracotta text-xs font-semibold px-4 py-2.5 rounded-full transition-all flex items-center gap-1.5"
+                    className="bg-sand hover:bg-sand-dark text-terracotta text-xs font-semibold px-4 py-2.5 min-h-[44px] rounded-full transition-all flex items-center justify-center"
                   >
-                    <span>🔔 Bevaka i lager</span>
+                    <span>Bevaka i lager</span>
                   </button>
                 )}
 
                 <button
                   onClick={() => setActiveZoomProduct(null)}
-                  className="bg-sand hover:bg-sand-dark text-bark text-xs font-semibold px-4 py-2.5 rounded-full transition-all"
+                  className="bg-sand hover:bg-sand-dark text-bark text-xs font-semibold px-4 py-2.5 min-h-[44px] rounded-full transition-all"
                 >
                   Stäng (Esc)
                 </button>

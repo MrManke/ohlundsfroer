@@ -49,31 +49,58 @@ Systemet är en **modulär monolit** skriven uteslutande i **TypeScript**. Koden
 * Alla bakgrundshändelser och Firestore-triggers **MÅSTE** definieras med `{ retry: true }` (använd alltid den centrala hjälparen `defineTrigger()`).
 * Eftersom händelser kan levereras mer än en gång (*at-least-once*) **MÅSTE alla händelsehanterare vara idempotenta** genom att kontrollera och spara ett unikt `eventId`.
 
+### Regel 2.6: Obligatorisk testtäckning & regressionsskydd
+* **Ingen kod utan tester:** Varje ny domänmetod, affärsregel, API-rutt eller buggfix MÅSTE åtföljas av relevanta automatiserade tester. Kod utan tillhörande tester godkänns inte.
+* **Förbud mot testmanipulation:** En agent får ALDRIG inaktivera (`test.skip`), kommentera bort eller sänka kraven i befintliga tester för att få en körning grön. Ett fallerande test är alltid en regression som måste lösas i applikationskoden.
+* **Teststruktur:**
+  * Enhetstester ska ligga intill koden de testar (`*.test.ts`).
+  * Integrationstester mot Firebase Emulator Suite placeras i respektive moduls `test/integration/`.
+  * E2E-flöden placeras i `/tests/e2e/`.
+
+### Regel 2.7: Responsivitet & god tillgänglighet (WCAG AA)
+* **Mobile-First & Responsivitet:** All design ska byggas med mobilt gränssnitt som bas (från 360 px) och skalas uppåt med Tailwind (`sm:`, `md:`, `lg:`). Horisontell sidscroll är förbjuden. Interaktiva touchytor på mobil ska vara minst 44×44 pixlar.
+* **Tillgänglighetsstandard (WCAG 2.1/2.2 AA):** Även om mikroföretag juridiskt är undantagna från Tillgänglighetsdirektivet ska systemet byggas ergonomiskt för kunder i solljus och med synnedsättningar:
+  * Semantisk HTML5 (`<main>`, `<nav>`, `<button>`, `<article>`) – generiska `<div>`/`<span>` för klickbara element är förbjudna.
+  * Informativa `alt`-texter på produktbilder och odlingsillustrationer.
+  * Full funktionalitet med enbart tangentbord (Tab, Enter, Space, Escape) samt tydlig fokusram (`focus-visible`).
+
 ---
 
 ## 3. Deterministisk Verifieringsloop (Låt kompilatorn styra)
 
-En agent får aldrig gissa eller hallucinera att kod fungerar. Innan en uppgift anses klar **MÅSTE** verifieringsloopen köras i terminalen med noll fel:
+En agent får aldrig gissa eller anta att kod fungerar. Innan en uppgift markeras som klar MÅSTE verifierings- och regressionssviten köras i terminalen och returnera noll fel:
 
 ```
-[Agent skriver kod] 
+[Agent skriver kod + tester]
         ↓
-1. `npm run typecheck` (strikt TypeScript-kompilering, tsc --noEmit)
+1. `npm run typecheck` (tsc --noEmit, strikt typkontroll)
         ↓ (OK)
-2. `npm run lint` (kontroll av arkitekturgränser via eslint-plugin-boundaries)
+2. `npm run lint`      (eslint-plugin-boundaries för modulgränser)
         ↓ (OK)
-3. `npm run test` (enhets- och kontraktstester mot emulatorer)
+3. `npm run test`      (isolerade enhets- och beräkningstester)
         ↓ (OK)
-[Koden godkänd]
+4. `npm run test:emu`  (integrationstester mot Firebase Emulator Suite)
+        ↓ (OK)
+[Uppgiften godkänd]
 ```
 
-**Krav före slutförd uppgift:**
-En agent får **INTE** markera en uppgift som klar utan att ha kört och fått grönt ljus (noll fel) på:
-1. `npm run typecheck` (strikt TypeScript-kompilering)
-2. `npm run lint` (kontroll av arkitekturgränser via boundaries)
-3. `npm run test` (enhets- och kontraktstester mot emulatorer)
+### 3.1 Teststandarder per nivå
 
-Om något steg fallerar ska agenten själv korrigera koden och köra loopen igen tills den är grön.
+#### 1. Enhetstester (Snabb affärslogik)
+* **Omfattning:** Alla Zod-kontrakt, prisberäkningar i öre, fraktklassregler (`FLAT_LETTER` vs `BULKY_PARCEL`), momskalkyler, zon- och månadsfilter (`zones`, `sowMonths`).
+* **Krav:** 100 % isolerade från nätverk och databaser. Körs på millisekunder.
+
+#### 2. Integrationstester (Emulator & Transaktionssäkerhet)
+* **Omfattning:**
+  * **Lagersaldo & ACID:** Samtidighetstester där 20–50 parallella anrop försöker reservera de sista enheterna av en SKU eller ett bukettpaket – exakt rätt antal ska lyckas och resten nekas utan översäljning.
+  * **TTL & Task Queue:** Säkerställ att utgångna reservationer (30 min) automatiskt återförs till disponibelt saldo.
+  * **Idempotens:** Verifiera att triggning av samma `eventId` två gånger inte duplicerar verifikationer i `finance_entries` eller skickar dubbla mail.
+* **Miljö:** Körs uteslutande mot lokal Firebase Emulator Suite.
+
+#### 3. E2E & Regressionssvit (Playwright)
+* **Kritiska flöden:**
+  * Bygga bukettpaket → lägga i korg → kontrollera fraktklass → slutföra mockad kassa → verifiera fryst orderstatus och uppdaterat lagersaldo.
+  * Blandad varukorg (fröer + dahlia med framtida leveransfönster) för att säkerställa att sändningsdatum sätts till det senaste gemensamma datumet.
 
 ---
 
@@ -126,6 +153,22 @@ Arbetet fördelas mellan specialiserade subagenter med anpassad risktolerans:
   - Tydliga ikoner för sådjup, plantavstånd, förkultivering/direktsådd.
   - Odlingstips anpassade för **Zon 5 / Ljusdal och kallare klimat**.
   - Skörde- och snittblomstips för långt vasliv.
+
+### Tillgänglighet & Kontrast (Synfel & Färgblindhet)
+* **Kontrastkrav (minst 4.5:1):**
+  * All text mot den ljusa Havre-bakgrunden (`#F7F5EE`) ska använda Tallgrön (`#1B2A20`) eller Bark (`#26231F`).
+  * Knappar i Terrakotta (`#C66B4E`) med vit text ska kontrastsäkras (använd `#B8583B` vid behov för att uppnå 4.5:1).
+* **Färgredundans (Färgblindhet):** Information får aldrig förmedlas enbart med färg:
+  * Lagerstatus ska kombinera ikon/symbol och text (t.ex. diskret bock + "I lager", "Slutsåld").
+  * Odlingszoner och fraktklasser ska alltid anges i tydlig text och med symboler (t.ex. kuvert/brev, paket för skrymmande).
+* **Skärmläsare och dynamiska ytor:**
+  * Slide-out-varukorgen ska fånga tangentbordsfokus vid öppning och släppa det vid stängning.
+  * Dynamiska uppdateringar (t.ex. fri frakt-mätaren: *"Handla för 45 kr till för fri frakt"*) ska annoteras med `aria-live="polite"`.
+
+### UI-minimalism & Förbud mot emoji-kladd
+* **FÖRBJUDET med färgglada standard-emojis i UI:** Standard-emojis (såsom 🔍, 🌱, ✉️, 📦, 🌸, 🔔, 🌾, 📱, 🛒) får **INTE** användas som ikoner på knappar, badgar, toast-meddelanden eller i rubriker. De ger ett oseriöst, gammalmodigt och "kladdigt" intryck.
+* **Modern skandinavisk stil:** Använd istället ren typografi, diskreta mikroetiketter eller minimalistiska monokroma SVG-ikoner i varumärkets färgskala (Tallgrön, Terrakotta eller Bark).
+* **Inga störande overlays:** Överlägg som t.ex. stora rutor med "Förstora bild" eller "Detaljzoom" direkt över produktbilderna är förbjudna. Använd istället rena klickinteraktioner och naturlig musmarkör (`cursor-pointer`).
 
 ---
 

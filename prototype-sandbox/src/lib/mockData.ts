@@ -176,8 +176,9 @@ export const PRODUCTS: Product[] = [
       producerCode: 'SE-X-12345',
       traceCode: 'NL-2026-1934'
     },
-    imageUrl: '/assets/sensommardrom_bukett_1791312135766.jpg',
-    packetStyle: 'cream_botanical',
+    imageUrl: '/assets/packets/rosenskara_kraft.jpg',
+    backImageUrl: '/assets/packets/packet_backside_qr.jpg',
+    packetStyle: 'kraft',
     specs: {
       sowMonths: [3, 4, 5],
       zones: [1, 2, 3, 4, 5, 6],
@@ -210,8 +211,9 @@ export const PRODUCTS: Product[] = [
       producerCode: 'SE-X-12345',
       traceCode: 'UK-2026-5521'
     },
-    imageUrl: '/assets/sensommardrom_bukett_1791312135766.jpg',
-    packetStyle: 'cream_botanical',
+    imageUrl: '/assets/packets/luktart_kraft.jpg',
+    backImageUrl: '/assets/packets/packet_backside_qr.jpg',
+    packetStyle: 'kraft',
     specs: {
       sowMonths: [2, 3, 4],
       zones: [1, 2, 3, 4, 5, 6],
@@ -244,8 +246,9 @@ export const PRODUCTS: Product[] = [
       producerCode: 'SE-X-12345',
       traceCode: 'NL-2026-8801'
     },
-    imageUrl: '/assets/seed_packets_mockup_1791312156789.jpg',
-    packetStyle: 'technical_label',
+    imageUrl: '/assets/user_packets_photo.jpg',
+    backImageUrl: '/assets/packets/packet_backside_qr.jpg',
+    packetStyle: 'kraft',
     specs: {
       sowMonths: [2, 3],
       zones: [1, 2, 3, 4, 5],

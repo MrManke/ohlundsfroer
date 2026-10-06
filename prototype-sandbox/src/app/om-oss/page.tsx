@@ -54,7 +54,7 @@ export default function OmOssPage() {
       {/* Top Banner */}
       <div className="bg-pine text-oat text-xs py-2 px-4 text-center tracking-wide font-sans border-b border-pine-light">
         <span>
-          🌾 <strong>Öhlunds Brygga vid Ljusnan (Ljusdal, Zon 5):</strong> Från vår hobbyodling och blomsterkiosk till din trädgård • Följ oss på Instagram @ohlunds_brygga
+          <strong>Öhlunds Brygga vid Ljusnan (Ljusdal, Zon 5):</strong> Från vår hobbyodling och blomsterkiosk till din trädgård • Följ oss på Instagram @ohlunds_brygga
         </span>
       </div>
 
@@ -90,7 +90,6 @@ export default function OmOssPage() {
               rel="noopener noreferrer"
               className="bg-sand hover:bg-pine hover:text-white text-pine px-4 py-2 rounded-full text-xs font-semibold transition-all inline-flex items-center gap-1.5"
             >
-              <span>📸</span>
               <span>@ohlunds_brygga</span>
             </a>
           </nav>
@@ -145,13 +144,13 @@ export default function OmOssPage() {
 
               <div className="mt-8 flex flex-wrap gap-4 text-xs font-semibold text-pine">
                 <div className="bg-oat px-3.5 py-2 rounded-xl border border-sand">
-                  📍 Ljusdal (Zon 5)
+                  Ljusdal (Zon 5)
                 </div>
                 <div className="bg-oat px-3.5 py-2 rounded-xl border border-sand">
-                  🌸 Dahlior & Snittblommor
+                  Dahlior & Snittblommor
                 </div>
                 <div className="bg-oat px-3.5 py-2 rounded-xl border border-sand">
-                  📦 Fraktsmart logistik
+                  Fraktsmart logistik
                 </div>
               </div>
             </div>
@@ -167,7 +166,7 @@ export default function OmOssPage() {
               </div>
               <div className="absolute -bottom-6 -left-6 bg-white p-4 sm:p-5 rounded-2xl shadow-xl border border-sand max-w-xs">
                 <span className="text-[11px] uppercase font-bold text-terracotta block tracking-wider mb-1">
-                  📸 Från Instagram @ohlunds_brygga
+                  Från Instagram @ohlunds_brygga
                 </span>
                 <p className="text-xs text-bark/80 italic">
                   ”Här visar jag min hobbyodling och de blommor & grönsaker som finns i vår blomsterkiosk.”
@@ -265,7 +264,7 @@ export default function OmOssPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left mt-10">
             <div className="bg-pine-light/60 p-6 rounded-2xl border border-sand/10">
-              <span className="text-2xl mb-3 block">❄️</span>
+              <span className="text-xs font-mono font-bold tracking-widest text-sand/60 mb-3 block">01</span>
               <h4 className="font-serif text-lg text-white mb-2">Testat i Ljusdal (Zon 5)</h4>
               <p className="text-xs text-oat/80 leading-relaxed font-sans">
                 Klarar våra växter de sena frostnätterna i Hälsingland och den korta norrländska odlingssäsongen så kommer de att stormtrivas i din trädgård, oavsett var i landet du bor.
@@ -273,7 +272,7 @@ export default function OmOssPage() {
             </div>
 
             <div className="bg-pine-light/60 p-6 rounded-2xl border border-sand/10">
-              <span className="text-2xl mb-3 block">🌱</span>
+              <span className="text-xs font-mono font-bold tracking-widest text-sand/60 mb-3 block">02</span>
               <h4 className="font-serif text-lg text-white mb-2">EU-växtpass & Full Spårbarhet</h4>
               <p className="text-xs text-oat/80 leading-relaxed font-sans">
                 Varje fröpåse och bulksändning spåras mekaniskt med unika lotnummer. Inga anonyma blandningar – bara certifierade, kontrollerade fröer av högsta kvalitet.
@@ -281,7 +280,7 @@ export default function OmOssPage() {
             </div>
 
             <div className="bg-pine-light/60 p-6 rounded-2xl border border-sand/10">
-              <span className="text-2xl mb-3 block">📬</span>
+              <span className="text-xs font-mono font-bold tracking-widest text-sand/60 mb-3 block">03</span>
               <h4 className="font-serif text-lg text-white mb-2">Fraktsmart Direkt till Lådan</h4>
               <p className="text-xs text-oat/80 leading-relaxed font-sans">
                 Villes logistikarkitektur säkerställer att fröerna skickas i platta brev (29 kr porto, fri frakt över 350 kr). Inga onödiga turer till ombudet för vanliga fröpåsar.
