@@ -174,6 +174,31 @@ export default function OmOssPage() {
         </div>
       </section>
 
+      {/* Panoramic Showcase of Öhlunds Brygga & Stugan */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+        <div className="relative rounded-3xl overflow-hidden shadow-xl border-2 border-white aspect-[21/9] sm:aspect-[24/10]">
+          <Image
+            src="/assets/ohlunds_brygga_panoramic.jpg"
+            alt="Öhlunds Brygga och odlingarna vid Stugan i Ljusdal"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-pine/85 via-transparent to-transparent flex items-end p-6 sm:p-10">
+            <div className="text-oat max-w-2xl">
+              <span className="text-[10px] uppercase tracking-widest font-bold text-pine bg-oat px-3 py-1 rounded-full mb-2.5 inline-block">
+                Stugan vid Ljusnans strand • Ljusdal (Zon 5)
+              </span>
+              <h3 className="font-serif text-xl sm:text-3xl text-white font-medium leading-tight mb-1">
+                Här provodlas och härdas varje sort
+              </h3>
+              <p className="font-sans text-xs sm:text-sm text-oat/90">
+                Från de upphöjda odlingsbäddarna och blomsterkiosken intill träbryggan vid Ljusnan.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Team Profiles Section */}
       <section className="py-20 sm:py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16">

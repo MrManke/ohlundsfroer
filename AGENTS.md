@@ -168,7 +168,15 @@ Arbetet fördelas mellan specialiserade subagenter med anpassad risktolerans:
 ### UI-minimalism & Förbud mot emoji-kladd
 * **FÖRBJUDET med färgglada standard-emojis i UI:** Standard-emojis (såsom 🔍, 🌱, ✉️, 📦, 🌸, 🔔, 🌾, 📱, 🛒) får **INTE** användas som ikoner på knappar, badgar, toast-meddelanden eller i rubriker. De ger ett oseriöst, gammalmodigt och "kladdigt" intryck.
 * **Modern skandinavisk stil:** Använd istället ren typografi, diskreta mikroetiketter eller minimalistiska monokroma SVG-ikoner i varumärkets färgskala (Tallgrön, Terrakotta eller Bark).
-* **Inga störande overlays:** Överlägg som t.ex. stora rutor med "Förstora bild" eller "Detaljzoom" direkt över produktbilderna är förbjudna. Använd istället rena klickinteraktioner och naturlig musmarkör (`cursor-pointer`).
+* **Inga störande overlays eller zoom-knappar:** Överlägg som t.ex. rutor med "Förstora bild", knappar märkta "Detaljzoom (2x)" eller flytande tooltips som "Klicka på bilden för att förstora" är **strängt förbjudna**. Använd istället rena klickinteraktioner och naturlig musmarkör (`cursor-pointer`).
+* **Varumärkeslogotyp (Sprout-Ö):** Den officiella logotypen är ett grodd-Ö (`ohlunds_sprout_logo.svg`) med två distinkta blad spirande från ringens ovansida. Varianter med yttre cirklar, standby-symboler eller inverterade snitt är ogiltiga.
+
+### Förpacknings- & Bildintegritet
+* **Enhetliga kraftpåsar:** Alla fröpåsar ska avbildas i varumärkets bruna papperskraftpåsar med Tallgrönt tryck. Vita papperskuvert eller blank plast är förbjudet i produktkatalogen.
+* **Strikt textmatchning:** Texten och sortnamnet på den avbildade påsen MÅSTE matcha produktens titel i katalogen (t.ex. får en bild med texten "Slöjsilja" aldrig användas för körsbärstomater).
+* **Sanningsenliga produktbilder:**
+  * Tillbehör (`accessory`) ska avbilda den faktiska produkten (t.ex. trämärketiketter i sin kraftgördel), aldrig fröpåsar.
+  * Knölar (`tuber`) ska visa faktiska rotknölar redo för vårplantering, inte enbart utslagna sommarblommor.
 
 ---
 
@@ -180,6 +188,26 @@ Arbetet fördelas mellan specialiserade subagenter med anpassad risktolerans:
   * `BULKY_PARCEL`: Skrymmande artiklar (vaser, krukor, jord, knölar). Paketfrakt till ombud (79 kr).
 * Kassan och varukorgsrekommendationer **måste respektera fraktklasserna**:
   * Om en varukorg enbart har `FLAT_LETTER` får merförsäljningsmotorn **inte** föreslå `BULKY_PARCEL` utan tydlig varning till kunden om ändrat fraktpris.
+
+### Katalog- och kortdifferentiering per produkttyp (`ProductType`)
+Varje produkt i katalogen tillhör en explicit `ProductType` som styr kortets layout, specifikationer och köpknappar:
+1. `seed` (Fröpåsar):
+   - Visar såmånader, odlingszoner och planthöjd.
+   - Visar klickbar länk till "Se odlingsguide & QR-kod".
+   - CTA-knapp: *"Köp fröer"*.
+2. `tuber` (Knölar & Rotstockar, t.ex. dahlia):
+   - Visar leveransfönster och frostriskvarning (`shipWindow`, t.ex. *"Leverans mars–maj"*).
+   - Visar planteringsdjup och plantavstånd.
+   - Får **INTE** visa fröodlingsguide eller fröpåse-QR-kod.
+   - CTA-knapp: *"Köp knöl"* (eller *"Bevaka knöl"* vid slutförsäljning).
+3. `accessory` & `lifestyle` (Prylar, trämärketiketter, vaser, fakirer):
+   - Får **ALDRIG** visa QR-kod till odlingsguide eller såmånader.
+   - Visar materiella specifikationer (t.ex. *"10-pack björkträ"*, *"Handdrejat stengods"*).
+   - CTA-knapp: *"Köp tillbehör"* eller *"Köp vas"*.
+4. `bouquet_bundle` (Virtuella bukettpaket):
+   - Visar paketpris, ordinarie pris och sparad procentsats (*"Spara 15%"*).
+   - Visar ingående frösorter och skördeperiod.
+   - CTA-knapp: *"Köp paketet"*.
 
 ### Bukettpaket (Snittblomsrecept)
 * Bukettpaket modelleras som **virtuella paket** i Catalog (`type: 'bouquet_bundle'`). De refererar till en uppsättning frö-SKU:er.
@@ -203,3 +231,17 @@ Arbetet fördelas mellan specialiserade subagenter med anpassad risktolerans:
 * `/apps/web/AGENTS.md`: Lokala frontend-regler (Next.js, Server Actions, tillgänglighet, ingen direkt Firebase SDK-åtkomst).
 * `/packages/modules/inventory/AGENTS.md`: Lokala transaktions- och saldoregler (ACID, TTL, bucket-reservation).
 * `/packages/modules/fulfillment/AGENTS.md`: Lokala pack-, lot- och fraktregler (FEFO, CSV-format).
+
+---
+
+## 8. Token-optimering & Agent-ekonomi (Frugal Engineering)
+
+För att hålla nere tokenförbrukningen och säkerställa snabba, kostnadseffektiva agentcykler gäller följande regler:
+1. **Kirurgiska ändringar (Surgical diffs):** Använd alltid `replace_file_content` för precisa kodblock framför att skriva om hela filer. Skriv aldrig om filer på flera hundra rader när endast 5 rader ändras.
+2. **Selektiv testkörning:** Kör inte hela emulator- och E2E-sviten vid enkla komponentändringar. Kör enhetstester mot den specifika filen först:
+   ```bash
+   npx vitest run path/to/file.test.ts
+   ```
+3. **Kompakt kommandoutdata:** Använd tysta flaggor (`--silent`, `--quiet`) i CLI-verktyg för att förhindra att tusentals rader terminaloutput fyller agentens kontextfönster.
+4. **Tillgångsdisciplin:** Undvik onödiga externa API-anrop när lokala verktyg (t.ex. Python PIL för bildmanipulering, SVG-vektorer) löser uppgiften deterministiskt och utan token- eller API-kostnad.
+5. **Subagent-isolering:** Vid komplexa uppgifter, isolera domänundersökningar till specialiserade personas så att inte hela projektets historik laddas in i varje enskild agentkonversation.

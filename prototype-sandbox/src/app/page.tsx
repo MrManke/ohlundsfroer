@@ -526,19 +526,33 @@ export default function StorefrontPage() {
                 {/* Card body */}
                 <div className="p-5 flex flex-col flex-grow">
                   <span className="text-[10px] font-bold uppercase tracking-widest text-terracotta mb-1 block">
-                    {p.category === "snittblommor" ? "Snittblomma" : p.category === "kokstradgard" ? "Köksträdgård" : "Tillbehör"}
+                    {p.type === "bouquet_bundle"
+                      ? "Bukettrecept • Paket"
+                      : p.type === "tuber"
+                      ? "Knöl & Rotstock"
+                      : p.type === "accessory"
+                      ? "Trädgårdstillbehör"
+                      : p.type === "lifestyle"
+                      ? "Keramik & Form"
+                      : p.category === "kokstradgard"
+                      ? "Köksträdgård"
+                      : "Snittblomma"}
                   </span>
                   
                   <h3 className="font-serif text-xl font-medium text-pine mb-1 leading-snug">
                     {p.title}
                   </h3>
                   
-                  {p.botanicalName && (
+                  {p.botanicalName ? (
                     <p className="text-xs italic text-bark/60 mb-3">{p.botanicalName}</p>
+                  ) : p.subtitle ? (
+                    <p className="text-xs text-bark/60 mb-3">{p.subtitle}</p>
+                  ) : (
+                    <div className="mb-3" />
                   )}
 
-                  {/* Specs chips */}
-                  {p.specs && (
+                  {/* Differentiated Specs Chips based on ProductType */}
+                  {p.type === "seed" && p.specs && (
                     <div className="flex flex-wrap gap-1.5 mb-4 text-[11px] text-bark/70">
                       <span className="bg-oat px-2 py-0.5 rounded-md border border-sand/50">
                         Zon {Math.min(...p.specs.zones)}–{Math.max(...p.specs.zones)}
@@ -556,13 +570,89 @@ export default function StorefrontPage() {
                     </div>
                   )}
 
-                  {/* Mobile Garden Guide & QR code preview */}
-                  <button
-                    onClick={() => setActiveGuideProduct(p)}
-                    className="text-xs text-pine font-medium underline text-left hover:text-terracotta mb-4 flex items-center gap-1.5 py-1"
-                  >
-                    <span>Se odlingsguide & QR-kod</span>
-                  </button>
+                  {p.type === "tuber" && (
+                    <div className="flex flex-wrap gap-1.5 mb-4 text-[11px] text-bark/70">
+                      <span className="bg-oat px-2 py-0.5 rounded-md border border-sand/50">
+                        Zon 1–5
+                      </span>
+                      <span className="bg-oat px-2 py-0.5 rounded-md border border-sand/50">
+                        Höjd 110 cm
+                      </span>
+                      <span className="bg-oat px-2 py-0.5 rounded-md border border-sand/50">
+                        Djup: 10 cm
+                      </span>
+                    </div>
+                  )}
+
+                  {p.type === "accessory" && (
+                    <div className="flex flex-wrap gap-1.5 mb-4 text-[11px] text-bark/70">
+                      <span className="bg-oat px-2 py-0.5 rounded-md border border-sand/50 font-medium text-pine">
+                        10-pack
+                      </span>
+                      <span className="bg-oat px-2 py-0.5 rounded-md border border-sand/50">
+                        15 cm björkträ
+                      </span>
+                      <span className="bg-oat px-2 py-0.5 rounded-md border border-sand/50">
+                        FSC-märkt
+                      </span>
+                    </div>
+                  )}
+
+                  {p.type === "lifestyle" && (
+                    <div className="flex flex-wrap gap-1.5 mb-4 text-[11px] text-bark/70">
+                      <span className="bg-oat px-2 py-0.5 rounded-md border border-sand/50 font-medium text-pine">
+                        Handdrejad
+                      </span>
+                      <span className="bg-oat px-2 py-0.5 rounded-md border border-sand/50">
+                        Stengods
+                      </span>
+                      <span className="bg-oat px-2 py-0.5 rounded-md border border-sand/50">
+                        Havssandglasyr
+                      </span>
+                    </div>
+                  )}
+
+                  {p.type === "bouquet_bundle" && (
+                    <div className="flex flex-wrap gap-1.5 mb-4 text-[11px] text-bark/70">
+                      <span className="bg-terracotta/10 text-terracotta font-semibold px-2 py-0.5 rounded-md border border-terracotta/20">
+                        Paketpris (-15%)
+                      </span>
+                      <span className="bg-oat px-2 py-0.5 rounded-md border border-sand/50">
+                        4 frösorter
+                      </span>
+                      <span className="bg-oat px-2 py-0.5 rounded-md border border-sand/50">
+                        Snittblomsrecept
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Type-Specific Helper or Guide link (NO odlingsguide or QR for accessories/lifestyle) */}
+                  {p.type === "seed" && (
+                    <button
+                      onClick={() => setActiveGuideProduct(p)}
+                      className="text-xs text-pine font-medium underline text-left hover:text-terracotta mb-4 flex items-center gap-1.5 py-1"
+                    >
+                      <span>Se odlingsguide & QR-kod</span>
+                    </button>
+                  )}
+
+                  {p.type === "tuber" && (
+                    <div className="text-xs text-terracotta font-medium mb-4 flex items-center gap-1.5 py-1">
+                      <span>{p.shipWindow?.description || "Leverans mars–maj (frostrisk)"}</span>
+                    </div>
+                  )}
+
+                  {(p.type === "accessory" || p.type === "lifestyle") && (
+                    <div className="text-xs text-bark/60 mb-4 py-1">
+                      <span>{p.type === "accessory" ? "Väderbeständigt för pallkrage & kruka" : "Formgiven för fylliga buketter"}</span>
+                    </div>
+                  )}
+
+                  {p.type === "bouquet_bundle" && (
+                    <div className="text-xs text-pine font-medium mb-4 py-1">
+                      <span>Blomning från juli till september</span>
+                    </div>
+                  )}
 
                   {/* Footer & Action button */}
                   <div className="mt-auto pt-3 border-t border-sand/60 flex items-center justify-between">
@@ -575,14 +665,22 @@ export default function StorefrontPage() {
                         onClick={() => addToCart(p, 1)}
                         className="bg-sand hover:bg-pine hover:text-white text-pine text-xs font-semibold px-4 py-2.5 min-h-[44px] rounded-full transition-all flex items-center justify-center"
                       >
-                        Köp fröer
+                        {p.type === "seed"
+                          ? "Köp fröer"
+                          : p.type === "tuber"
+                          ? "Köp knöl"
+                          : p.type === "bouquet_bundle"
+                          ? "Köp paketet"
+                          : p.type === "lifestyle"
+                          ? "Köp vas"
+                          : "Köp tillbehör"}
                       </button>
                     ) : (
                       <button
                         onClick={() => setActiveNotifyProduct(p)}
                         className="bg-sand/70 hover:bg-sand text-terracotta text-xs font-semibold px-4 py-2.5 min-h-[44px] rounded-full transition-all flex items-center justify-center"
                       >
-                        Bevaka
+                        {p.type === "tuber" ? "Bevaka knöl" : "Bevaka"}
                       </button>
                     )}
                   </div>
@@ -997,24 +1095,11 @@ export default function StorefrontPage() {
                   </div>
                 )}
 
-                {/* Zoom Magnification Toggle Button */}
-                <button
-                  onClick={() => setIsZoomMagnified((prev) => !prev)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 border ${
-                    isZoomMagnified
-                      ? "bg-terracotta text-white border-terracotta"
-                      : "bg-white hover:bg-sand text-pine border-sand"
-                  }`}
-                  title={isZoomMagnified ? "Återställ förstoring" : "Zooma in 2x för detaljer"}
-                >
-                  <span>{isZoomMagnified ? "Återställ (1x)" : "Detaljzoom (2x)"}</span>
-                </button>
-
                 {/* Close Button */}
                 <button
                   onClick={() => setActiveZoomProduct(null)}
                   className="w-9 h-9 rounded-full bg-sand/60 hover:bg-pine hover:text-white text-bark flex items-center justify-center text-lg transition-colors"
-                  aria-label="Stäng bildförstoring"
+                  aria-label="Stäng bildvisning"
                 >
                   ✕
                 </button>
@@ -1025,7 +1110,6 @@ export default function StorefrontPage() {
             <div
               className="relative flex-grow bg-sand-light/50 overflow-auto flex items-center justify-center p-4 min-h-[350px] sm:min-h-[480px] cursor-pointer select-none"
               onClick={() => setIsZoomMagnified((prev) => !prev)}
-              title="Klicka på bilden för att växla mellan 1x och 2x förstoring"
             >
               <div
                 className={`relative transition-all duration-300 ${
@@ -1045,17 +1129,6 @@ export default function StorefrontPage() {
                   className="object-contain drop-shadow-md rounded-xl"
                   priority
                 />
-              </div>
-
-              {/* Floating Helper Tip */}
-              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 pointer-events-none">
-                <span className="bg-bark/75 text-oat text-[11px] font-medium px-3.5 py-1.5 rounded-full backdrop-blur-xs shadow-md">
-                  {zoomActiveSide === "back"
-                    ? "Baksida: Skanningsbar QR-kod & EU-växtpass"
-                    : isZoomMagnified
-                    ? "Klicka för att zooma ut"
-                    : "Klicka på bilden för att förstora 2x"}
-                </span>
               </div>
             </div>
 
@@ -1083,7 +1156,7 @@ export default function StorefrontPage() {
               </div>
 
               <div className="flex items-center gap-3">
-                {activeZoomProduct.product?.specs && (
+                {activeZoomProduct.product?.type === "seed" && activeZoomProduct.product?.specs && (
                   <button
                     onClick={() => {
                       const p = activeZoomProduct.product!;

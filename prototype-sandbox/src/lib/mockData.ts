@@ -246,7 +246,7 @@ export const PRODUCTS: Product[] = [
       producerCode: 'SE-X-12345',
       traceCode: 'NL-2026-8801'
     },
-    imageUrl: '/assets/packets/kraft_packet_single.jpg',
+    imageUrl: '/assets/packets/tomat_kraft.jpg',
     backImageUrl: '/assets/packets/packet_backside_qr.jpg',
     packetStyle: 'kraft',
     specs: {
@@ -281,7 +281,7 @@ export const PRODUCTS: Product[] = [
     inStock: false, // Demonstrerar "Bevaka i lager"
     stockQty: 0,
     lotNumber: 'LOT-2026-DA07',
-    imageUrl: '/assets/dahlia_blooms.jpg',
+    imageUrl: '/assets/dahlia_tuber.jpg',
     specs: {
       sowMonths: [3, 4],
       zones: [1, 2, 3, 4, 5],
@@ -320,7 +320,7 @@ export const PRODUCTS: Product[] = [
     description: 'Rejäla väderbeständiga trämärketiketter som håller reda på dina sådder från förkultivering till skörd.',
     inStock: true,
     stockQty: 250,
-    imageUrl: '/assets/garden_accessories.jpg'
+    imageUrl: '/assets/wooden_labels.jpg'
   },
   {
     id: 'bukettpaket-sensommardrom',
