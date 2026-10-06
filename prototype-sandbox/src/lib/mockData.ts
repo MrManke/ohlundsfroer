@@ -46,6 +46,7 @@ export interface Product {
   lotNumber?: string;
   plantPassport?: PlantPassport;
   imageUrl: string;
+  backImageUrl?: string;
   packetStyle?: 'kraft' | 'cream_botanical' | 'technical_label';
   bundleComponentIds?: string[];
 }
@@ -70,8 +71,9 @@ export const PRODUCTS: Product[] = [
       producerCode: 'SE-X-12345',
       traceCode: 'NL-2026-9988'
     },
-    imageUrl: '/assets/user_packets_photo.jpg',
-    packetStyle: 'cream_botanical',
+    imageUrl: '/assets/packets/slojsilja_kraft.jpg',
+    backImageUrl: '/assets/packets/packet_backside_qr.jpg',
+    packetStyle: 'kraft',
     specs: {
       sowMonths: [4, 5],
       zones: [1, 2, 3, 4, 5, 6, 7, 8],
@@ -104,7 +106,8 @@ export const PRODUCTS: Product[] = [
       producerCode: 'SE-X-12345',
       traceCode: 'NL-2026-4412'
     },
-    imageUrl: '/assets/seed_packets_mockup_1791312156789.jpg',
+    imageUrl: '/assets/packets/zinnia_kraft.jpg',
+    backImageUrl: '/assets/packets/packet_backside_qr.jpg',
     packetStyle: 'kraft',
     specs: {
       sowMonths: [3, 4],
@@ -138,7 +141,8 @@ export const PRODUCTS: Product[] = [
       producerCode: 'SE-X-12345',
       traceCode: 'DE-2026-7711'
     },
-    imageUrl: '/assets/user_packets_photo.jpg',
+    imageUrl: '/assets/packets/pionvallmo_kraft.jpg',
+    backImageUrl: '/assets/packets/packet_backside_qr.jpg',
     packetStyle: 'kraft',
     specs: {
       sowMonths: [4, 5],

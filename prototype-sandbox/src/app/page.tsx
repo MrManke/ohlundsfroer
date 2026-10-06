@@ -38,6 +38,7 @@ export default function StorefrontPage() {
   const [activeNotifyProduct, setActiveNotifyProduct] = useState<Product | null>(null);
   const [activeZoomProduct, setActiveZoomProduct] = useState<ZoomItem | null>(null);
   const [isZoomMagnified, setIsZoomMagnified] = useState(false);
+  const [zoomActiveSide, setZoomActiveSide] = useState<"front" | "back">("front");
   const [notifyEmail, setNotifyEmail] = useState("");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -479,6 +480,7 @@ export default function StorefrontPage() {
                       product: p,
                     });
                     setIsZoomMagnified(false);
+                    setZoomActiveSide("front");
                   }}
                   className="relative aspect-[4/3] bg-sand-light overflow-hidden cursor-zoom-in group/img"
                   role="button"
@@ -495,6 +497,7 @@ export default function StorefrontPage() {
                         product: p,
                       });
                       setIsZoomMagnified(false);
+                      setZoomActiveSide("front");
                     }
                   }}
                 >
@@ -982,7 +985,40 @@ export default function StorefrontPage() {
                 )}
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3">
+                {/* Front / Back Side Toggle (if backImageUrl exists) */}
+                {activeZoomProduct.product?.backImageUrl && (
+                  <div className="flex bg-sand/60 rounded-full p-1 border border-sand">
+                    <button
+                      onClick={() => {
+                        setZoomActiveSide("front");
+                        setIsZoomMagnified(false);
+                      }}
+                      className={`px-3 py-1 rounded-full text-xs font-semibold transition-all ${
+                        zoomActiveSide === "front"
+                          ? "bg-pine text-white shadow-xs"
+                          : "text-bark/70 hover:text-bark"
+                      }`}
+                    >
+                      Framsida
+                    </button>
+                    <button
+                      onClick={() => {
+                        setZoomActiveSide("back");
+                        setIsZoomMagnified(false);
+                      }}
+                      className={`px-3 py-1 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                        zoomActiveSide === "back"
+                          ? "bg-pine text-white shadow-xs"
+                          : "text-bark/70 hover:text-bark"
+                      }`}
+                    >
+                      <span>Baksida</span>
+                      <span className="text-[10px] bg-terracotta text-white px-1.5 py-0.5 rounded-full font-bold">QR</span>
+                    </button>
+                  </div>
+                )}
+
                 {/* Zoom Magnification Toggle Button */}
                 <button
                   onClick={() => setIsZoomMagnified((prev) => !prev)}
@@ -1021,8 +1057,12 @@ export default function StorefrontPage() {
                 }`}
               >
                 <Image
-                  src={activeZoomProduct.imageUrl}
-                  alt={activeZoomProduct.title}
+                  src={
+                    zoomActiveSide === "back" && activeZoomProduct.product?.backImageUrl
+                      ? activeZoomProduct.product.backImageUrl
+                      : activeZoomProduct.imageUrl
+                  }
+                  alt={`${activeZoomProduct.title} ${zoomActiveSide === "back" ? "baksida med QR-kod" : "framsida"}`}
                   fill
                   className="object-contain drop-shadow-md rounded-xl"
                   priority
@@ -1032,7 +1072,11 @@ export default function StorefrontPage() {
               {/* Floating Helper Tip */}
               <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 pointer-events-none">
                 <span className="bg-bark/75 text-oat text-[11px] font-medium px-3.5 py-1.5 rounded-full backdrop-blur-xs shadow-md">
-                  {isZoomMagnified ? "Klicka för att zooma ut" : "Klicka på bilden för att zooma in 2x"}
+                  {zoomActiveSide === "back"
+                    ? "Baksida: Skanningsbar QR-kod & EU-växtpass (Klicka för 2x zoom)"
+                    : isZoomMagnified
+                    ? "Klicka för att zooma ut"
+                    : "Klicka på bilden för att zooma in 2x"}
                 </span>
               </div>
             </div>

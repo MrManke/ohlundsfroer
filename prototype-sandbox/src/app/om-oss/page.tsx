@@ -13,11 +13,11 @@ export default function OmOssPage() {
     {
       name: "Ville Öhlund",
       role: "VD & Head of Logistics",
-      titleNote: "Civilingenjör i Industriell Ekonomi",
+      titleNote: "Ingenjör i Industriell Ekonomi",
       image: "/assets/team/ville_ohlund.jpg",
       quote: "Att få bygga ett modernt e-handelsbolag från grunden – där varje logistikflöde är optimerat och fraktsmart – är min stora drivkraft och dröm.",
       bio: [
-        "Ville är nyexaminerad civilingenjör inom Industriell Ekonomi och leder bolagets övergripande strategi och operativa distributionsflöde. Med ett skarpt öga för processtyrning och lageroptimering ser han till att distributionskedjan – från EU-import och ompackning till sista milen ut till kundens brevlåda – är så snabb, kostnadseffektiv och hållbar som möjligt.",
+        "Ville är nyexaminerad ingenjör inom Industriell Ekonomi och leder bolagets övergripande strategi och operativa distributionsflöde. Med ett skarpt öga för processtyrning och lageroptimering ser han till att distributionskedjan – från EU-import och ompackning till sista milen ut till kundens brevlåda – är så snabb, kostnadseffektiv och hållbar som möjligt.",
         "Hans entreprenörsdröm om att bygga ett bolag från grunden kombineras här med modern industriell logik: fraktsmarta brevformat, digital spårbarhet och skalbara distributionsprocesser som gör att fröerna når trädgårdsodlare i hela Sverige på rekordtid.",
       ],
       skills: ["Logistikoptimering", "Distributionskedjor", "Entreprenörskap", "Affärsutveckling"],
