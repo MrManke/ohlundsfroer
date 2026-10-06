@@ -1,8 +1,18 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import { PRODUCTS, Product, ShippingClass } from "@/lib/mockData";
+
+interface ZoomItem {
+  title: string;
+  imageUrl: string;
+  botanicalName?: string;
+  subtitle?: string;
+  shippingClass?: ShippingClass;
+  priceSek?: number;
+  product?: Product;
+}
 
 export default function StorefrontPage() {
   // Cart state
@@ -26,8 +36,29 @@ export default function StorefrontPage() {
   // Modals state
   const [activeGuideProduct, setActiveGuideProduct] = useState<Product | null>(null);
   const [activeNotifyProduct, setActiveNotifyProduct] = useState<Product | null>(null);
+  const [activeZoomProduct, setActiveZoomProduct] = useState<ZoomItem | null>(null);
+  const [isZoomMagnified, setIsZoomMagnified] = useState(false);
   const [notifyEmail, setNotifyEmail] = useState("");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // Keyboard listener for Escape to close open modals
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        if (activeZoomProduct) {
+          setActiveZoomProduct(null);
+        } else if (activeGuideProduct) {
+          setActiveGuideProduct(null);
+        } else if (activeNotifyProduct) {
+          setActiveNotifyProduct(null);
+        } else if (isCartOpen) {
+          setIsCartOpen(false);
+        }
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [activeZoomProduct, activeGuideProduct, activeNotifyProduct, isCartOpen]);
 
   // Toast trigger
   const showToast = (msg: string) => {
@@ -242,15 +273,34 @@ export default function StorefrontPage() {
         <div className="bg-sand-light border border-sand rounded-3xl p-6 sm:p-10 lg:p-14 shadow-sm">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             
-            {/* Image */}
-            <div className="lg:col-span-5 relative rounded-2xl overflow-hidden shadow-xl aspect-[4/3] lg:aspect-[4/5]">
+            {/* Image (Click to zoom) */}
+            <div
+              onClick={() => {
+                setActiveZoomProduct({
+                  title: "Bukettrecept: Sensommardröm vid Bryggan",
+                  imageUrl: "/assets/sensommardrom_bukett_1791312135766.jpg",
+                  subtitle: "Snittblomsbukett komponerad av Jessica Öhlund • Aprikos zinnia, slöjsilja, pionvallmo & luktärt",
+                  priceSek: bundleFinalPrice,
+                });
+                setIsZoomMagnified(false);
+              }}
+              className="lg:col-span-5 relative rounded-2xl overflow-hidden shadow-xl aspect-[4/3] lg:aspect-[4/5] cursor-zoom-in group/img"
+              role="button"
+              tabIndex={0}
+              aria-label="Förstora bild för bukettrecept"
+            >
               <Image
                 src="/assets/sensommardrom_bukett_1791312135766.jpg"
                 alt="Snittblomsbukett Sensommardröm vid Bryggan"
                 fill
-                className="object-cover"
+                className="object-cover group-hover/img:scale-105 transition-transform duration-300"
               />
-              <div className="absolute top-4 left-4 bg-pine/90 text-oat text-xs font-semibold px-3 py-1.5 rounded-full backdrop-blur-sm tracking-wider uppercase">
+              <div className="absolute inset-0 bg-bark/0 group-hover/img:bg-bark/15 transition-colors flex items-center justify-center pointer-events-none">
+                <span className="opacity-0 group-hover/img:opacity-100 transition-all duration-200 bg-pine/90 text-oat text-xs font-medium px-3.5 py-2 rounded-full shadow-lg flex items-center gap-1.5 backdrop-blur-xs transform translate-y-1 group-hover/img:translate-y-0">
+                  🔍 Förstora bukettbild
+                </span>
+              </div>
+              <div className="absolute top-4 left-4 bg-pine/90 text-oat text-xs font-semibold px-3 py-1.5 rounded-full backdrop-blur-sm tracking-wider uppercase pointer-events-none">
                 Bukettrecept #1
               </div>
             </div>
@@ -417,17 +467,53 @@ export default function StorefrontPage() {
                 key={p.id}
                 className="bg-white border border-sand rounded-2xl overflow-hidden hover:shadow-md transition-all flex flex-col group"
               >
-                {/* Image */}
-                <div className="relative aspect-[4/3] bg-sand-light overflow-hidden">
+                {/* Image (Click to zoom) */}
+                <div
+                  onClick={() => {
+                    setActiveZoomProduct({
+                      title: p.title,
+                      imageUrl: p.imageUrl,
+                      botanicalName: p.botanicalName,
+                      shippingClass: p.shippingClass,
+                      priceSek: p.priceSek,
+                      product: p,
+                    });
+                    setIsZoomMagnified(false);
+                  }}
+                  className="relative aspect-[4/3] bg-sand-light overflow-hidden cursor-zoom-in group/img"
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Förstora bild för ${p.title}`}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      setActiveZoomProduct({
+                        title: p.title,
+                        imageUrl: p.imageUrl,
+                        botanicalName: p.botanicalName,
+                        shippingClass: p.shippingClass,
+                        priceSek: p.priceSek,
+                        product: p,
+                      });
+                      setIsZoomMagnified(false);
+                    }
+                  }}
+                >
                   <Image
                     src={p.imageUrl}
                     alt={p.title}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="object-cover group-hover/img:scale-105 transition-transform duration-300"
                   />
 
+                  {/* Zoom Hover Badge */}
+                  <div className="absolute inset-0 bg-bark/0 group-hover/img:bg-bark/15 transition-colors flex items-center justify-center pointer-events-none">
+                    <span className="opacity-0 group-hover/img:opacity-100 transition-all duration-200 bg-pine/90 text-oat text-[11px] font-medium px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5 backdrop-blur-xs transform translate-y-1 group-hover/img:translate-y-0">
+                      🔍 Förstora bild
+                    </span>
+                  </div>
+
                   {/* Shipping badge */}
-                  <div className="absolute top-3 left-3">
+                  <div className="absolute top-3 left-3 pointer-events-none">
                     <span
                       className={`text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full backdrop-blur-sm ${
                         isLetter
@@ -441,7 +527,7 @@ export default function StorefrontPage() {
 
                   {/* Out of stock badge */}
                   {!p.inStock && (
-                    <div className="absolute top-3 right-3">
+                    <div className="absolute top-3 right-3 pointer-events-none">
                       <span className="bg-bark/80 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">
                         Slutsåld
                       </span>
@@ -860,6 +946,168 @@ export default function StorefrontPage() {
                 Meddela mig när den finns i lager
               </button>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Modal: Bildförstoring & Lightbox */}
+      {activeZoomProduct && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-bark/90 backdrop-blur-md"
+          onClick={() => setActiveZoomProduct(null)}
+        >
+          <div
+            className="bg-white rounded-3xl max-w-4xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden relative border border-sand"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="p-4 sm:p-5 border-b border-sand bg-oat flex items-center justify-between">
+              <div className="min-w-0 pr-4">
+                <span className="text-[10px] uppercase font-bold tracking-widest text-terracotta block">
+                  {activeZoomProduct.product?.category === "snittblommor"
+                    ? "Snittblomma • Fröpåse"
+                    : activeZoomProduct.product?.category === "kokstradgard"
+                    ? "Köksträdgård"
+                    : activeZoomProduct.product?.category === "tillbehor"
+                    ? "Trädgårdstillbehör"
+                    : "Detaljvy"}
+                </span>
+                <h3 className="font-serif text-xl sm:text-2xl font-medium text-pine truncate">
+                  {activeZoomProduct.title}
+                </h3>
+                {(activeZoomProduct.botanicalName || activeZoomProduct.subtitle) && (
+                  <p className="text-xs italic text-bark/60 truncate">
+                    {activeZoomProduct.botanicalName || activeZoomProduct.subtitle}
+                  </p>
+                )}
+              </div>
+
+              <div className="flex items-center gap-2">
+                {/* Zoom Magnification Toggle Button */}
+                <button
+                  onClick={() => setIsZoomMagnified((prev) => !prev)}
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 border ${
+                    isZoomMagnified
+                      ? "bg-terracotta text-white border-terracotta"
+                      : "bg-white hover:bg-sand text-pine border-sand"
+                  }`}
+                  title={isZoomMagnified ? "Återställ förstoring" : "Zooma in 2x för detaljer"}
+                >
+                  <span>{isZoomMagnified ? "🔍 1x Normal" : "🔍 2x Detaljzoom"}</span>
+                </button>
+
+                {/* Close Button */}
+                <button
+                  onClick={() => setActiveZoomProduct(null)}
+                  className="w-9 h-9 rounded-full bg-sand/60 hover:bg-pine hover:text-white text-bark flex items-center justify-center text-lg transition-colors"
+                  aria-label="Stäng bildförstoring"
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+
+            {/* Modal Image Viewport */}
+            <div
+              className="relative flex-grow bg-sand-light/50 overflow-auto flex items-center justify-center p-4 min-h-[350px] sm:min-h-[480px] cursor-pointer select-none"
+              onClick={() => setIsZoomMagnified((prev) => !prev)}
+              title="Klicka på bilden för att växla mellan 1x och 2x förstoring"
+            >
+              <div
+                className={`relative transition-all duration-300 ${
+                  isZoomMagnified
+                    ? "scale-175 cursor-zoom-out w-full max-w-2xl aspect-square"
+                    : "scale-100 cursor-zoom-in w-full max-w-xl aspect-[4/3] sm:aspect-[16/10]"
+                }`}
+              >
+                <Image
+                  src={activeZoomProduct.imageUrl}
+                  alt={activeZoomProduct.title}
+                  fill
+                  className="object-contain drop-shadow-md rounded-xl"
+                  priority
+                />
+              </div>
+
+              {/* Floating Helper Tip */}
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 pointer-events-none">
+                <span className="bg-bark/75 text-oat text-[11px] font-medium px-3.5 py-1.5 rounded-full backdrop-blur-xs shadow-md">
+                  {isZoomMagnified ? "Klicka för att zooma ut" : "Klicka på bilden för att zooma in 2x"}
+                </span>
+              </div>
+            </div>
+
+            {/* Modal Footer Bar */}
+            <div className="p-4 sm:p-5 border-t border-sand bg-white flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                {activeZoomProduct.priceSek !== undefined && (
+                  <span className="font-serif text-2xl font-bold text-pine">
+                    {activeZoomProduct.priceSek} kr
+                  </span>
+                )}
+                {activeZoomProduct.shippingClass && (
+                  <span
+                    className={`text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full ${
+                      activeZoomProduct.shippingClass === "FLAT_LETTER"
+                        ? "bg-pine/10 text-pine"
+                        : "bg-terracotta/15 text-terracotta"
+                    }`}
+                  >
+                    {activeZoomProduct.shippingClass === "FLAT_LETTER"
+                      ? "✉️ Brevfrakt (29 kr)"
+                      : "📦 Paketfrakt (79 kr)"}
+                  </span>
+                )}
+              </div>
+
+              <div className="flex items-center gap-3">
+                {activeZoomProduct.product?.specs && (
+                  <button
+                    onClick={() => {
+                      const p = activeZoomProduct.product!;
+                      setActiveZoomProduct(null);
+                      setActiveGuideProduct(p);
+                    }}
+                    className="text-xs text-pine font-medium underline hover:text-terracotta px-2 py-1"
+                  >
+                    📱 Se odlingsguide & QR-kod
+                  </button>
+                )}
+
+                {activeZoomProduct.product && activeZoomProduct.product.inStock && (
+                  <button
+                    onClick={() => {
+                      addToCart(activeZoomProduct.product!, 1);
+                      setActiveZoomProduct(null);
+                      setIsCartOpen(true);
+                    }}
+                    className="bg-pine hover:bg-pine-light text-oat text-xs font-semibold px-5 py-2.5 rounded-full transition-all shadow-sm hover:shadow flex items-center gap-1.5"
+                  >
+                    <span>🛒 Lägg i varukorg</span>
+                  </button>
+                )}
+
+                {activeZoomProduct.product && !activeZoomProduct.product.inStock && (
+                  <button
+                    onClick={() => {
+                      const p = activeZoomProduct.product!;
+                      setActiveZoomProduct(null);
+                      setActiveNotifyProduct(p);
+                    }}
+                    className="bg-sand hover:bg-sand-dark text-terracotta text-xs font-semibold px-4 py-2.5 rounded-full transition-all flex items-center gap-1.5"
+                  >
+                    <span>🔔 Bevaka i lager</span>
+                  </button>
+                )}
+
+                <button
+                  onClick={() => setActiveZoomProduct(null)}
+                  className="bg-sand hover:bg-sand-dark text-bark text-xs font-semibold px-4 py-2.5 rounded-full transition-all"
+                >
+                  Stäng (Esc)
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
