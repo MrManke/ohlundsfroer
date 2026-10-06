@@ -174,21 +174,18 @@ export default function StorefrontPage() {
       <header className="sticky top-0 z-40 bg-oat/95 backdrop-blur-md border-b border-sand transition-all">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-3 group">
-            {/* Seed & Sprout SVG Logo matching the user's packet photo */}
-            <div className="w-10 h-10 rounded-full border-2 border-pine flex items-center justify-center bg-sand-light transition-transform group-hover:scale-105">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="14" r="7" stroke="#1B2A20" strokeWidth="2.2" />
-                <path d="M12 7V13" stroke="#1B2A20" strokeWidth="2.2" strokeLinecap="round" />
-                <path d="M12 8C12 5 15 4 16 5C17 6 15 9 12 8Z" fill="#1B2A20" />
-                <path d="M12 9C12 6 9 5 8 6C7 7 9 10 12 9Z" fill="#1B2A20" />
+          <a href="#" className="flex items-center gap-3.5 group">
+            {/* Sprout 'Ö' Logo exactly matching the brown kraft packet */}
+            <div className="w-9 h-11 flex items-center justify-center transition-transform group-hover:scale-105">
+              <svg viewBox="16 18 73 105" className="w-full h-full text-pine fill-current" xmlns="http://www.w3.org/2000/svg">
+                <path fillRule="evenodd" d="M 29,32 L 32,41 L 36,45 L 38,46 L 48,48 L 48,50 L 49,52 L 47,54 L 44,54 L 32,60 L 26,66 L 22,72 L 19,82 L 19,91 L 22,101 L 26,107 L 30,111 L 34,114 L 40,117 L 46,119 L 59,119 L 63,118 L 74,112 L 81,104 L 84,98 L 86,89 L 86,84 L 84,75 L 80,67 L 73,60 L 61,54 L 58,54 L 50,51 L 49,49 L 49,43 L 45,35 L 44,35 L 40,32 L 36,31 Z M 46,62 L 59,62 L 65,65 L 68,68 L 69,68 L 73,73 L 75,77 L 77,84 L 77,89 L 76,93 L 72,101 L 66,107 L 63,109 L 56,111 L 50,111 L 45,110 L 39,107 L 32,100 L 30,96 L 28,89 L 28,83 L 29,79 L 32,73 L 37,67 L 43,63 Z M 81,22 L 73,22 L 69,23 L 62,27 L 58,32 L 56,40 L 57,46 L 58,41 L 60,38 L 67,34 L 62,40 L 62,42 L 61,44 L 67,44 L 72,42 L 78,36 L 80,33 L 82,26 Z" />
               </svg>
             </div>
             <div>
               <span className="font-serif text-2xl font-semibold tracking-tight text-pine block leading-none">
                 ÖHLUNDS FRÖER
               </span>
-              <span className="text-[10px] uppercase tracking-[0.2em] font-sans font-semibold text-terracotta mt-0.5 block">
+              <span className="text-[10px] uppercase tracking-[0.2em] font-sans font-semibold text-terracotta mt-1 block">
                 Öhlunds Brygga • Ljusdal
               </span>
             </div>
@@ -224,17 +221,17 @@ export default function StorefrontPage() {
         </div>
       </header>
 
-      {/* Hero Banner (Matching the laptop mockup image!) */}
+      {/* Hero Banner (Showing bright, sunny Stugan & Bryggan at Ljusnan) */}
       <section className="relative overflow-hidden bg-pine text-oat py-20 lg:py-28">
         <div className="absolute inset-0 z-0">
           <Image
             src="/assets/ohlunds_brygga_hero_1791312124759.jpg"
-            alt="Öhlunds Brygga vid Ljusnans strand i Hälsingland"
+            alt="Öhlunds Brygga och Stugan vid Ljusnans strand i Hälsingland"
             fill
-            className="object-cover opacity-35 filter saturate-125"
+            className="object-cover opacity-80 object-center"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-pine/95 via-pine/80 to-pine/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-pine/95 via-pine/70 to-transparent sm:via-pine/50" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
