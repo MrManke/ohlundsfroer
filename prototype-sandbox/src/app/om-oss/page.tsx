@@ -95,13 +95,15 @@ export default function OmOssPage() {
 
       {/* Hero Section */}
       <section className="relative py-20 bg-pine text-oat overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0">
           <Image
-            src="/assets/ohlunds_brygga_hero_1791312124759.jpg"
-            alt="Öhlunds Brygga bakgrund"
+            src="/assets/ohlunds_brygga_panoramic.jpg"
+            alt="Öhlunds Brygga och odlingarna vid Stugan i Ljusdal"
             fill
-            className="object-cover"
+            priority
+            className="object-cover opacity-35"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-pine via-pine/60 to-pine/40" />
         </div>
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <span className="inline-block px-3.5 py-1 rounded-full bg-sand/20 text-sand text-xs font-mono uppercase tracking-widest mb-4">
