@@ -64,6 +64,23 @@ Systemet är en **modulär monolit** skriven uteslutande i **TypeScript**. Koden
   * Informativa `alt`-texter på produktbilder och odlingsillustrationer.
   * Full funktionalitet med enbart tangentbord (Tab, Enter, Space, Escape) samt tydlig fokusram (`focus-visible`).
 
+### Regel 2.8: Mobile-First Typografi & Klippskydd (Diakritiska tecken Å, Ä, Ö)
+* **Förbud mot `leading-none` på rubriker:** Display- och serif-typsnitt i rubriker eller logotyper som innehåller svenska tecken (Å, Ä, Ö) får **ALDRIG** ha `leading-none`. Det klipper armar och prickar mot containerns överkant. Använd alltid `leading-tight` eller `leading-snug` och säkerställ minst `pt-1`/`py-1` i luft.
+* **Flexibla containerhöjder:** Fasta containerhöjder i navigationsfält (t.ex. `h-20`) får inte kväva innehållet på mindre skärmar; använd responsiva höjder som `h-16 sm:h-20` och flexibel centrering.
+
+### Regel 2.9: Icke-påträngande köpflöde (Anti-Screen Theft & Toast-principen)
+* **FÖRBJUDET med automatisk fullskärmsöppning av varukorg:** Att automatiskt skjuta ut varukorgs-drawern eller en modal över hela skärmen när kunden klickar "Köp fröer" är **strängt förbjudet**. Det stjäl skärmen, avbryter bläddringsflödet och tvingar kunden att stänga panelen manuellt varje gång en artikel läggs till.
+* **Diskret toast-bekräftelse:** Bekräftelse på tillagd produkt ska ske via en diskret toast i skärmens underkant (t.ex. *"✓ Luktärt 'Morgonbris' lades till i korgen [Öppna varukorg]"*) eller via en mikromarkering på varukorgsikonen. Kunden ska kunna fortsätta botanisera i katalogen utan avbrott.
+
+### Regel 2.10: Mobilanpassade Drawers & Layouthierarki (Vertical Real Estate)
+* **Full bredd på mobil:** Sidopaneler och drawers ska expandera till full bredd (`w-full sm:w-[430px]`) på mobil. Stora fasta indrag (såsom `pl-10`) är förbjudna på skärmar <640px då de trycker ihop innehållet i sidled.
+* **Dynamisk viewporthöjd (`100dvh`):** Drawers måste använda `h-[100dvh]` istället för `100vh` för att förhindra att knappar kapas bakom mobila webbläsares adress- och verktygsfält.
+* **Garanterad artikellista (`flex-1 min-h-0`):** Varukorgens lista över artiklar måste ha `flex-1 min-h-0 overflow-y-auto`. Fasta element som fri frakt-mätare, tips och kassaknapp får aldrig kväva artikellistan till oigenkännlighet.
+* **Förbud mot ordavhuggning:** Knappar och åtgärder (som *"Ta bort"*) ska förses med `whitespace-nowrap` och tillräckliga touchytor (minst 44×44px). Snabbjustering av antal (`[-] qty [+]`) ska finnas direkt på kortet.
+
+### Regel 2.11: Bildintegritet & Autentiska fotografier
+* **Alltid användarens originalfoto:** När användaren tillhandahåller eller laddar upp autentiska fotografier (t.ex. Stugan och odlingarna vid Ljusnan) ska koden uteslutande referera till detta fotografi. Agenter får aldrig falla tillbaka på gamla eller genererade mockups i hero- eller profilsektioner.
+
 ---
 
 ## 3. Deterministisk Verifieringsloop (Låt kompilatorn styra)
@@ -81,6 +98,8 @@ En agent får aldrig gissa eller anta att kod fungerar. Innan en uppgift markera
         ↓ (OK)
 4. `npm run test:emu`  (integrationstester mot Firebase Emulator Suite)
         ↓ (OK)
+5. `npm run test:e2e`  (responsiva Playwright-tester: Desktop & Mobile 375×667 / 390×844)
+        ↓ (OK)
 [Uppgiften godkänd]
 ```
 
@@ -97,9 +116,17 @@ En agent får aldrig gissa eller anta att kod fungerar. Innan en uppgift markera
   * **Idempotens:** Verifiera att triggning av samma `eventId` två gånger inte duplicerar verifikationer i `finance_entries` eller skickar dubbla mail.
 * **Miljö:** Körs uteslutande mot lokal Firebase Emulator Suite.
 
-#### 3. E2E & Regressionssvit (Playwright)
-* **Kritiska flöden:**
-  * Bygga bukettpaket → lägga i korg → kontrollera fraktklass → slutföra mockad kassa → verifiera fryst orderstatus och uppdaterat lagersaldo.
+#### 3. E2E & Responsivitetstestning (Playwright)
+* **Obligatoriska Viewports:**
+  * **Desktop:** 1280×800.
+  * **Mobile Small:** 375×667 (iPhone SE, kompakta Android-enheter).
+  * **Mobile Modern:** 390×844 (iPhone 12/14/15, moderna Android-telefoner).
+* **Obligatoriska automatiserade kontroller:**
+  * **Noll horisontell overflow:** Kontrollera mekaniskt att `document.documentElement.scrollWidth <= window.innerWidth` på alla viewports.
+  * **Typografisk integritet:** Kontrollera att logotyp och rubriker med Å/Ä/Ö inte har klippta bounding boxes.
+  * **Köpbeteende & Toast:** Verifiera att klick på köpknapp visar bekräftelsetoast utan att automatiskt öppna modal/drawer som blockerar katalogen.
+  * **Varukorgslayout:** Verifiera att artikellistan är fullt läsbar och rullningsbar på 375×667 utan ordavhuggning på åtgärder som "Ta bort".
+  * **Kritiska köpflöden:** Bukettpaket → lägg i korg → fraktklassberäkning → mockad kassa → fryst order.
   * Blandad varukorg (fröer + dahlia med framtida leveransfönster) för att säkerställa att sändningsdatum sätts till det senaste gemensamma datumet.
 
 ---

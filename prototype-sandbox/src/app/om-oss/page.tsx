@@ -60,18 +60,18 @@ export default function OmOssPage() {
 
       {/* Navigation Header */}
       <header className="sticky top-0 z-40 bg-oat/95 backdrop-blur-md border-b border-sand">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3.5 group">
-            <div className="w-9 h-11 flex items-center justify-center transition-transform group-hover:scale-105">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2.5 sm:gap-3.5 group min-w-0">
+            <div className="w-8 sm:w-9 h-10 sm:h-11 flex-shrink-0 flex items-center justify-center transition-transform group-hover:scale-105">
               <svg viewBox="16 18 73 105" className="w-full h-full text-pine fill-current" xmlns="http://www.w3.org/2000/svg">
                 <path fillRule="evenodd" d="M 29,32 L 32,41 L 36,45 L 38,46 L 48,48 L 48,50 L 49,52 L 47,54 L 44,54 L 32,60 L 26,66 L 22,72 L 19,82 L 19,91 L 22,101 L 26,107 L 30,111 L 34,114 L 40,117 L 46,119 L 59,119 L 63,118 L 74,112 L 81,104 L 84,98 L 86,89 L 86,84 L 84,75 L 80,67 L 73,60 L 61,54 L 58,54 L 50,51 L 49,49 L 49,43 L 45,35 L 44,35 L 40,32 L 36,31 Z M 46,62 L 59,62 L 65,65 L 68,68 L 69,68 L 73,73 L 75,77 L 77,84 L 77,89 L 76,93 L 72,101 L 66,107 L 63,109 L 56,111 L 50,111 L 45,110 L 39,107 L 32,100 L 30,96 L 28,89 L 28,83 L 29,79 L 32,73 L 37,67 L 43,63 Z M 81,22 L 73,22 L 69,23 L 62,27 L 58,32 L 56,40 L 57,46 L 58,41 L 60,38 L 67,34 L 62,40 L 62,42 L 61,44 L 67,44 L 72,42 L 78,36 L 80,33 L 82,26 Z" />
               </svg>
             </div>
-            <div>
-              <span className="font-serif text-2xl font-semibold tracking-tight text-pine block leading-none">
+            <div className="min-w-0">
+              <span className="font-serif text-lg sm:text-2xl font-semibold tracking-tight text-pine block leading-tight pt-1">
                 ÖHLUNDS FRÖER
               </span>
-              <span className="text-[10px] uppercase tracking-[0.2em] font-sans font-semibold text-terracotta mt-1 block">
+              <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-sans font-semibold text-terracotta block truncate">
                 Öhlunds Brygga • Ljusdal
               </span>
             </div>

@@ -107,7 +107,6 @@ export default function StorefrontPage() {
       addToCart(item, 1);
     });
     showToast("Bukettpaketet lades till i varukorgen!");
-    setIsCartOpen(true);
   };
 
   // Cart calculations & shipping awareness
@@ -164,28 +163,31 @@ export default function StorefrontPage() {
   return (
     <div className="min-h-screen flex flex-col bg-oat text-bark">
       {/* Top Notice Bar */}
-      <div className="bg-pine text-oat text-xs py-2 px-4 text-center tracking-wide font-sans border-b border-pine-light">
-        <span>
+      <div className="bg-pine text-oat text-[11px] sm:text-xs py-1.5 sm:py-2 px-3 sm:px-4 text-center tracking-wide font-sans border-b border-pine-light">
+        <span className="hidden sm:inline">
           <strong>Öhlunds Brygga vid Ljusnan (Ljusdal, Zon 5):</strong> Handpackade kulturarvsfröer & snittblommor • Brevfrakt 29 kr (Fri frakt över 350 kr) • EU-växtpass
+        </span>
+        <span className="sm:hidden font-medium">
+          Öhlunds Brygga (Zon 5) • Handpackade kulturarvsfröer • Brevfrakt 29 kr
         </span>
       </div>
 
       {/* Navigation Header */}
       <header className="sticky top-0 z-40 bg-oat/95 backdrop-blur-md border-b border-sand transition-all">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-3.5 group">
+          <a href="#" className="flex items-center gap-2.5 sm:gap-3.5 group min-w-0">
             {/* Sprout 'Ö' Logo exactly matching the brown kraft packet */}
-            <div className="w-9 h-11 flex items-center justify-center transition-transform group-hover:scale-105">
+            <div className="w-8 sm:w-9 h-10 sm:h-11 flex-shrink-0 flex items-center justify-center transition-transform group-hover:scale-105">
               <svg viewBox="16 18 73 105" className="w-full h-full text-pine fill-current" xmlns="http://www.w3.org/2000/svg">
                 <path fillRule="evenodd" d="M 29,32 L 32,41 L 36,45 L 38,46 L 48,48 L 48,50 L 49,52 L 47,54 L 44,54 L 32,60 L 26,66 L 22,72 L 19,82 L 19,91 L 22,101 L 26,107 L 30,111 L 34,114 L 40,117 L 46,119 L 59,119 L 63,118 L 74,112 L 81,104 L 84,98 L 86,89 L 86,84 L 84,75 L 80,67 L 73,60 L 61,54 L 58,54 L 50,51 L 49,49 L 49,43 L 45,35 L 44,35 L 40,32 L 36,31 Z M 46,62 L 59,62 L 65,65 L 68,68 L 69,68 L 73,73 L 75,77 L 77,84 L 77,89 L 76,93 L 72,101 L 66,107 L 63,109 L 56,111 L 50,111 L 45,110 L 39,107 L 32,100 L 30,96 L 28,89 L 28,83 L 29,79 L 32,73 L 37,67 L 43,63 Z M 81,22 L 73,22 L 69,23 L 62,27 L 58,32 L 56,40 L 57,46 L 58,41 L 60,38 L 67,34 L 62,40 L 62,42 L 61,44 L 67,44 L 72,42 L 78,36 L 80,33 L 82,26 Z" />
               </svg>
             </div>
-            <div>
-              <span className="font-serif text-2xl font-semibold tracking-tight text-pine block leading-none">
+            <div className="min-w-0">
+              <span className="font-serif text-lg sm:text-2xl font-semibold tracking-tight text-pine block leading-tight pt-1">
                 ÖHLUNDS FRÖER
               </span>
-              <span className="text-[10px] uppercase tracking-[0.2em] font-sans font-semibold text-terracotta mt-1 block">
+              <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-sans font-semibold text-terracotta block truncate">
                 Öhlunds Brygga • Ljusdal
               </span>
             </div>
@@ -210,41 +212,41 @@ export default function StorefrontPage() {
           {/* Cart button */}
           <button
             onClick={() => setIsCartOpen(true)}
-            className="flex items-center gap-2.5 bg-pine hover:bg-pine-light text-oat px-4 py-2.5 rounded-full text-sm font-medium transition-all shadow-sm hover:shadow"
+            className="flex items-center gap-2 bg-pine hover:bg-pine-light text-oat px-3 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all shadow-sm hover:shadow flex-shrink-0"
           >
             <span>Varukorg</span>
-            <span className="w-5 h-5 rounded-full bg-terracotta text-white text-xs flex items-center justify-center font-bold">
+            <span className="w-5 h-5 rounded-full bg-terracotta text-white text-[11px] sm:text-xs flex items-center justify-center font-bold">
               {cartItemCount}
             </span>
-            {cartSubtotal > 0 && <span className="font-bold text-xs">({cartSubtotal} kr)</span>}
+            {cartSubtotal > 0 && <span className="font-bold text-xs hidden sm:inline">({cartSubtotal} kr)</span>}
           </button>
         </div>
       </header>
 
-      {/* Hero Banner (Showing bright, sunny Stugan & Bryggan at Ljusnan) */}
-      <section className="relative overflow-hidden bg-pine text-oat py-20 lg:py-28">
+      {/* Hero Banner (Showing user panoramic photo of Stugan, odlingarna & Bryggan at Ljusnan) */}
+      <section className="relative overflow-hidden bg-pine text-oat py-16 sm:py-24 lg:py-32">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/assets/ohlunds_brygga_hero_1791312124759.jpg"
+            src="/assets/ohlunds_brygga_panoramic.jpg"
             alt="Öhlunds Brygga och Stugan vid Ljusnans strand i Hälsingland"
             fill
-            className="object-cover opacity-80 object-center"
+            className="object-cover opacity-90 object-center"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-pine/95 via-pine/70 to-transparent sm:via-pine/50" />
+          <div className="absolute inset-0 bg-gradient-to-t sm:bg-gradient-to-r from-pine/95 via-pine/70 to-transparent sm:via-pine/40" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 bg-sand-light/15 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase mb-6 border border-sand/30 text-sand-light">
+            <div className="inline-flex items-center gap-2 bg-sand-light/20 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase mb-5 border border-sand/30 text-sand-light">
               <span>Från odlingarna vid Stugan i Hälsingland</span>
             </div>
             
-            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.12] mb-6 tracking-tight">
+            <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal leading-tight mb-5 tracking-tight text-white drop-shadow-sm">
               SÅ DIN EGEN DRÖM
             </h1>
 
-            <p className="text-lg text-oat/90 font-sans font-normal leading-relaxed mb-8 max-w-xl">
+            <p className="text-base sm:text-lg text-oat/95 font-sans font-normal leading-relaxed mb-7 max-w-xl drop-shadow-xs">
               Utforska vårt noggrant utvalda sortiment av kulturhistoriska fröer, snittblommor och robusta grönsaker. Provodlat och handpackat vid Ljusnans strand.
             </p>
 
@@ -762,39 +764,40 @@ export default function StorefrontPage() {
         <div className="fixed inset-0 z-50 overflow-hidden">
           {/* Backdrop */}
           <div
-            className="absolute inset-0 bg-bark/40 backdrop-blur-xs transition-opacity"
+            className="absolute inset-0 bg-bark/50 backdrop-blur-xs transition-opacity"
             onClick={() => setIsCartOpen(false)}
           />
 
-          <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-            <div className="w-screen max-w-md bg-white shadow-2xl flex flex-col">
+          <div className="fixed inset-y-0 right-0 max-w-full flex w-full sm:w-auto">
+            <div className="w-full sm:w-[430px] bg-white shadow-2xl flex flex-col h-[100dvh]">
               {/* Header */}
-              <div className="p-5 border-b border-sand bg-oat flex items-center justify-between">
+              <div className="p-4 sm:p-5 border-b border-sand bg-oat flex items-center justify-between flex-shrink-0">
                 <div>
-                  <h3 className="font-serif text-2xl font-normal text-pine">Din Varukorg</h3>
-                  <span className="text-xs text-bark/60">{cartItemCount} artiklar</span>
+                  <h3 className="font-serif text-xl sm:text-2xl font-normal text-pine">Din Varukorg</h3>
+                  <span className="text-xs text-bark/60">{cartItemCount} {cartItemCount === 1 ? "artikel" : "artiklar"}</span>
                 </div>
                 <button
                   onClick={() => setIsCartOpen(false)}
-                  className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-sand text-bark/60"
+                  className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-sand text-bark/70 text-lg transition-colors"
+                  aria-label="Stäng varukorg"
                 >
                   ✕
                 </button>
               </div>
 
               {/* Free shipping progress bar */}
-              <div className="p-4 bg-sand-light border-b border-sand">
-                <div className="flex justify-between text-xs font-semibold mb-2">
-                  <span className="text-pine">
+              <div className="px-4 py-2.5 bg-sand-light border-b border-sand flex-shrink-0">
+                <div className="flex justify-between text-xs font-semibold mb-1.5">
+                  <span className="text-pine text-[11px] sm:text-xs">
                     {hasBulkyParcel
                       ? "Paketfrakt till ombud (skrymmande)"
                       : isFreeShipping
                       ? "Du har kvalificerat dig för FRI FRAKT!"
                       : `Handla för ${FREE_SHIPPING_LIMIT - cartSubtotal} kr till för fri frakt`}
                   </span>
-                  <span className="text-bark/60">Gräns: 350 kr</span>
+                  <span className="text-bark/50 text-[11px] sm:text-xs">Gräns: 350 kr</span>
                 </div>
-                <div className="h-2 w-full bg-sand rounded-full overflow-hidden">
+                <div className="h-1.5 w-full bg-sand rounded-full overflow-hidden">
                   <div
                     className={`h-full transition-all duration-300 ${
                       hasBulkyParcel ? "bg-terracotta w-full" : "bg-pine"
@@ -808,43 +811,68 @@ export default function StorefrontPage() {
                 </div>
               </div>
 
-              {/* Shipping format alert */}
+              {/* Compact shipping note */}
               {cart.length > 0 && (
-                <div className="px-4 pt-3">
-                  {hasBulkyParcel ? (
-                    <div className="bg-terracotta/10 border border-terracotta/30 text-clay rounded-xl p-3 text-xs leading-relaxed">
-                      <strong>Paketfrakt (79 kr):</strong> Din order innehåller skrymmande vara (t.ex. vas/knöl) och skickas till PostNord-ombud.
-                    </div>
-                  ) : (
-                    <div className="bg-pine/10 border border-pine/20 text-pine rounded-xl p-3 text-xs leading-relaxed">
-                      <strong>Brevfrakt (29 kr):</strong> Din order är lätt och platt och levereras direkt i din brevlåda!
-                    </div>
-                  )}
+                <div className="px-4 py-2 bg-oat/60 border-b border-sand/50 text-xs flex items-center justify-between flex-shrink-0">
+                  <span className="text-pine font-medium flex items-center gap-1.5 text-[11px] sm:text-xs">
+                    {hasBulkyParcel ? "Paketfrakt 79 kr (ombud)" : "Brevfrakt 29 kr (direkt i brevlådan)"}
+                  </span>
+                  <span className="text-bark/50 text-[11px]">PostNord</span>
                 </div>
               )}
 
-              {/* Cart Items list */}
-              <div className="flex-grow overflow-y-auto p-4 space-y-4">
+              {/* Cart Items list - takes maximum vertical room */}
+              <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-3.5 divide-y divide-sand/40">
                 {cart.length === 0 ? (
-                  <div className="text-center py-16 text-bark/50 text-sm">
-                    Din varukorg är tom.<br />Kika på våra fröer och bukettrecept!
+                  <div className="text-center py-20 text-bark/50 text-sm">
+                    Din varukorg är tom.<br />Kika på våra handpackade fröer och bukettrecept!
                   </div>
                 ) : (
                   cart.map(({ product, qty }) => (
-                    <div key={product.id} className="flex gap-3 pb-3 border-b border-sand/60 items-center">
-                      <div className="w-14 h-14 relative rounded-lg bg-sand-light overflow-hidden flex-shrink-0">
+                    <div key={product.id} className="flex gap-3 pt-3.5 first:pt-0 items-start">
+                      <div className="w-14 h-14 relative rounded-xl bg-sand-light overflow-hidden flex-shrink-0 border border-sand/60">
                         <Image src={product.imageUrl} alt={product.title} fill className="object-cover" />
                       </div>
-                      <div className="flex-grow min-w-0">
-                        <h4 className="text-sm font-semibold text-pine truncate">{product.title}</h4>
-                        <span className="text-xs text-bark/60 block">
-                          {qty} st × {product.priceSek} kr ({product.shippingClass === "FLAT_LETTER" ? "Brev" : "Paket"})
+                      <div className="flex-grow min-w-0 pr-1">
+                        <h4 className="text-sm font-semibold text-pine leading-tight line-clamp-2">{product.title}</h4>
+                        <span className="text-[11px] text-bark/60 block mt-0.5">
+                          {product.priceSek} kr / st • {product.shippingClass === "FLAT_LETTER" ? "Brev" : "Paket"}
                         </span>
-                        <span className="text-xs font-bold text-pine">{qty * product.priceSek} kr</span>
+                        
+                        {/* Quantity controls */}
+                        <div className="flex items-center gap-3 mt-2">
+                          <div className="flex items-center border border-sand rounded-full bg-oat px-1.5 py-0.5">
+                            <button
+                              onClick={() => {
+                                if (qty > 1) {
+                                  setCart((prev) => prev.map((it) => it.product.id === product.id ? { ...it, qty: it.qty - 1 } : it));
+                                } else {
+                                  removeFromCart(product.id);
+                                }
+                              }}
+                              className="w-5 h-5 flex items-center justify-center text-bark/70 hover:text-pine text-sm font-bold active:scale-95"
+                              aria-label="Minska antal"
+                            >
+                              -
+                            </button>
+                            <span className="w-6 text-center text-xs font-bold text-pine">{qty}</span>
+                            <button
+                              onClick={() => {
+                                setCart((prev) => prev.map((it) => it.product.id === product.id ? { ...it, qty: it.qty + 1 } : it));
+                              }}
+                              className="w-5 h-5 flex items-center justify-center text-bark/70 hover:text-pine text-sm font-bold active:scale-95"
+                              aria-label="Öka antal"
+                            >
+                              +
+                            </button>
+                          </div>
+                          <span className="text-xs font-bold text-pine">{qty * product.priceSek} kr</span>
+                        </div>
                       </div>
                       <button
                         onClick={() => removeFromCart(product.id)}
-                        className="text-terracotta hover:text-clay text-xs p-1"
+                        className="text-terracotta/80 hover:text-terracotta text-xs whitespace-nowrap p-1.5 flex-shrink-0 font-medium"
+                        title="Ta bort artikel"
                       >
                         Ta bort
                       </button>
@@ -854,23 +882,19 @@ export default function StorefrontPage() {
               </div>
 
               {/* Fraktsmart merförsäljning */}
-              {cart.length > 0 && !hasBulkyParcel && (
-                <div className="p-4 bg-sand-light border-t border-sand">
-                  <div className="text-[11px] font-bold uppercase tracking-wider text-terracotta mb-2 flex justify-between">
-                    <span>Fraktsmart tips</span>
-                    <span className="font-normal normal-case text-bark/60">(Samma låga brevfrakt)</span>
-                  </div>
-                  <div className="bg-white p-3 rounded-xl border border-sand flex items-center justify-between">
-                    <div>
-                      <span className="text-xs font-semibold block text-pine">Trämärketiketter (10-pack)</span>
-                      <span className="text-[11px] text-bark/60">+35 kr</span>
+              {cart.length > 0 && !hasBulkyParcel && cart.length < 5 && (
+                <div className="px-4 py-2.5 bg-sand-light/60 border-t border-sand flex-shrink-0">
+                  <div className="flex items-center justify-between text-xs">
+                    <div className="min-w-0 pr-2">
+                      <span className="text-[10px] uppercase font-bold tracking-wider text-terracotta block">Fraktsmart tips</span>
+                      <span className="text-xs font-semibold text-pine block truncate">Trämärketiketter (10-pack) • 35 kr</span>
                     </div>
                     <button
                       onClick={() => {
                         const labelItem = PRODUCTS.find((p) => p.id === "tramarketiketter-10p");
                         if (labelItem) addToCart(labelItem, 1);
                       }}
-                      className="bg-pine text-oat text-xs px-3 py-1.5 rounded-full font-medium hover:bg-pine-light"
+                      className="bg-pine text-oat text-xs px-3 py-1.5 rounded-full font-medium hover:bg-pine-light whitespace-nowrap flex-shrink-0 shadow-xs"
                     >
                       + Lägg till
                     </button>
@@ -879,7 +903,7 @@ export default function StorefrontPage() {
               )}
 
               {/* Cart Footer */}
-              <div className="p-5 border-t border-sand bg-white space-y-3">
+              <div className="p-4 sm:p-5 border-t border-sand bg-white space-y-2.5 flex-shrink-0">
                 <div className="flex justify-between text-xs text-bark/70">
                   <span>Delsumma</span>
                   <span>{cartSubtotal} kr</span>
@@ -906,7 +930,7 @@ export default function StorefrontPage() {
                 <div className="flex justify-center gap-3 text-[11px] text-bark/50 pt-1">
                   <span>✓ Swish</span>
                   <span>✓ Klarna</span>
-                  <span>✓ Visa / Mastercard</span>
+                  <span>✓ Kort</span>
                 </div>
               </div>
             </div>
@@ -1174,7 +1198,6 @@ export default function StorefrontPage() {
                     onClick={() => {
                       addToCart(activeZoomProduct.product!, 1);
                       setActiveZoomProduct(null);
-                      setIsCartOpen(true);
                     }}
                     className="bg-pine hover:bg-pine-light text-oat text-xs font-semibold px-5 py-2.5 min-h-[44px] rounded-full transition-all shadow-sm hover:shadow flex items-center justify-center"
                   >
@@ -1209,8 +1232,20 @@ export default function StorefrontPage() {
 
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 bg-pine text-oat px-6 py-3 rounded-full text-sm font-medium shadow-xl flex items-center gap-2 animate-bounce">
-          {toastMessage}
+        <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] sm:w-auto sm:max-w-md bg-pine/95 backdrop-blur-md text-oat px-4 py-3 rounded-2xl sm:rounded-full text-xs sm:text-sm font-medium shadow-2xl flex items-center justify-between gap-3 border border-pine-light animate-in fade-in slide-in-from-bottom-3 duration-200">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="text-terracotta font-bold text-sm">✓</span>
+            <span className="truncate">{toastMessage}</span>
+          </div>
+          <button
+            onClick={() => {
+              setToastMessage(null);
+              setIsCartOpen(true);
+            }}
+            className="bg-oat text-pine hover:bg-white text-xs font-bold px-3 py-1.5 rounded-full flex-shrink-0 transition-all shadow-xs"
+          >
+            Öppna varukorg
+          </button>
         </div>
       )}
     </div>
