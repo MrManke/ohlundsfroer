@@ -14,10 +14,70 @@ interface ZoomItem {
   product?: Product;
 }
 
+interface PromoCode {
+  code: string;
+  label: string;
+  type: "PERCENT" | "FIXED" | "FREE_SHIPPING";
+  value: number;
+}
+
+const PROMO_CODES: Record<string, PromoCode> = {
+  "VÅR2026": { code: "VÅR2026", label: "10% vårrabatt", type: "PERCENT", value: 10 },
+  "VAR2026": { code: "VAR2026", label: "10% vårrabatt", type: "PERCENT", value: 10 },
+  "LJUSDAL": { code: "LJUSDAL", label: "15% odlar-rabatt", type: "PERCENT", value: 15 },
+  "BRYGGAN": { code: "BRYGGAN", label: "25 kr rabatt", type: "FIXED", value: 25 },
+  "FRIFRAKT": { code: "FRIFRAKT", label: "Fri frakt", type: "FREE_SHIPPING", value: 0 },
+};
+
 export default function StorefrontPage() {
-  // Cart state
+  // Cart state with localStorage persistence
   const [cart, setCart] = useState<{ product: Product; qty: number }[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isCartLoaded, setIsCartLoaded] = useState(false);
+
+  // Promotion code state
+  const [isPromoOpen, setIsPromoOpen] = useState(false);
+  const [promoInput, setPromoInput] = useState("");
+  const [appliedPromo, setAppliedPromo] = useState<PromoCode | null>(null);
+  const [promoError, setPromoError] = useState<string | null>(null);
+
+  // Load cart and promo from localStorage on client mount
+  useEffect(() => {
+    try {
+      const savedCart = localStorage.getItem("ohlunds_cart");
+      if (savedCart) {
+        const parsed = JSON.parse(savedCart);
+        if (Array.isArray(parsed)) {
+          setCart(parsed);
+        }
+      }
+      const savedPromo = localStorage.getItem("ohlunds_promo");
+      if (savedPromo) {
+        const parsedPromo = JSON.parse(savedPromo);
+        if (parsedPromo?.code && PROMO_CODES[parsedPromo.code.toUpperCase()]) {
+          setAppliedPromo(PROMO_CODES[parsedPromo.code.toUpperCase()]);
+        }
+      }
+    } catch (e) {
+      console.error("Kunde inte läsa varukorg från localStorage:", e);
+    }
+    setIsCartLoaded(true);
+  }, []);
+
+  // Save cart and promo to localStorage whenever changed
+  useEffect(() => {
+    if (!isCartLoaded) return;
+    try {
+      localStorage.setItem("ohlunds_cart", JSON.stringify(cart));
+      if (appliedPromo) {
+        localStorage.setItem("ohlunds_promo", JSON.stringify(appliedPromo));
+      } else {
+        localStorage.removeItem("ohlunds_promo");
+      }
+    } catch (e) {
+      console.error("Kunde inte spara varukorg till localStorage:", e);
+    }
+  }, [cart, appliedPromo, isCartLoaded]);
 
   // Filters state
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -87,6 +147,28 @@ export default function StorefrontPage() {
     setCart((prev) => prev.filter((item) => item.product.id !== productId));
   };
 
+  // Promo code actions
+  const handleApplyPromo = () => {
+    const cleaned = promoInput.trim().toUpperCase();
+    if (!cleaned) return;
+    const found = PROMO_CODES[cleaned];
+    if (found) {
+      setAppliedPromo(found);
+      setPromoError(null);
+      setPromoInput("");
+      setIsPromoOpen(false);
+      showToast(`Rabattkod ${found.code} aktiverad!`);
+    } else {
+      setPromoError("Ogiltig kod. Testa t.ex. VÅR2026, LJUSDAL eller FRIFRAKT.");
+    }
+  };
+
+  const handleRemovePromo = () => {
+    setAppliedPromo(null);
+    setPromoError(null);
+    showToast("Rabattkoden togs bort.");
+  };
+
   // Bundle price calculation
   const bundleItems = useMemo(() => {
     return PRODUCTS.filter((p) => bundleComponentIds.includes(p.id));
@@ -123,7 +205,18 @@ export default function StorefrontPage() {
   }, [cart]);
 
   const FREE_SHIPPING_LIMIT = 350;
-  const isFreeShipping = cartSubtotal >= FREE_SHIPPING_LIMIT && !hasBulkyParcel;
+  const isFreeShipping = (cartSubtotal >= FREE_SHIPPING_LIMIT || appliedPromo?.type === "FREE_SHIPPING") && !hasBulkyParcel;
+
+  const discountAmount = useMemo(() => {
+    if (!appliedPromo) return 0;
+    if (appliedPromo.type === "PERCENT") {
+      return Math.round((cartSubtotal * appliedPromo.value) / 100);
+    }
+    if (appliedPromo.type === "FIXED") {
+      return Math.min(cartSubtotal, appliedPromo.value);
+    }
+    return 0;
+  }, [appliedPromo, cartSubtotal]);
 
   const shippingCost = useMemo(() => {
     if (cart.length === 0) return 0;
@@ -131,7 +224,7 @@ export default function StorefrontPage() {
     return isFreeShipping ? 0 : 29;
   }, [cart, hasBulkyParcel, isFreeShipping]);
 
-  const cartTotal = cartSubtotal + shippingCost;
+  const cartTotal = Math.max(0, cartSubtotal - discountAmount + shippingCost);
 
   // Filtered products
   const filteredProducts = useMemo(() => {
@@ -815,7 +908,11 @@ export default function StorefrontPage() {
               {cart.length > 0 && (
                 <div className="px-4 py-2 bg-oat/60 border-b border-sand/50 text-xs flex items-center justify-between flex-shrink-0">
                   <span className="text-pine font-medium flex items-center gap-1.5 text-[11px] sm:text-xs">
-                    {hasBulkyParcel ? "Paketfrakt 79 kr (ombud)" : "Brevfrakt 29 kr (direkt i brevlådan)"}
+                    {hasBulkyParcel
+                      ? "Paketfrakt 79 kr (ombud)"
+                      : isFreeShipping
+                      ? "✓ Fri brevfrakt (0 kr)"
+                      : "Brevfrakt 29 kr (direkt i brevlådan)"}
                   </span>
                   <span className="text-bark/50 text-[11px]">PostNord</span>
                 </div>
@@ -904,13 +1001,87 @@ export default function StorefrontPage() {
 
               {/* Cart Footer */}
               <div className="p-4 sm:p-5 border-t border-sand bg-white space-y-2.5 flex-shrink-0">
+                {/* Promotion / Rabattkod */}
+                {cart.length > 0 && (
+                  <div className="pb-2 border-b border-sand/50">
+                    {!isPromoOpen && !appliedPromo ? (
+                      <button
+                        onClick={() => setIsPromoOpen(true)}
+                        className="text-xs text-terracotta hover:underline font-semibold inline-flex items-center gap-1.5 py-0.5"
+                      >
+                        <span>+ Ange rabattkod eller presentkort</span>
+                      </button>
+                    ) : appliedPromo ? (
+                      <div className="flex items-center justify-between bg-sand-light border border-sand rounded-xl px-3 py-2 text-xs">
+                        <div className="flex items-center gap-1.5 text-pine font-medium">
+                          <span className="font-bold">✓ {appliedPromo.code}</span>
+                          <span className="text-bark/70">({appliedPromo.label})</span>
+                        </div>
+                        <button
+                          onClick={handleRemovePromo}
+                          className="text-terracotta hover:text-clay text-xs font-semibold px-1"
+                        >
+                          Ta bort
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="space-y-1.5">
+                        <div className="flex gap-2">
+                          <input
+                            type="text"
+                            value={promoInput}
+                            onChange={(e) => {
+                              setPromoInput(e.target.value);
+                              setPromoError(null);
+                            }}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                e.preventDefault();
+                                handleApplyPromo();
+                              }
+                            }}
+                            placeholder="Rabattkod (t.ex. VÅR2026)"
+                            className="flex-1 bg-oat border border-sand rounded-lg px-3 py-1.5 text-xs text-bark uppercase placeholder:normal-case focus:outline-none focus:border-pine font-sans"
+                          />
+                          <button
+                            onClick={handleApplyPromo}
+                            className="bg-pine text-oat px-3.5 py-1.5 rounded-lg text-xs font-semibold hover:bg-pine-light transition-colors"
+                          >
+                            Tillämpa
+                          </button>
+                          <button
+                            onClick={() => {
+                              setIsPromoOpen(false);
+                              setPromoError(null);
+                            }}
+                            className="text-bark/50 hover:text-bark text-xs px-1.5"
+                          >
+                            Avbryt
+                          </button>
+                        </div>
+                        {promoError && (
+                          <span className="text-[11px] text-terracotta block">{promoError}</span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 <div className="flex justify-between text-xs text-bark/70">
                   <span>Delsumma</span>
                   <span>{cartSubtotal} kr</span>
                 </div>
+                {appliedPromo && discountAmount > 0 && (
+                  <div className="flex justify-between text-xs text-pine font-medium">
+                    <span>Rabatt ({appliedPromo.code})</span>
+                    <span className="font-bold">-{discountAmount} kr</span>
+                  </div>
+                )}
                 <div className="flex justify-between text-xs text-bark/70">
                   <span>Frakt</span>
-                  <span>{shippingCost === 0 ? "Gratis" : `${shippingCost} kr`}</span>
+                  <span className={shippingCost === 0 ? "font-bold text-pine" : ""}>
+                    {shippingCost === 0 ? "0 kr (Fri frakt)" : `${shippingCost} kr`}
+                  </span>
                 </div>
                 <div className="flex justify-between text-base font-bold text-pine pt-2 border-t border-sand">
                   <span>Totalt att betala</span>
