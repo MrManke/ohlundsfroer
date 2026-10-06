@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Öhlundsfröer – Från Öhlunds Brygga vid Stugan | Interaktiv Prototyp</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-serif: 'Newsreader', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      
+      --color-primary: #24412c;
+      --color-primary-dark: #172b1d;
+      --color-primary-light: #3a5c43;
+      --color-accent: #c4684d;
+      --color-accent-soft: #f4e8e2;
+      --color-clay: #b55d42;
+      --color-bg: #faf7f2;
+      --color-card-bg: #ffffff;
+      --color-sand: #f0ebe1;
+      --color-sand-light: #f7f4ed;
+      --color-text: #1d251e;
+      --color-text-muted: #647065;
+      --color-border: #e2dbcd;
+      --color-success: #2d6a4f;
+      
+      --shadow-sm: 0 2px 8px rgba(36, 65, 44, 0.04);
+      --shadow-md: 0 8px 24px rgba(36, 65, 44, 0.08);
+      --shadow-lg: 0 16px 40px rgba(36, 65, 44, 0.12);
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Top Notice Bar */
+    .top-bar {
+      background-color: var(--color-primary-dark);
+      color: #e3ebd7;
+      font-size: 13px;
+      padding: 8px 0;
+      text-align: center;
+      letter-spacing: 0.02em;
+    }
+    .top-bar strong {
+      color: #ffffff;
+    }
+
+    /* Navigation */
+    header {
+      background: rgba(250, 247, 242, 0.95);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--color-border);
+      transition: all 0.2s ease;
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 80px;
+    }
+    .brand {
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+    }
+    .brand-title {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--color-primary);
+      line-height: 1.1;
+    }
+    .brand-sub {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--color-accent);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+      align-items: center;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--color-text);
+      font-size: 15px;
+      font-weight: 500;
+      transition: color 0.15s ease;
+    }
+    .nav-links a:hover {
+      color: var(--color-accent);
+    }
+    .cart-btn {
+      background-color: var(--color-primary);
+      color: #ffffff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: var(--radius-full);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .cart-btn:hover {
+      background-color: var(--color-primary-light);
+      transform: translateY(-1px);
+    }
+    .cart-badge {
+      background-color: var(--color-accent);
+      color: #fff;
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      margin: 20px auto 48px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      min-height: 480px;
+      display: flex;
+      align-items: center;
+      background: #172b1d;
+    }
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.75;
+      filter: saturate(1.1);
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(20, 36, 24, 0.88) 0%, rgba(20, 36, 24, 0.4) 60%, rgba(20, 36, 24, 0.1) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 620px;
+      padding: 48px 48px;
+      color: #ffffff;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: 46px;
+      line-height: 1.15;
+      font-weight: 500;
+      margin-bottom: 16px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    .hero-desc {
+      font-size: 17px;
+      color: #e5ece6;
+      line-height: 1.55;
+      margin-bottom: 28px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .btn-primary {
+      background-color: var(--color-accent);
+      color: #ffffff;
+      padding: 14px 26px;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 15px;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      background-color: var(--color-clay);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(196, 104, 77, 0.35);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      backdrop-filter: blur(6px);
+      padding: 14px 24px;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 15px;
+      transition: all 0.2s ease;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Section Headers */
+    .section-header {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 40px;
+    }
+    .section-sub {
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      color: var(--color-accent);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: 34px;
+      color: var(--color-primary);
+      font-weight: 500;
+      line-height: 1.2;
+    }
+    .section-desc {
+      color: var(--color-text-muted);
+      margin-top: 10px;
+      font-size: 16px;
+    }
+
+    /* Bouquet Bundle Feature ("Köp Buketten") */
+    .bundle-section {
+      background-color: var(--color-sand-light);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      margin-bottom: 64px;
+      border: 1px solid var(--color-border);
+    }
+    .bundle-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 44px;
+      align-items: center;
+    }
+    .bundle-img-wrap {
+      position: relative;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    .bundle-img-wrap img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      display: block;
+    }
+    .bundle-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: var(--color-primary);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .bundle-info h3 {
+      font-family: var(--font-serif);
+      font-size: 30px;
+      color: var(--color-primary);
+      margin-bottom: 8px;
+    }
+    .bundle-info p.lead {
+      color: var(--color-text-muted);
+      font-size: 15px;
+      margin-bottom: 24px;
+    }
+    .bundle-items-box {
+      background: #ffffff;
+      border-radius: var(--radius-md);
+      padding: 20px;
+      border: 1px solid var(--color-border);
+      margin-bottom: 24px;
+    }
+    .bundle-items-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .bundle-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px dashed #eee;
+    }
+    .bundle-item:last-child {
+      border-bottom: none;
+    }
+    .bundle-item-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+    .bundle-item-label input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--color-primary);
+      cursor: pointer;
+    }
+    .bundle-item-name {
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .bundle-item-sub {
+      font-size: 12px;
+      color: var(--color-text-muted);
+    }
+    .bundle-item-price {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-primary);
+    }
+    .bundle-pricing {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .bundle-price-current {
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+    .bundle-price-old {
+      font-size: 18px;
+      text-decoration: line-through;
+      color: var(--color-text-muted);
+    }
+    .bundle-discount-tag {
+      background-color: var(--color-accent-soft);
+      color: var(--color-accent);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* Filter Controls */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 32px;
+      align-items: center;
+      justify-content: space-between;
+      background: #ffffff;
+      padding: 16px 20px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-sm);
+    }
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .filter-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+    }
+    .filter-select {
+      background: var(--color-sand-light);
+      border: 1px solid var(--color-border);
+      padding: 8px 14px;
+      border-radius: var(--radius-full);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text);
+      cursor: pointer;
+      outline: none;
+    }
+    .filter-chips {
+      display: flex;
+      gap: 8px;
+    }
+    .filter-chip {
+      background: var(--color-sand-light);
+      border: 1px solid var(--color-border);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .filter-chip.active {
+      background: var(--color-primary);
+      color: #fff;
+      border-color: var(--color-primary);
+    }
+
+    /* Catalog Grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 28px;
+      margin-bottom: 64px;
+    }
+    .product-card {
+      background: var(--color-card-bg);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--color-border);
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: #cbd5cb;
+    }
+    .product-img-wrap {
+      position: relative;
+      background: var(--color-sand);
+      height: 240px;
+      overflow: hidden;
+    }
+    .product-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .product-card:hover .product-img-wrap img {
+      transform: scale(1.04);
+    }
+    .shipping-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 9px;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .badge-letter {
+      background: rgba(36, 65, 44, 0.9);
+      color: #e3ebd7;
+      backdrop-filter: blur(4px);
+    }
+    .badge-parcel {
+      background: rgba(196, 104, 77, 0.95);
+      color: #fff;
+      backdrop-filter: blur(4px);
+    }
+    .badge-stock {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+    }
+    .badge-out-of-stock {
+      background: #7a1c1c;
+      color: #fff;
+    }
+
+    .product-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .product-cat {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--color-accent);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .product-title {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--color-primary);
+      line-height: 1.25;
+      margin-bottom: 4px;
+    }
+    .product-botanical {
+      font-size: 12px;
+      font-style: italic;
+      color: var(--color-text-muted);
+      margin-bottom: 12px;
+    }
+    .product-specs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .spec-tag {
+      background: var(--color-sand-light);
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      color: var(--color-text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .product-footer {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 14px;
+      border-top: 1px solid #f2ede4;
+    }
+    .product-price {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+    .btn-add-cart {
+      background: var(--color-sand);
+      color: var(--color-primary);
+      border: 1px solid var(--color-border);
+      padding: 8px 14px;
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-add-cart:hover {
+      background: var(--color-primary);
+      color: #fff;
+      border-color: var(--color-primary);
+    }
+    .btn-notify {
+      background: #f7ede2;
+      color: #934320;
+      border: 1px solid #e8c8b4;
+      padding: 8px 14px;
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-guide-preview {
+      font-size: 12px;
+      color: var(--color-primary);
+      text-decoration: underline;
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-top: 8px;
+      text-align: left;
+    }
+
+    /* Slide-out Cart Drawer */
+    .cart-drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    .cart-drawer-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: -460px;
+      width: 440px;
+      max-width: 90vw;
+      height: 100%;
+      background: #ffffff;
+      z-index: 1001;
+      box-shadow: -8px 0 32px rgba(0, 0, 0, 0.15);
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+    .cart-drawer-overlay.open .cart-drawer {
+      right: 0;
+    }
+    .cart-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--color-sand-light);
+    }
+    .cart-header h3 {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      color: var(--color-primary);
+    }
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--color-text-muted);
+    }
+
+    /* Free Shipping Progress Bar */
+    .free-shipping-box {
+      background: #fdfbf7;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .shipping-msg {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-primary);
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .progress-track {
+      height: 8px;
+      background: #e9e4d9;
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3a5c43, #2d6a4f);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* Shipping Format Alert */
+    .shipping-format-alert {
+      margin: 12px 24px 0;
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .alert-letter {
+      background: #eef5ef;
+      border: 1px solid #cadfcd;
+      color: #1e4d2b;
+    }
+    .alert-parcel {
+      background: #fff4f0;
+      border: 1px solid #f2cec4;
+      color: #8c3822;
+    }
+
+    /* Cart Items list */
+    .cart-items {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 20px 24px;
+    }
+    .cart-empty-msg {
+      text-align: center;
+      color: var(--color-text-muted);
+      margin-top: 60px;
+      font-size: 15px;
+    }
+    .cart-item-row {
+      display: flex;
+      gap: 14px;
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid #f2ede4;
+      align-items: center;
+    }
+    .cart-item-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 6px;
+      object-fit: cover;
+      background: var(--color-sand);
+    }
+    .cart-item-info {
+      flex-grow: 1;
+    }
+    .cart-item-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-primary);
+    }
+    .cart-item-meta {
+      font-size: 11px;
+      color: var(--color-text-muted);
+    }
+    .cart-item-price {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-top: 4px;
+    }
+    .remove-item-btn {
+      background: none;
+      border: none;
+      color: #aa4433;
+      font-size: 12px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    /* Shipping-aware Upsell Box */
+    .cart-upsell-box {
+      background: var(--color-sand-light);
+      padding: 16px 24px;
+      border-top: 1px solid var(--color-border);
+    }
+    .upsell-header {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-accent);
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .upsell-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #ffffff;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--color-border);
+    }
+    .upsell-title {
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .upsell-sub {
+      font-size: 11px;
+      color: var(--color-text-muted);
+    }
+    .btn-upsell-add {
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Cart Footer */
+    .cart-footer {
+      padding: 20px 24px;
+      border-top: 1px solid var(--color-border);
+      background: #ffffff;
+    }
+    .cart-summary-line {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      margin-bottom: 8px;
+      color: var(--color-text-muted);
+    }
+    .cart-total-line {
+      display: flex;
+      justify-content: space-between;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--color-border);
+    }
+    .btn-checkout {
+      width: 100%;
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      padding: 14px;
+      border-radius: var(--radius-full);
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 16px;
+      transition: background 0.2s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-checkout:hover {
+      background: var(--color-primary-light);
+    }
+    .payment-badges {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      font-size: 11px;
+      color: var(--color-text-muted);
+      margin-top: 12px;
+      letter-spacing: 0.03em;
+    }
+
+    /* Modal Styling */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 1100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open {
+      display: flex;
+    }
+    .modal-card {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      max-width: 520px;
+      width: 100%;
+      padding: 32px;
+      position: relative;
+      box-shadow: var(--shadow-lg);
+    }
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: var(--color-text-muted);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--color-primary-dark);
+      color: #ffffff;
+      padding: 12px 24px;
+      border-radius: var(--radius-full);
+      font-size: 14px;
+      font-weight: 500;
+      box-shadow: var(--shadow-md);
+      z-index: 2000;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .bundle-grid {
+        grid-template-columns: 1fr;
+      }
+      .bundle-img-wrap img {
+        height: 340px;
+      }
+      .hero-title {
+        font-size: 34px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-bar">
+    <span>🌸 <strong>Skördesäsong vid Öhlunds Brygga:</strong> Handpackade fröer & snittblomsrecept • Brevfrakt 29 kr (Fri frakt över 350 kr)</span>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#" class="brand">
+          <span class="brand-title">Öhlundsfröer</span>
+          <span class="brand-sub">Från Öhlunds Brygga vid Stugan</span>
+        </a>
+        
+        <ul class="nav-links">
+          <li><a href="#bukettpaket">Bukettpaket</a></li>
+          <li><a href="#katalog">Frökatalog</a></li>
+          <li><a href="#odlingsguider">Odlingsguider</a></li>
+          <li><a href="#om-bryggan">Om Bryggan</a></li>
+        </ul>
+
+        <button class="cart-btn" id="openCartBtn" onclick="toggleCart(true)">
+          <span>🛒 Varukorg</span>
+          <span class="cart-badge" id="cartBadgeCount">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <img src="assets/ohlunds_brygga_hero_1791312124759.jpg" alt="Öhlunds Brygga vid Stugan i morgonljus" class="hero-img">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-tag">🌱 Odlarglädje från skärgården</div>
+        <h1 class="hero-title">Fröer odlade med havsvind & kärlek vid Stugan</h1>
+        <p class="hero-desc">Vi odlar, provar och paketerar våra snittblommor och kulturarvsfröer för hand vid Öhlunds Brygga. Skapa din egen blomsterprakt i sommar.</p>
+        <div class="hero-actions">
+          <a href="#bukettpaket" class="btn-primary">🌸 Utforska Bukettpaketen</a>
+          <a href="#katalog" class="btn-secondary">Bläddra i Katalogen</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bukettpaket Section ("Köp Buketten") -->
+    <section id="bukettpaket" class="bundle-section">
+      <div class="bundle-grid">
+        <div class="bundle-img-wrap">
+          <img src="assets/sensommardrom_bukett_1791312135766.jpg" alt="Bukett Sensommardröm vid Bryggan">
+          <span class="bundle-badge">Bukettrecept #1</span>
+        </div>
+        
+        <div class="bundle-info">
+          <div class="section-sub">Snittblomsrecept av Jessica</div>
+          <h3>Bukettpaket: ”Sensommardröm vid Bryggan”</h3>
+          <p class="lead">En harmonisk kombination av aprikos zinnia, fluffig rosenskära, mörkröd vädd och skir slöjsilja. Blommar oavbrutet från juli till första frosten.</p>
+
+          <div class="bundle-items-box">
+            <div class="bundle-items-header">
+              <span>Ingående frösorter (Välj vad du vill ha)</span>
+              <span>Ord. pris</span>
+            </div>
+
+            <div class="bundle-item">
+              <label class="bundle-item-label">
+                <input type="checkbox" class="bundle-check" data-id="zinnia-apricot" data-price="45" data-title="Zinnia 'Ölandslängtan' (Aprikos)" checked onchange="updateBundlePrice()">
+                <div>
+                  <div class="bundle-item-name">Zinnia elegans 'Ölandslängtan'</div>
+                  <div class="bundle-item-sub">Hållbar snittblomma, aprikostoner • ca 40 frön</div>
+                </div>
+              </label>
+              <div class="bundle-item-price">45 kr</div>
+            </div>
+
+            <div class="bundle-item">
+              <label class="bundle-item-label">
+                <input type="checkbox" class="bundle-check" data-id="slojsilja" data-price="39" data-title="Slöjsilja / Bishop's Flower" checked onchange="updateBundlePrice()">
+                <div>
+                  <div class="bundle-item-name">Slöjsilja (Ammi majus)</div>
+                  <div class="bundle-item-sub">Skir luftig fyllnadsblomma till buketter • ca 150 frön</div>
+                </div>
+              </label>
+              <div class="bundle-item-price">39 kr</div>
+            </div>
+
+            <div class="bundle-item">
+              <label class="bundle-item-label">
+                <input type="checkbox" class="bundle-check" data-id="rosenskara" data-price="42" data-title="Rosenskära 'Pastel Pink'" checked onchange="updateBundlePrice()">
+                <div>
+                  <div class="bundle-item-name">Rosenskära (Cosmos bipinnatus)</div>
+                  <div class="bundle-item-sub">Romantisk rosa, blommar rikligt • ca 50 frön</div>
+                </div>
+              </label>
+              <div class="bundle-item-price">42 kr</div>
+            </div>
+
+            <div class="bundle-item">
+              <label class="bundle-item-label">
+                <input type="checkbox" class="bundle-check" data-id="praktvadd" data-price="45" data-title="Praktvädd 'Black Knight'" checked onchange="updateBundlePrice()">
+                <div>
+                  <div class="bundle-item-name">Praktvädd 'Black Knight'</div>
+                  <div class="bundle-item-sub">Djup vinröd kontrast, älskas av fjärilar • ca 30 frön</div>
+                </div>
+              </label>
+              <div class="bundle-item-price">45 kr</div>
+            </div>
+          </div>
+
+          <div class="bundle-pricing">
+            <span class="bundle-price-current" id="bundleCurrentPrice">145 kr</span>
+            <span class="bundle-price-old" id="bundleOldPrice">171 kr</span>
+            <span class="bundle-discount-tag" id="bundleDiscountTag">Spara 15% (Paketpris)</span>
+          </div>
+
+          <button class="btn-primary" onclick="addBundleToCart()">
+            🛒 Lägg till hela buketten i varukorgen
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Catalog Section with Smart Grower Filters -->
+    <section id="katalog">
+      <div class="section-header">
+        <div class="section-sub">Fröer & Tillbehör</div>
+        <h2 class="section-title">Handpackade fröer för svenskt klimat</h2>
+        <p class="section-desc">Alla våra fröer är provodlade vid Stugan. Filtrera på din odlingszon och såmånad för garanterat resultat.</p>
+      </div>
+
+      <!-- Filter Controls Bar -->
+      <div class="filter-bar">
+        <div class="filter-chips">
+          <button class="filter-chip active" onclick="setCategoryFilter('all', this)">Alla artiklar</button>
+          <button class="filter-chip" onclick="setCategoryFilter('snittblomma', this)">Snittblommor</button>
+          <button class="filter-chip" onclick="setCategoryFilter('kokstradgard', this)">Köksträdgård</button>
+          <button class="filter-chip" onclick="setCategoryFilter('tillbehor', this)">Tillbehör & Vaser</button>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label">Zon:</label>
+          <select class="filter-select" id="zoneSelect" onchange="applyFilters()">
+            <option value="all">Alla zoner (1–8)</option>
+            <option value="zon13">Zon 1–3 (Södra Sverige)</option>
+            <option value="zon45">Zon 4–5 (Mellansverige)</option>
+            <option value="zon68">Zon 6–8 (Norrland)</option>
+          </select>
+
+          <label class="filter-label" style="margin-left: 10px;">Såmånad:</label>
+          <select class="filter-select" id="sowSelect" onchange="applyFilters()">
+            <option value="all">Alla månader</option>
+            <option value="feb-mar">Feb–Mar (Förkultivering)</option>
+            <option value="apr-maj">Apr–Maj (Direktsådd)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Product Grid -->
+      <div class="product-grid" id="productGrid">
+        <!-- Javascript populates products here -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Slide-out Cart Drawer -->
+  <div class="cart-drawer-overlay" id="cartOverlay" onclick="closeCartOnOverlay(event)">
+    <div class="cart-drawer">
+      <div class="cart-header">
+        <h3>Din Blomsterkorg</h3>
+        <button class="close-btn" onclick="toggleCart(false)">&times;</button>
+      </div>
+
+      <!-- Free shipping progress bar -->
+      <div class="free-shipping-box">
+        <div class="shipping-msg">
+          <span id="freeShippingText">Handla för 350 kr till för fri frakt!</span>
+          <span id="shippingTarget">Fri frakt vid 350 kr</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="shippingProgressFill"></div>
+        </div>
+      </div>
+
+      <!-- Shipping format awareness notification -->
+      <div id="shippingFormatAlert" class="shipping-format-alert alert-letter">
+        <span>✉️ <strong>Brevfrakt (29 kr):</strong> Din order är lätt och platt och levereras direkt i brevlådan!</span>
+      </div>
+
+      <!-- Cart Item Rows -->
+      <div class="cart-items" id="cartItemsContainer">
+        <div class="cart-empty-msg">Din varukorg är tom.<br>Kika på våra bukettrecept eller frösorter!</div>
+      </div>
+
+      <!-- Shipping-Aware Cross-sell / Upsell Engine -->
+      <div class="cart-upsell-box" id="cartUpsellBox">
+        <div class="upsell-header">
+          <span id="upsellHeaderTitle">🌿 Fraktsmart merförsäljning</span>
+          <span style="font-weight:400; text-transform:none; font-size:11px;">(Samma låga brevfrakt)</span>
+        </div>
+        <div class="upsell-item" id="upsellItem">
+          <div>
+            <div class="upsell-title">Trämärketiketter (10-pack)</div>
+            <div class="upsell-sub">Handgjorda vid Bryggan • +35 kr</div>
+          </div>
+          <button class="btn-upsell-add" onclick="addUpsellItem('etiketter')">+ Lägg till</button>
+        </div>
+      </div>
+
+      <!-- Cart Footer / Checkout -->
+      <div class="cart-footer">
+        <div class="cart-summary-line">
+          <span>Delsumma</span>
+          <span id="cartSubtotal">0 kr</span>
+        </div>
+        <div class="cart-summary-line">
+          <span>Frakt</span>
+          <span id="cartShippingCost">29 kr</span>
+        </div>
+        <div class="cart-total-line">
+          <span>Att betala</span>
+          <span id="cartTotal">29 kr</span>
+        </div>
+
+        <button class="btn-checkout" onclick="openCheckoutDemo()">
+          🔒 Gå till Kassan (Swish / Klarna / Kort)
+        </button>
+        <div class="payment-badges">
+          <span>✓ Swish</span>
+          <span>✓ Klarna</span>
+          <span>✓ Visa / Mastercard</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Odlingsguide & QR-kod Mockup -->
+  <div class="modal-overlay" id="guideModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeGuideModal()">&times;</button>
+      <div style="text-align: center; margin-bottom: 20px;">
+        <span style="font-size: 11px; text-transform: uppercase; color: var(--color-accent); font-weight: 700; letter-spacing: 0.1em;">Mobilguide & QR-kod</span>
+        <h3 id="guideTitle" style="font-family: var(--font-serif); font-size: 26px; color: var(--color-primary); margin-top: 4px;">Zinnia 'Ölandslängtan'</h3>
+        <p id="guideBotanical" style="font-style: italic; color: var(--color-text-muted); font-size: 13px;">Zinnia elegans</p>
+      </div>
+
+      <div style="background: var(--color-sand-light); border-radius: 8px; padding: 18px; margin-bottom: 20px; font-size: 14px; line-height: 1.7;">
+        <p><strong>🌱 Förkultivering:</strong> Så inomhus i mars–april. Täck med ett tunt lager jord eller vermikulit. Håll fuktigt i ca 20–22°C.</p>
+        <p><strong>☀️ Utplantering:</strong> Avhärda plantorna och plantera ut efter sista nattfrosten på ett soligt läge.</p>
+        <p><strong>✂️ Skörd:</strong> Skörda när stjälken är styv och knoppen precis slagit ut. Ju mer du plockar, desto fler blommor bildas!</p>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 16px; background: #fff; border: 1px solid var(--color-border); padding: 12px; border-radius: 8px;">
+        <div style="width: 64px; height: 64px; background: #eee; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 28px;">
+          📱
+        </div>
+        <div style="font-size: 12px; color: var(--color-text-muted);">
+          <strong>Tryckt QR-kod på påsen:</strong><br>
+          Kunden skannar påsens baksida vid odlingsbädden för direktåtkomst till denna guide och Jessica odlingstips.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Bevaka i lager -->
+  <div class="modal-overlay" id="notifyModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeNotifyModal()">&times;</button>
+      <div style="text-align: center; margin-bottom: 20px;">
+        <span style="font-size: 11px; text-transform: uppercase; color: var(--color-accent); font-weight: 700;">Håll utkik</span>
+        <h3 id="notifyProductTitle" style="font-family: var(--font-serif); font-size: 24px; color: var(--color-primary); margin-top: 4px;">Bevaka produkt</h3>
+        <p style="color: var(--color-text-muted); font-size: 14px; margin-top: 6px;">Denna sort är tillfälligt slutsåld. Ange din e-post så pingar vi dig via Resend så fort nästa parti packas vid Bryggan!</p>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <input type="email" id="notifyEmailInput" placeholder="din.epost@exempel.se" style="width: 100%; padding: 12px 16px; border: 1px solid var(--color-border); border-radius: var(--radius-full); font-size: 14px; outline: none;">
+      </div>
+      <button class="btn-primary" style="width: 100%; justify-content: center;" onclick="submitNotify()">
+        🔔 Meddela mig vid inleverans
+      </button>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <span id="toastMsg">Varan lades till i varukorgen!</span>
+  </div>
+
+  <script>
+    // Product Catalog Database for the Prototype
+    const PRODUCTS = [
+      {
+        id: 'zinnia-apricot',
+        title: "Zinnia elegans 'Ölandslängtan'",
+        botanical: "Zinnia elegans",
+        category: 'snittblomma',
+        price: 45,
+        zones: [1, 2, 3, 4, 5],
+        sowMonths: ['mar', 'apr'],
+        shippingClass: 'FLAT_LETTER',
+        img: 'assets/seed_packets_mockup_1791312156789.jpg',
+        specs: ['Zon 1–5', 'Så: Mar–Apr', 'Snittblomma', '75 cm'],
+        inStock: true
+      },
+      {
+        id: 'slojsilja',
+        title: "Slöjsilja (Bishop's Flower)",
+        botanical: "Ammi majus",
+        category: 'snittblomma',
+        price: 39,
+        zones: [1, 2, 3, 4, 5, 6, 7, 8],
+        sowMonths: ['apr', 'maj'],
+        shippingClass: 'FLAT_LETTER',
+        img: 'assets/sensommardrom_bukett_1791312135766.jpg',
+        specs: ['Zon 1–8', 'Så: Apr–Maj', 'Skir bukettfyllnad', '90 cm'],
+        inStock: true
+      },
+      {
+        id: 'vallmo-skargard',
+        title: "Pionvallmo 'Skärgårdspastell'",
+        botanical: "Papaver somniferum",
+        category: 'snittblomma',
+        price: 42,
+        zones: [1, 2, 3, 4, 5, 6, 7, 8],
+        sowMonths: ['apr', 'maj'],
+        shippingClass: 'FLAT_LETTER',
+        img: 'assets/seed_packets_mockup_1791312156789.jpg',
+        specs: ['Zon 1–8', 'Direktsådd', 'Snitt & Frökapsel', '80 cm'],
+        inStock: true
+      },
+      {
+        id: 'luktart-bryggan',
+        title: "Luktärt 'Morgonbris vid Bryggan'",
+        botanical: "Lathyrus odoratus",
+        category: 'snittblomma',
+        price: 45,
+        zones: [1, 2, 3, 4, 5, 6],
+        sowMonths: ['feb', 'mar', 'apr'],
+        shippingClass: 'FLAT_LETTER',
+        img: 'assets/sensommardrom_bukett_1791312135766.jpg',
+        specs: ['Zon 1–6', 'Underbar doft', 'Långa stjälkar', '180 cm'],
+        inStock: true
+      },
+      {
+        id: 'tomat-gardeners',
+        title: "Körsbärstomat 'Gardeners Delight'",
+        botanical: "Solanum lycopersicum",
+        category: 'kokstradgard',
+        price: 38,
+        zones: [1, 2, 3, 4, 5],
+        sowMonths: ['feb', 'mar'],
+        shippingClass: 'FLAT_LETTER',
+        img: 'assets/seed_packets_mockup_1791312156789.jpg',
+        specs: ['Zon 1–5', 'Så: Feb–Mar', 'Hög sötma', 'Kulturarv'],
+        inStock: true
+      },
+      {
+        id: 'dahlia-cafe-au-lait',
+        title: "Dahlia 'Café au Lait' (Knöl)",
+        botanical: "Dahlia pinnata",
+        category: 'snittblomma',
+        price: 85,
+        zones: [1, 2, 3, 4, 5],
+        sowMonths: ['mar', 'apr'],
+        shippingClass: 'BULKY_PARCEL',
+        img: 'assets/sensommardrom_bukett_1791312135766.jpg',
+        specs: ['Förbeställning', 'Tallriksdahlia', 'Levereras i mars'],
+        inStock: false // Demonstrates out-of-stock lead capture
+      },
+      {
+        id: 'vas-bryggan-keramik',
+        title: "Handdrejad Bukettvas 'Bryggan'",
+        botanical: "Stengods från skärgården",
+        category: 'tillbehor',
+        price: 349,
+        zones: [1, 2, 3, 4, 5, 6, 7, 8],
+        sowMonths: [],
+        shippingClass: 'BULKY_PARCEL',
+        img: 'assets/sensommardrom_bukett_1791312135766.jpg',
+        specs: ['Unik keramik', 'Perfekt för snittbuketter', 'Skrymmande'],
+        inStock: true
+      },
+      {
+        id: 'etiketter-tra',
+        title: "Trämärketiketter (10-pack)",
+        botanical: "FSC-märkt trä vid Bryggan",
+        category: 'tillbehor',
+        price: 35,
+        zones: [1, 2, 3, 4, 5, 6, 7, 8],
+        sowMonths: [],
+        shippingClass: 'FLAT_LETTER',
+        img: 'assets/seed_packets_mockup_1791312156789.jpg',
+        specs: ['Brevfrakt', 'Väderbeständiga', '12 cm'],
+        inStock: true
+      }
+    ];
+
+    // Cart state
+    let cart = [];
+    let currentCategory = 'all';
+
+    function init() {
+      renderProducts(PRODUCTS);
+      updateBundlePrice();
+      updateCartUI();
+    }
+
+    // Render products
+    function renderProducts(items) {
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = '';
+
+      items.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        
+        const isLetter = p.shippingClass === 'FLAT_LETTER';
+        const badgeClass = isLetter ? 'badge-letter' : 'badge-parcel';
+        const badgeText = isLetter ? '✉️ Brev 29 kr' : '📦 Paket 79 kr';
+
+        card.innerHTML = `
+          <div class="product-img-wrap">
+            <img src="${p.img}" alt="${p.title}">
+            <span class="shipping-badge ${badgeClass}">${badgeText}</span>
+            ${!p.inStock ? '<span class="badge-stock badge-out-of-stock">Slutsåld</span>' : ''}
+          </div>
+          <div class="product-content">
+            <div class="product-cat">${p.category === 'snittblomma' ? 'Snittblomma' : (p.category === 'kokstradgard' ? 'Köksträdgård' : 'Tillbehör')}</div>
+            <h3 class="product-title">${p.title}</h3>
+            <div class="product-botanical">${p.botanical}</div>
+            
+            <div class="product-specs">
+              ${p.specs.map(s => `<span class="spec-tag">${s}</span>`).join('')}
+            </div>
+
+            <button class="btn-guide-preview" onclick="openGuideModal('${p.id}')">
+              📱 Se odlingsguide & QR-kod ↗
+            </button>
+
+            <div class="product-footer">
+              <span class="product-price">${p.price} kr</span>
+              ${p.inStock ? 
+                `<button class="btn-add-cart" onclick="addToCart('${p.id}')">Köp fröer</button>` : 
+                `<button class="btn-notify" onclick="openNotifyModal('${p.title}')">🔔 Bevaka</button>`
+              }
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Filter Logic
+    function setCategoryFilter(cat, btn) {
+      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      currentCategory = cat;
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const zone = document.getElementById('zoneSelect').value;
+      const sow = document.getElementById('sowSelect').value;
+
+      let filtered = PRODUCTS.filter(p => {
+        if (currentCategory !== 'all' && p.category !== currentCategory) return false;
+        
+        if (zone === 'zon13' && !p.zones.includes(2)) return false;
+        if (zone === 'zon45' && !p.zones.includes(4)) return false;
+        if (zone === 'zon68' && !p.zones.includes(7)) return false;
+
+        if (sow === 'feb-mar' && (!p.sowMonths.includes('feb') && !p.sowMonths.includes('mar'))) return false;
+        if (sow === 'apr-maj' && (!p.sowMonths.includes('apr') && !p.sowMonths.includes('maj'))) return false;
+
+        return true;
+      });
+
+      renderProducts(filtered);
+    }
+
+    // Bundle Price Calculator
+    function updateBundlePrice() {
+      const checks = document.querySelectorAll('.bundle-check:checked');
+      let sum = 0;
+      checks.forEach(c => sum += parseInt(c.dataset.price));
+
+      const isAll = checks.length === 4;
+      const finalPrice = isAll ? Math.round(sum * 0.85) : sum;
+
+      document.getElementById('bundleCurrentPrice').innerText = finalPrice + ' kr';
+      const oldPriceEl = document.getElementById('bundleOldPrice');
+      const discountTagEl = document.getElementById('bundleDiscountTag');
+
+      if (isAll) {
+        oldPriceEl.style.display = 'inline';
+        oldPriceEl.innerText = sum + ' kr';
+        discountTagEl.style.display = 'inline';
+      } else {
+        oldPriceEl.style.display = 'none';
+        discountTagEl.style.display = 'none';
+      }
+    }
+
+    function addBundleToCart() {
+      const checks = document.querySelectorAll('.bundle-check:checked');
+      checks.forEach(c => {
+        const item = PRODUCTS.find(p => p.id === c.dataset.id);
+        if (item) {
+          addToCart(item.id, false);
+        }
+      });
+      showToast('🌸 Hela bukettpaketet lades till i varukorgen!');
+      toggleCart(true);
+    }
+
+    // Cart Operations
+    function addToCart(productId, showToastMsg = true) {
+      const product = PRODUCTS.find(p => p.id === productId);
+      if (!product) return;
+
+      const existing = cart.find(i => i.id === productId);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ ...product, qty: 1 });
+      }
+
+      updateCartUI();
+      if (showToastMsg) {
+        showToast(`🌱 ${product.title} lades i varukorgen!`);
+      }
+    }
+
+    function removeFromCart(productId) {
+      cart = cart.filter(i => i.id !== productId);
+      updateCartUI();
+    }
+
+    function addUpsellItem(type) {
+      if (type === 'etiketter') {
+        addToCart('etiketter-tra');
+      }
+    }
+
+    // Update Cart & Shipping calculations
+    function updateCartUI() {
+      const count = cart.reduce((acc, i) => acc + i.qty, 0);
+      document.getElementById('cartBadgeCount').innerText = count;
+
+      const container = document.getElementById('cartItemsContainer');
+      if (cart.length === 0) {
+        container.innerHTML = '<div class="cart-empty-msg">Din varukorg är tom.<br>Kika på våra bukettrecept eller frösorter!</div>';
+      } else {
+        container.innerHTML = cart.map(item => `
+          <div class="cart-item-row">
+            <img src="${item.img}" class="cart-item-img">
+            <div class="cart-item-info">
+              <div class="cart-item-title">${item.title}</div>
+              <div class="cart-item-meta">${item.qty} st × ${item.price} kr (${item.shippingClass === 'FLAT_LETTER' ? '✉️ Brev' : '📦 Paket'})</div>
+              <div class="cart-item-price">${item.qty * item.price} kr</div>
+            </div>
+            <button class="remove-item-btn" onclick="removeFromCart('${item.id}')">✕</button>
+          </div>
+        `).join('');
+      }
+
+      // Calculate Subtotal
+      const subtotal = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
+      document.getElementById('cartSubtotal').innerText = subtotal + ' kr';
+
+      // Check Shipping Class
+      const hasBulkyParcel = cart.some(i => i.shippingClass === 'BULKY_PARCEL');
+      const freeShippingLimit = 350;
+      const isFreeShipping = subtotal >= freeShippingLimit && !hasBulkyParcel;
+
+      let shippingCost = 0;
+      const alertBox = document.getElementById('shippingFormatAlert');
+      const upsellBox = document.getElementById('cartUpsellBox');
+
+      if (cart.length === 0) {
+        shippingCost = 0;
+        alertBox.style.display = 'none';
+      } else if (hasBulkyParcel) {
+        shippingCost = 79;
+        alertBox.style.display = 'flex';
+        alertBox.className = 'shipping-format-alert alert-parcel';
+        alertBox.innerHTML = `<span>📦 <strong>Paketfrakt (79 kr):</strong> Din order innehåller skrymmande vara (t.ex. vas/knöl) och skickas till PostNord-ombud.</span>`;
+        
+        // Show free upsell for bulky
+        document.getElementById('upsellHeaderTitle').innerText = '🌿 Komplettera buketten';
+      } else {
+        // Only FLAT_LETTER
+        shippingCost = isFreeShipping ? 0 : 29;
+        alertBox.style.display = 'flex';
+        alertBox.className = 'shipping-format-alert alert-letter';
+        alertBox.innerHTML = isFreeShipping ? 
+          `<span>🎉 <strong>Fri brevfrakt uppnådd!</strong> Dina fröer levereras kostnadsfritt direkt i brevlådan.</span>` :
+          `<span>✉️ <strong>Brevfrakt (29 kr):</strong> Lätt och platt order – postas direkt i brevlådan!</span>`;
+
+        document.getElementById('upsellHeaderTitle').innerText = '🌿 Fraktsmart merförsäljning (Samma brevfrakt)';
+      }
+
+      document.getElementById('cartShippingCost').innerText = shippingCost === 0 ? 'Gratis' : shippingCost + ' kr';
+      document.getElementById('cartTotal').innerText = (subtotal + shippingCost) + ' kr';
+
+      // Progress bar
+      const progressFill = document.getElementById('shippingProgressFill');
+      const freeShippingText = document.getElementById('freeShippingText');
+
+      if (hasBulkyParcel) {
+        freeShippingText.innerText = 'Paketfrakt till ombud (79 kr)';
+        progressFill.style.width = '100%';
+        progressFill.style.background = 'var(--color-clay)';
+      } else {
+        const remaining = freeShippingLimit - subtotal;
+        if (remaining <= 0) {
+          freeShippingText.innerText = '🎉 Du har kvalificerat dig för FRI FRAKT!';
+          progressFill.style.width = '100%';
+          progressFill.style.background = 'var(--color-success)';
+        } else {
+          freeShippingText.innerText = `Handla för ${remaining} kr till för fri frakt!`;
+          const pct = Math.min(100, Math.round((subtotal / freeShippingLimit) * 100));
+          progressFill.style.width = pct + '%';
+          progressFill.style.background = 'linear-gradient(90deg, #3a5c43, #2d6a4f)';
+        }
+      }
+    }
+
+    function toggleCart(open) {
+      const overlay = document.getElementById('cartOverlay');
+      if (open) {
+        overlay.classList.add('open');
+      } else {
+        overlay.classList.remove('open');
+      }
+    }
+
+    function closeCartOnOverlay(e) {
+      if (e.target.id === 'cartOverlay') {
+        toggleCart(false);
+      }
+    }
+
+    // Modals
+    function openGuideModal(productId) {
+      const p = PRODUCTS.find(x => x.id === productId);
+      if (!p) return;
+      document.getElementById('guideTitle').innerText = p.title;
+      document.getElementById('guideBotanical').innerText = p.botanical;
+      document.getElementById('guideModal').classList.add('open');
+    }
+
+    function closeGuideModal() {
+      document.getElementById('guideModal').classList.remove('open');
+    }
+
+    function openNotifyModal(productTitle) {
+      document.getElementById('notifyProductTitle').innerText = productTitle;
+      document.getElementById('notifyModal').classList.add('open');
+    }
+
+    function closeNotifyModal() {
+      document.getElementById('notifyModal').classList.remove('open');
+    }
+
+    function submitNotify() {
+      const email = document.getElementById('notifyEmailInput').value;
+      if (!email || !email.includes('@')) {
+        alert('Vänligen ange en giltig e-postadress.');
+        return;
+      }
+      closeNotifyModal();
+      showToast('🔔 Tack! Vi skickar ett e-postmeddelande så fort partiet är redo.');
+      document.getElementById('notifyEmailInput').value = '';
+    }
+
+    function openCheckoutDemo() {
+      if (cart.length === 0) {
+        alert('Din varukorg är tom!');
+        return;
+      }
+      const total = document.getElementById('cartTotal').innerText;
+      alert(`[Kassa Mockup - Stripe Checkout]\n\nOmdirigerar till Stripe Checkout för säker betalning via Swish, Klarna eller Kort.\nTotalt belopp: ${total}\n\nI den skarpa versionen skapas en Checkout Session med 30 minuters TTL och automatisk reservation i Firestore.`);
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3500);
+    }
+
+    // Run on load
+    window.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
