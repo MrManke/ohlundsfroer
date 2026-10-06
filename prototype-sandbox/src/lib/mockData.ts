@@ -246,7 +246,7 @@ export const PRODUCTS: Product[] = [
       producerCode: 'SE-X-12345',
       traceCode: 'NL-2026-8801'
     },
-    imageUrl: '/assets/packets/tomat_kraft.jpg',
+    imageUrl: '/assets/packets/korsbarstomat_kraft_packet.jpg',
     backImageUrl: '/assets/packets/packet_backside_qr.jpg',
     packetStyle: 'kraft',
     specs: {
