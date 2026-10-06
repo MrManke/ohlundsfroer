@@ -41,6 +41,9 @@ export default function StorefrontPage() {
   const [appliedPromo, setAppliedPromo] = useState<PromoCode | null>(null);
   const [promoError, setPromoError] = useState<string | null>(null);
 
+  // Mobile menu state
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   // Load cart and promo from localStorage on client mount
   useEffect(() => {
     try {
@@ -286,7 +289,7 @@ export default function StorefrontPage() {
             </div>
           </a>
 
-          {/* Nav links */}
+          {/* Desktop Nav links */}
           <nav className="hidden md:flex items-center gap-8 font-sans text-sm font-medium">
             <a href="#katalog" className="text-bark hover:text-terracotta transition-colors">
               Fröer
@@ -302,18 +305,116 @@ export default function StorefrontPage() {
             </a>
           </nav>
 
-          {/* Cart button */}
-          <button
-            onClick={() => setIsCartOpen(true)}
-            className="flex items-center gap-2 bg-pine hover:bg-pine-light text-oat px-3 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all shadow-sm hover:shadow flex-shrink-0"
-          >
-            <span>Varukorg</span>
-            <span className="w-5 h-5 rounded-full bg-terracotta text-white text-[11px] sm:text-xs flex items-center justify-center font-bold">
-              {cartItemCount}
-            </span>
-            {cartSubtotal > 0 && <span className="font-bold text-xs hidden sm:inline">({cartSubtotal} kr)</span>}
-          </button>
+          {/* Actions: Cart button & Mobile Menu button */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setIsCartOpen(true)}
+              className="flex items-center gap-1.5 sm:gap-2 bg-pine hover:bg-pine-light text-oat px-3 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all shadow-sm hover:shadow flex-shrink-0"
+              aria-label="Öppna varukorg"
+            >
+              <span>Varukorg</span>
+              <span className="w-5 h-5 rounded-full bg-terracotta text-white text-[11px] sm:text-xs flex items-center justify-center font-bold">
+                {cartItemCount}
+              </span>
+              {cartSubtotal > 0 && <span className="font-bold text-xs hidden sm:inline">({cartSubtotal} kr)</span>}
+            </button>
+
+            {/* Mobile Menu Hamburger */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden w-10 h-10 flex items-center justify-center rounded-full border border-sand bg-oat text-pine hover:bg-sand transition-colors"
+              aria-label={isMobileMenuOpen ? "Stäng meny" : "Öppna meny"}
+            >
+              {isMobileMenuOpen ? (
+                <span className="text-xl font-bold leading-none">✕</span>
+              ) : (
+                <svg className="w-5 h-5 text-pine" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
+          </div>
         </div>
+
+        {/* Mobile Horizontal Quick Nav (Always visible on mobile for 1-tap thumb navigation) */}
+        <div className="md:hidden border-t border-sand/70 bg-oat/95 px-3 py-2 flex items-center gap-2 overflow-x-auto no-scrollbar text-xs font-medium">
+          <a
+            href="#katalog"
+            className="px-3 py-1.5 rounded-full bg-white border border-sand text-pine hover:bg-sand-light whitespace-nowrap transition-colors"
+          >
+            Fröer
+          </a>
+          <a
+            href="#bukettpaket"
+            className="px-3 py-1.5 rounded-full bg-white border border-sand text-pine hover:bg-sand-light whitespace-nowrap transition-colors"
+          >
+            Bukettrecept
+          </a>
+          <a
+            href="#odla-zon5"
+            className="px-3 py-1.5 rounded-full bg-white border border-sand text-pine hover:bg-sand-light whitespace-nowrap transition-colors"
+          >
+            Odla i Zon 5
+          </a>
+          <a
+            href="/om-oss"
+            className="px-3.5 py-1.5 rounded-full bg-sand-light border border-terracotta/40 text-terracotta hover:bg-terracotta hover:text-white whitespace-nowrap transition-colors font-semibold"
+          >
+            Om oss
+          </a>
+        </div>
+
+        {/* Mobile Slide-down Full Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden bg-white border-t border-sand px-4 py-4 shadow-xl space-y-3 animate-in fade-in slide-in-from-top-2 duration-150">
+            <nav className="flex flex-col space-y-1 font-sans text-sm">
+              <a
+                href="#katalog"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-pine font-medium py-2.5 px-3 rounded-xl hover:bg-oat flex items-center justify-between"
+              >
+                <span>Fröer & Sortiment</span>
+                <span className="text-xs text-bark/50">Katalog →</span>
+              </a>
+              <a
+                href="#bukettpaket"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-pine font-medium py-2.5 px-3 rounded-xl hover:bg-oat flex items-center justify-between"
+              >
+                <span>Bukettrecept</span>
+                <span className="text-xs text-terracotta font-semibold">Paketpris →</span>
+              </a>
+              <a
+                href="#odla-zon5"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-pine font-medium py-2.5 px-3 rounded-xl hover:bg-oat flex items-center justify-between"
+              >
+                <span>Odla i Zon 5</span>
+                <span className="text-xs text-bark/50">Härdighetstips →</span>
+              </a>
+              <a
+                href="/om-oss"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-pine font-semibold py-2.5 px-3 rounded-xl bg-oat flex items-center justify-between border border-sand"
+              >
+                <span>Om oss – Öhlunds Brygga</span>
+                <span className="text-xs text-terracotta font-bold">Läs historien →</span>
+              </a>
+            </nav>
+
+            <div className="pt-3 border-t border-sand/70 flex items-center justify-between">
+              <span className="text-xs text-bark/70">Instagram</span>
+              <a
+                href="https://www.instagram.com/ohlunds_brygga/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-sand hover:bg-pine hover:text-white text-pine px-3.5 py-1.5 rounded-full text-xs font-semibold inline-flex items-center gap-1 transition-colors"
+              >
+                @ohlunds_brygga
+              </a>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Hero Banner (Showing user panoramic photo of Stugan, odlingarna & Bryggan at Ljusnan) */}
