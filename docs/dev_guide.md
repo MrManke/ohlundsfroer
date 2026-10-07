@@ -42,9 +42,9 @@ Under prototypbyggandet identifierades och löstes flera subtila men avgörande 
 * **Flexibla containerhöjder:** Fasta containerhöjder (t.ex. `h-20`) riskerar att kväva logotypen på mobiler. Använd responsiva höjder som `h-16 sm:h-20`.
 
 ### 2.2 Mobilnavigering & Ergonomi
-* **Tvåstegs mobilnavigering:**
-  1. **Tumvänliga snabbknappar (Quick-Nav):** En horisontell rad med rullbara piller direkt under headern (`Fröer`, `Bukettrecept`, `Odla i Zon 5`, `Om oss`) gör att kunden kan hoppa mellan sektioner med en enda hand utan att öppna en meny.
-  2. **Mobilmeny (Hamburgare ☰):** En ren, utfällbar panel med fullständiga länkar och länk till Instagram (`@ohlunds_brygga`).
+* **Horisontell snabbnavigering (Quick-Nav):**
+  - En rullbar rad med tumvänliga piller direkt under headern (`Fröer`, `Bukettrecept`, `Odla i Zon 5`, `Om oss`) ger direkt 1-klicksåtkomst till butikens kärnsektioner utan att behöva öppna en separat hamburgarmeny.
+  - Sociala kanaler (Instagram, TikTok, YouTube) och fördjupande information placeras i sajtens footer.
 * **Ingen automatisk fullskärmsöppning av varukorg vid köp (Anti-Screen Theft):**
   - Att automatiskt skjuta ut varukorgs-drawern eller en modal när kunden klickar "Köp fröer" bryter flödet och tvingar kunden att stänga panelen manuellt varje gång.
   - **Rätt mönster:** Visa en diskret toast i skärmens underkant:  
@@ -72,18 +72,16 @@ Systemet differentierar produkter i två strikta fraktklasser:
 1. **`FLAT_LETTER` (Brevfrakt 29 kr):**
    - Platta och lätta artiklar (fröpåsar, etiketter, såband).
    - Levereras direkt i brevlådan.
-   - **Fri frakt vid köp över 350 kr.**
+   - **Fri brevfrakt vid köp över 350 kr.**
 2. **`BULKY_PARCEL` (Paketfrakt 79 kr):**
    - Skrymmande artiklar (vaser, krukor, jord, större rotknölar).
-   - Levereras till ombud.
-   - Omfattas inte av automatisk fri frakt.
+   - Levereras spårbart till PostNord-ombud.
+   - **Omfattas inte av fri frakt.**
 
 ### 3.2 Fri frakt-beräkning & presentation
-* När kunden uppnår fri fraktgränsen (>= 350 kr för brev) ska kalkyl och gränssnitt vara kristallklara:
-  - Framstegsmätaren visar: *"Du har kvalificerat dig för FRI FRAKT!"*
-  - Notisen visar: *"✓ Fri brevfrakt (0 kr)"*
-  - Summeringsraden visar: *"Frakt: 0 kr (Fri frakt)"* i tydlig tallgrön stil.
-  - Slutsumman drar av portot fullt ut.
+* När kunden uppnår fri fraktgränsen (>= 350 kr) ska gränssnittet tydligt differentiera brev och paket:
+  - Vid ren brevorder: Framstegsmätaren visar *"Du har kvalificerat dig för FRI BREVFRAKT!"*, notisen visar *"✓ Fri brevfrakt (0 kr – direkt i brevlådan)"* och totalsummeringen visar *"Frakt: 0 kr (Fri brevfrakt)"*.
+  - Vid skrymmande paketorder: Framstegsmätaren informerar *"Skrymmande varor i korgen (Paketfrakt 79 kr via ombud – fri frakt gäller endast brevorder)"* och totalsummeringen visar *"79 kr (Paket till ombud)"*.
 
 ### 3.3 Kampanj- & Rabattkodsmotor
 Varukorgen har ett dedikerat, diskret fält: `+ Ange rabattkod eller presentkort`.

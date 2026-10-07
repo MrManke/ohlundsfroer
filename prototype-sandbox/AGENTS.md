@@ -26,8 +26,11 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 * **Mobil Drawers:** Ska expandera till full bredd (`w-full sm:w-[430px]`) på mobil, använda `h-[100dvh]` och ha `flex-1 min-h-0 overflow-y-auto` på artikellistan.
 * **Ordavhuggning:** Knappar och åtgärder som "Ta bort" ska ha `whitespace-nowrap`.
 * **Persistent varukorg:** Synka alltid varukorgens tillstånd och aktiva rabattkoder mot `localStorage` så att data inte förloras vid sidomladdning (F5).
-* **Mobilnavigering:** Tillhandahåll både tumvänliga snabbknappar och en fullständig meny (☰) så att mobilanvändare enkelt når alla sektioner.
+* **Mobilnavigering:** Tumvänliga horisontella snabbknappar (`[ Fröer ] [ Bukettrecept ] [ Odla i Zon 5 ] [ Om oss ]`) ger direkt 1-klicksåtkomst utan att behöva en redundant hamburgarmeny. Sociala medier (Instagram, TikTok, YouTube) placeras i sajtens footer.
 
 ## 4. Fraktsmart Kassa
-* **Fraktklasser:** Respektera `FLAT_LETTER` (29 kr, fri frakt över 350 kr) och `BULKY_PARCEL` (79 kr paketfrakt till ombud).
-* **Tydlig fri frakt:** När fri frakt uppnås ska gränssnittet tydligt visa `0 kr (Fri frakt)` och inte visa fasta fraktnotiser.
+* **Fraktklasser & Fri frakt:**
+  - `FLAT_LETTER` (29 kr direkt i brevlåda via PostNord): Fri brevfrakt vid köp över 350 kr.
+  - `BULKY_PARCEL` (79 kr till ombud vid skrymmande varor): Omfattas EJ av fri frakt.
+* **Tydlig fri frakt-presentation:** När kunden handlar för >= 350 kr gäller fri frakt endast för brevorder. Om varukorgen innehåller skrymmande artiklar ska detta explicit förklaras i varukorg och kassa så att kunden förstår varför paketfrakt (79 kr) tillämpas.
+
