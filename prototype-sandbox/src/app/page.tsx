@@ -41,9 +41,6 @@ export default function StorefrontPage() {
   const [appliedPromo, setAppliedPromo] = useState<PromoCode | null>(null);
   const [promoError, setPromoError] = useState<string | null>(null);
 
-  // Mobile menu state
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
   // Load cart and promo from localStorage on client mount
   useEffect(() => {
     try {
@@ -261,10 +258,10 @@ export default function StorefrontPage() {
       {/* Top Notice Bar */}
       <div className="bg-pine text-oat text-[11px] sm:text-xs py-1.5 sm:py-2 px-3 sm:px-4 text-center tracking-wide font-sans border-b border-pine-light">
         <span className="hidden sm:inline">
-          <strong>Öhlunds Brygga vid Ljusnan (Ljusdal, Zon 5):</strong> Handpackade kulturarvsfröer & snittblommor • Brevfrakt 29 kr (Fri frakt över 350 kr) • EU-växtpass
+          <strong>Öhlunds Brygga vid Ljusnan (Ljusdal, Zon 5):</strong> Handpackade kulturarvsfröer & snittblommor • Brevfrakt 29 kr (Fri brevfrakt över 350 kr) • Paketfrakt 79 kr (ombud vid skrymmande) • EU-växtpass
         </span>
         <span className="sm:hidden font-medium">
-          Öhlunds Brygga (Zon 5) • Handpackade kulturarvsfröer • Brevfrakt 29 kr
+          Öhlunds Brygga (Zon 5) • Brevfrakt 29 kr • Fri brevfrakt över 350 kr (Paketfrakt 79 kr)
         </span>
       </div>
 
@@ -305,11 +302,11 @@ export default function StorefrontPage() {
             </a>
           </nav>
 
-          {/* Actions: Cart button & Mobile Menu button */}
-          <div className="flex items-center gap-2">
+          {/* Actions: Cart button */}
+          <div className="flex items-center">
             <button
               onClick={() => setIsCartOpen(true)}
-              className="flex items-center gap-1.5 sm:gap-2 bg-pine hover:bg-pine-light text-oat px-3 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all shadow-sm hover:shadow flex-shrink-0"
+              className="flex items-center gap-1.5 sm:gap-2 bg-pine hover:bg-pine-light text-oat px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all shadow-sm hover:shadow flex-shrink-0"
               aria-label="Öppna varukorg"
             >
               <span>Varukorg</span>
@@ -317,21 +314,6 @@ export default function StorefrontPage() {
                 {cartItemCount}
               </span>
               {cartSubtotal > 0 && <span className="font-bold text-xs hidden sm:inline">({cartSubtotal} kr)</span>}
-            </button>
-
-            {/* Mobile Menu Hamburger */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden w-10 h-10 flex items-center justify-center rounded-full border border-sand bg-oat text-pine hover:bg-sand transition-colors"
-              aria-label={isMobileMenuOpen ? "Stäng meny" : "Öppna meny"}
-            >
-              {isMobileMenuOpen ? (
-                <span className="text-xl font-bold leading-none">✕</span>
-              ) : (
-                <svg className="w-5 h-5 text-pine" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
             </button>
           </div>
         </div>
@@ -363,58 +345,6 @@ export default function StorefrontPage() {
             Om oss
           </a>
         </div>
-
-        {/* Mobile Slide-down Full Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden bg-white border-t border-sand px-4 py-4 shadow-xl space-y-3 animate-in fade-in slide-in-from-top-2 duration-150">
-            <nav className="flex flex-col space-y-1 font-sans text-sm">
-              <a
-                href="#katalog"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-pine font-medium py-2.5 px-3 rounded-xl hover:bg-oat flex items-center justify-between"
-              >
-                <span>Fröer & Sortiment</span>
-                <span className="text-xs text-bark/50">Katalog →</span>
-              </a>
-              <a
-                href="#bukettpaket"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-pine font-medium py-2.5 px-3 rounded-xl hover:bg-oat flex items-center justify-between"
-              >
-                <span>Bukettrecept</span>
-                <span className="text-xs text-terracotta font-semibold">Paketpris →</span>
-              </a>
-              <a
-                href="#odla-zon5"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-pine font-medium py-2.5 px-3 rounded-xl hover:bg-oat flex items-center justify-between"
-              >
-                <span>Odla i Zon 5</span>
-                <span className="text-xs text-bark/50">Härdighetstips →</span>
-              </a>
-              <a
-                href="/om-oss"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-pine font-semibold py-2.5 px-3 rounded-xl bg-oat flex items-center justify-between border border-sand"
-              >
-                <span>Om oss – Öhlunds Brygga</span>
-                <span className="text-xs text-terracotta font-bold">Läs historien →</span>
-              </a>
-            </nav>
-
-            <div className="pt-3 border-t border-sand/70 flex items-center justify-between">
-              <span className="text-xs text-bark/70">Instagram</span>
-              <a
-                href="https://www.instagram.com/ohlunds_brygga/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-sand hover:bg-pine hover:text-white text-pine px-3.5 py-1.5 rounded-full text-xs font-semibold inline-flex items-center gap-1 transition-colors"
-              >
-                @ohlunds_brygga
-              </a>
-            </div>
-          </div>
-        )}
       </header>
 
       {/* Hero Banner (Showing user panoramic photo of Stugan, odlingarna & Bryggan at Ljusnan) */}
@@ -953,6 +883,105 @@ export default function StorefrontPage() {
         </div>
       </section>
 
+      {/* Site Footer */}
+      <footer className="bg-pine text-oat pt-16 pb-12 border-t border-pine-light">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-pine-light/40">
+            {/* Brand column */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-10 flex-shrink-0 flex items-center justify-center">
+                  <svg viewBox="16 18 73 105" className="w-full h-full text-sand fill-current" xmlns="http://www.w3.org/2000/svg">
+                    <path fillRule="evenodd" d="M 29,32 L 32,41 L 36,45 L 38,46 L 48,48 L 48,50 L 49,52 L 47,54 L 44,54 L 32,60 L 26,66 L 22,72 L 19,82 L 19,91 L 22,101 L 26,107 L 30,111 L 34,114 L 40,117 L 46,119 L 59,119 L 63,118 L 74,112 L 81,104 L 84,98 L 86,89 L 86,84 L 84,75 L 80,67 L 73,60 L 61,54 L 58,54 L 50,51 L 49,49 L 49,43 L 45,35 L 44,35 L 40,32 L 36,31 Z M 46,62 L 59,62 L 65,65 L 68,68 L 69,68 L 73,73 L 75,77 L 77,84 L 77,89 L 76,93 L 72,101 L 66,107 L 63,109 L 56,111 L 50,111 L 45,110 L 39,107 L 32,100 L 30,96 L 28,89 L 28,83 L 29,79 L 32,73 L 37,67 L 43,63 Z M 81,22 L 73,22 L 69,23 L 62,27 L 58,32 L 56,40 L 57,46 L 58,41 L 60,38 L 67,34 L 62,40 L 62,42 L 61,44 L 67,44 L 72,42 L 78,36 L 80,33 L 82,26 Z" />
+                  </svg>
+                </div>
+                <div>
+                  <span className="font-serif text-xl font-semibold tracking-tight text-oat block leading-tight">
+                    ÖHLUNDS FRÖER
+                  </span>
+                  <span className="text-[10px] uppercase tracking-widest text-terracotta font-sans font-semibold">
+                    Öhlunds Brygga • Ljusdal
+                  </span>
+                </div>
+              </div>
+              <p className="text-xs text-oat/80 leading-relaxed font-sans">
+                Från vår hobbyodling och blomsterkiosk vid Ljusnans strand till trädgårdar i hela Sverige. Kulturhistoriska fröer, snittblommor och robusta grönsaker provodlade för Zon 5.
+              </p>
+            </div>
+
+            {/* Frakt & Leverans - Tydliggör brev vs paket */}
+            <div className="space-y-3 font-sans">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-sand">Fraktsmart leverans</h4>
+              <ul className="space-y-2.5 text-xs text-oat/85">
+                <li className="flex items-start gap-2">
+                  <span className="text-terracotta font-bold">•</span>
+                  <div>
+                    <strong>Brevfrakt (29 kr):</strong> Lätt och platt direkt i din brevlåda via PostNord.
+                    <span className="text-sand block font-semibold mt-0.5">Fri brevfrakt vid köp över 350 kr!</span>
+                  </div>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-terracotta font-bold">•</span>
+                  <div>
+                    <strong>Paketfrakt (79 kr):</strong> Skrymmande varor (krukor, vaser, redskap) skickas spårbart till PostNord-ombud. (Fri frakt gäller ej skrymmande paket).
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            {/* Snabblänkar */}
+            <div className="space-y-3 font-sans">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-sand">Navigering</h4>
+              <ul className="space-y-2 text-xs text-oat/80">
+                <li><a href="#katalog" className="hover:text-terracotta transition-colors">Fröer & Sortiment</a></li>
+                <li><a href="#bukettpaket" className="hover:text-terracotta transition-colors">Sensommardröm Bukettrecept</a></li>
+                <li><a href="#odla-zon5" className="hover:text-terracotta transition-colors">Odla i Zon 5 (Härdighetstips)</a></li>
+                <li><a href="/om-oss" className="hover:text-terracotta transition-colors font-semibold text-oat">Om oss – Möt familjen Öhlund</a></li>
+              </ul>
+            </div>
+
+            {/* Sociala medier: Instagram, TikTok, YouTube */}
+            <div className="space-y-3 font-sans">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-sand">Följ odlingen vid Ljusnan</h4>
+              <p className="text-xs text-oat/75 leading-relaxed">
+                Häng med Jessica vid blombäddarna, se Magnus snickra drivhus och följ Villes logistikbygge.
+              </p>
+              <div className="flex flex-col gap-2 pt-1">
+                <a
+                  href="https://www.instagram.com/ohlunds_brygga/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-pine-light hover:bg-terracotta hover:text-white text-oat px-3.5 py-2 rounded-xl text-xs font-medium transition-all inline-flex items-center justify-between border border-pine-light/60"
+                >
+                  <span>Instagram @ohlunds_brygga</span>
+                  <span>→</span>
+                </a>
+                <div className="flex items-center gap-2">
+                  <span className="bg-pine-light/40 text-oat/60 px-3 py-1.5 rounded-lg text-[11px] border border-pine-light/30 flex-1 text-center">
+                    TikTok (Kommer)
+                  </span>
+                  <span className="bg-pine-light/40 text-oat/60 px-3 py-1.5 rounded-lg text-[11px] border border-pine-light/30 flex-1 text-center">
+                    YouTube (Kommer)
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Bar: Cookies & Copyright */}
+          <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-oat/60 font-sans">
+            <div>
+              © 2026 Öhlundsfröer • Öhlunds Brygga, Ljusdal. Alla rättigheter förbehållna.
+            </div>
+            <div className="flex items-center gap-4 text-oat/70">
+              <span>✓ Inga spårningskakor – endast nödvändig varukorgslagring</span>
+              <span>•</span>
+              <a href="/om-oss" className="hover:underline">Om oss</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+
       {/* Slide-out Cart Drawer */}
       {isCartOpen && (
         <div className="fixed inset-0 z-50 overflow-hidden">
@@ -979,17 +1008,17 @@ export default function StorefrontPage() {
                 </button>
               </div>
 
-              {/* Free shipping progress bar */}
+              {/* Free shipping progress bar (Clarifying letters vs bulky parcels) */}
               <div className="px-4 py-2.5 bg-sand-light border-b border-sand flex-shrink-0">
                 <div className="flex justify-between text-xs font-semibold mb-1.5">
                   <span className="text-pine text-[11px] sm:text-xs">
                     {hasBulkyParcel
-                      ? "Paketfrakt till ombud (skrymmande)"
+                      ? "Skrymmande varor i korgen (Paketfrakt 79 kr via ombud – fri frakt gäller endast brevorder)"
                       : isFreeShipping
-                      ? "Du har kvalificerat dig för FRI FRAKT!"
-                      : `Handla för ${FREE_SHIPPING_LIMIT - cartSubtotal} kr till för fri frakt`}
+                      ? "Du har kvalificerat dig för FRI BREVFRAKT!"
+                      : `Handla för ${FREE_SHIPPING_LIMIT - cartSubtotal} kr till för fri brevfrakt`}
                   </span>
-                  <span className="text-bark/50 text-[11px] sm:text-xs">Gräns: 350 kr</span>
+                  <span className="text-bark/50 text-[11px] sm:text-xs">Gräns: 350 kr (brev)</span>
                 </div>
                 <div className="h-1.5 w-full bg-sand rounded-full overflow-hidden">
                   <div
@@ -1010,9 +1039,9 @@ export default function StorefrontPage() {
                 <div className="px-4 py-2 bg-oat/60 border-b border-sand/50 text-xs flex items-center justify-between flex-shrink-0">
                   <span className="text-pine font-medium flex items-center gap-1.5 text-[11px] sm:text-xs">
                     {hasBulkyParcel
-                      ? "Paketfrakt 79 kr (ombud)"
+                      ? "Paketfrakt 79 kr (PostNord ombud – skrymmande)"
                       : isFreeShipping
-                      ? "✓ Fri brevfrakt (0 kr)"
+                      ? "✓ Fri brevfrakt (0 kr – direkt i brevlådan)"
                       : "Brevfrakt 29 kr (direkt i brevlådan)"}
                   </span>
                   <span className="text-bark/50 text-[11px]">PostNord</span>
@@ -1181,7 +1210,11 @@ export default function StorefrontPage() {
                 <div className="flex justify-between text-xs text-bark/70">
                   <span>Frakt</span>
                   <span className={shippingCost === 0 ? "font-bold text-pine" : ""}>
-                    {shippingCost === 0 ? "0 kr (Fri frakt)" : `${shippingCost} kr`}
+                    {hasBulkyParcel
+                      ? "79 kr (Paket till ombud)"
+                      : shippingCost === 0
+                      ? "0 kr (Fri brevfrakt)"
+                      : `${shippingCost} kr (Brev)`}
                   </span>
                 </div>
                 <div className="flex justify-between text-base font-bold text-pine pt-2 border-t border-sand">
