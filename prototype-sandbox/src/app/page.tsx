@@ -98,7 +98,7 @@ export default function StorefrontPage() {
   const [activeNotifyProduct, setActiveNotifyProduct] = useState<Product | null>(null);
   const [activeZoomProduct, setActiveZoomProduct] = useState<ZoomItem | null>(null);
   const [isZoomMagnified, setIsZoomMagnified] = useState(false);
-  const [zoomActiveSide, setZoomActiveSide] = useState<"front" | "back">("front");
+  const [zoomActiveSide, setZoomActiveSide] = useState<"front" | "back" | "mature">("front");
   const [notifyEmail, setNotifyEmail] = useState("");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -278,10 +278,10 @@ export default function StorefrontPage() {
             </div>
             <div className="min-w-0">
               <span className="font-serif text-lg sm:text-2xl font-semibold tracking-tight text-pine block leading-tight pt-1">
-                ÖHLUNDS FRÖER
+                ÖHLUNDS BRYGGA
               </span>
               <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-sans font-semibold text-terracotta block truncate">
-                Öhlunds Brygga • Ljusdal
+                Ljusdal • Hälsingland
               </span>
             </div>
           </a>
@@ -402,7 +402,7 @@ export default function StorefrontPage() {
               onClick={() => {
                 setActiveZoomProduct({
                   title: "Bukettrecept: Sensommardröm vid Bryggan",
-                  imageUrl: "/assets/sensommardrom_bukett_1791312135766.jpg",
+                  imageUrl: "/assets/sensommardrom_bukett.jpg",
                   subtitle: "Snittblomsbukett komponerad av Jessica Öhlund • Aprikos zinnia, slöjsilja, pionvallmo & luktärt",
                   priceSek: bundleFinalPrice,
                 });
@@ -414,7 +414,7 @@ export default function StorefrontPage() {
               aria-label="Förstora bild för bukettrecept"
             >
               <Image
-                src="/assets/sensommardrom_bukett_1791312135766.jpg"
+                src="/assets/sensommardrom_bukett.jpg"
                 alt="Snittblomsbukett Sensommardröm vid Bryggan"
                 fill
                 className="object-cover group-hover/img:scale-105 transition-transform duration-300"
@@ -638,6 +638,30 @@ export default function StorefrontPage() {
                       {isLetter ? "Brev 29 kr" : "Paket 79 kr"}
                     </span>
                   </div>
+
+                  {/* Mature bloom quick-preview badge on card */}
+                  {p.matureImageUrl && (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveZoomProduct({
+                          title: p.title,
+                          imageUrl: p.imageUrl,
+                          botanicalName: p.botanicalName,
+                          shippingClass: p.shippingClass,
+                          priceSek: p.priceSek,
+                          product: p,
+                        });
+                        setIsZoomMagnified(false);
+                        setZoomActiveSide("mature");
+                      }}
+                      className="absolute bottom-2.5 right-2.5 z-10 bg-white/95 hover:bg-terracotta hover:text-white text-pine text-[11px] font-sans font-semibold px-2.5 py-1 rounded-full shadow-sm border border-sand/80 flex items-center gap-1.5 transition-all group-hover:scale-105"
+                      title="Se bild på sorten som fullvuxen"
+                    >
+                      <span>🌸 Se blomning</span>
+                    </button>
+                  )}
 
                   {/* Out of stock badge */}
                   {!p.inStock && (
@@ -897,15 +921,15 @@ export default function StorefrontPage() {
                 </div>
                 <div>
                   <span className="font-serif text-xl font-semibold tracking-tight text-oat block leading-tight">
-                    ÖHLUNDS FRÖER
+                    ÖHLUNDS BRYGGA
                   </span>
                   <span className="text-[10px] uppercase tracking-widest text-terracotta font-sans font-semibold">
-                    Öhlunds Brygga • Ljusdal
+                    Ljusdal • Zon 5
                   </span>
                 </div>
               </div>
               <p className="text-xs text-oat/80 leading-relaxed font-sans">
-                Från vår hobbyodling och blomsterkiosk vid Ljusnans strand till trädgårdar i hela Sverige. Kulturhistoriska fröer, snittblommor och robusta grönsaker provodlade för Zon 5.
+                Från vår odling och blomsterkiosk vid Ljusnans strand till trädgårdar i hela Sverige. Kulturarvsfröer, snittblommor och robusta grönsaker provodlade för Zon 5.
               </p>
             </div>
 
@@ -971,7 +995,7 @@ export default function StorefrontPage() {
           {/* Bottom Bar: Cookies & Copyright */}
           <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-oat/60 font-sans">
             <div>
-              © 2026 Öhlundsfröer • Öhlunds Brygga, Ljusdal. Alla rättigheter förbehållna.
+              © 2026 Öhlunds Brygga, Ljusdal. Alla rättigheter förbehållna.
             </div>
             <div className="flex items-center gap-4 text-oat/70">
               <span>✓ Inga spårningskakor – endast nödvändig varukorgslagring</span>
@@ -1264,10 +1288,25 @@ export default function StorefrontPage() {
               <span className="text-xs italic text-bark/60 block">{activeGuideProduct.botanicalName}</span>
             </div>
 
+            {/* Mature Bloom Photo in Guide */}
+            {activeGuideProduct.matureImageUrl && (
+              <div className="relative rounded-2xl overflow-hidden aspect-[16/10] mb-5 border border-sand/60 shadow-sm">
+                <Image
+                  src={activeGuideProduct.matureImageUrl}
+                  alt={`${activeGuideProduct.title} fullvuxen blomma`}
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute bottom-2.5 left-2.5 bg-pine/90 text-oat text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full backdrop-blur-sm pointer-events-none">
+                  🌸 Sorten i full blom
+                </div>
+              </div>
+            )}
+
             {/* Technical Passport Table (Matching the user's photo!) */}
             <div className="border border-bark/20 rounded-xl overflow-hidden mb-6 text-xs font-mono">
               <div className="bg-sand-light p-2 font-bold text-center border-b border-bark/20">
-                ÖHLUNDS FRÖER & ODLA • EST. 2026
+                ÖHLUNDS BRYGGA & ODLA • EST. 2026
               </div>
               <div className="grid grid-cols-2 divide-x divide-bark/20 border-b border-bark/20 p-2">
                 <div><strong>SORT:</strong> {activeGuideProduct.title}</div>
@@ -1391,22 +1430,37 @@ export default function StorefrontPage() {
               </div>
 
               <div className="flex items-center gap-3">
-                {/* Front / Back Side Toggle (if backImageUrl exists) */}
-                {activeZoomProduct.product?.backImageUrl && (
-                  <div className="flex bg-sand/60 rounded-full p-1 border border-sand">
+                {/* Front / Back Side / Mature Toggle */}
+                <div className="flex bg-sand/60 rounded-full p-1 border border-sand">
+                  <button
+                    onClick={() => {
+                      setZoomActiveSide("front");
+                      setIsZoomMagnified(false);
+                    }}
+                    className={`px-3 py-1 rounded-full text-xs font-semibold transition-all ${
+                      zoomActiveSide === "front"
+                        ? "bg-pine text-white shadow-xs"
+                        : "text-bark/70 hover:text-bark"
+                    }`}
+                  >
+                    Fröpåse
+                  </button>
+                  {activeZoomProduct.product?.matureImageUrl && (
                     <button
                       onClick={() => {
-                        setZoomActiveSide("front");
+                        setZoomActiveSide("mature");
                         setIsZoomMagnified(false);
                       }}
-                      className={`px-3 py-1 rounded-full text-xs font-semibold transition-all ${
-                        zoomActiveSide === "front"
-                          ? "bg-pine text-white shadow-xs"
-                          : "text-bark/70 hover:text-bark"
+                      className={`px-3 py-1 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                        zoomActiveSide === "mature"
+                          ? "bg-terracotta text-white shadow-xs"
+                          : "text-bark/70 hover:text-terracotta font-medium"
                       }`}
                     >
-                      Framsida
+                      <span>🌸 Uppvuxen</span>
                     </button>
+                  )}
+                  {activeZoomProduct.product?.backImageUrl && (
                     <button
                       onClick={() => {
                         setZoomActiveSide("back");
@@ -1421,8 +1475,8 @@ export default function StorefrontPage() {
                       <span>Baksida</span>
                       <span className="text-[10px] bg-terracotta text-white px-1.5 py-0.5 rounded-full font-bold">QR</span>
                     </button>
-                  </div>
-                )}
+                  )}
+                </div>
 
                 {/* Close Button */}
                 <button
@@ -1449,15 +1503,34 @@ export default function StorefrontPage() {
               >
                 <Image
                   src={
-                    zoomActiveSide === "back" && activeZoomProduct.product?.backImageUrl
+                    zoomActiveSide === "mature" && activeZoomProduct.product?.matureImageUrl
+                      ? activeZoomProduct.product.matureImageUrl
+                      : zoomActiveSide === "back" && activeZoomProduct.product?.backImageUrl
                       ? activeZoomProduct.product.backImageUrl
                       : activeZoomProduct.imageUrl
                   }
-                  alt={`${activeZoomProduct.title} ${zoomActiveSide === "back" ? "baksida med QR-kod" : "framsida"}`}
+                  alt={`${activeZoomProduct.title} ${
+                    zoomActiveSide === "mature"
+                      ? "uppvuxen blomma i full blom"
+                      : zoomActiveSide === "back"
+                      ? "baksida med QR-kod"
+                      : "framsida fröpåse"
+                  }`}
                   fill
                   className="object-contain drop-shadow-md rounded-xl"
                   priority
                 />
+              </div>
+
+              {/* Informative overlay tag on image */}
+              <div className="absolute bottom-4 left-4 pointer-events-none">
+                <span className="bg-pine/85 backdrop-blur-md text-oat text-[11px] font-sans px-3 py-1.5 rounded-full shadow-sm">
+                  {zoomActiveSide === "mature"
+                    ? "🌸 Så här ser sorten ut som fullvuxen & blommande"
+                    : zoomActiveSide === "back"
+                    ? "📱 Baksida med QR-kod för mobilguide & EU-växtpass"
+                    : "📦 Handpackad fröpåse i miljövänligt kraftpapper"}
+                </span>
               </div>
             </div>
 

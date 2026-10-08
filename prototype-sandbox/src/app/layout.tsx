@@ -16,8 +16,8 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Öhlundsfröer – Från Öhlunds Brygga vid Ljusnan (Ljusdal)",
-  description: "Kulturhistoriska fröer, snittblommor och bukettrecept. Provodlat och handpackat vid Stugan i Hälsingland (Zon 5).",
+  title: "Öhlunds Brygga – Kulturarvsfröer & Snittblommor vid Ljusnan (Ljusdal)",
+  description: "Kulturarvsfröer, snittblommor och bukettrecept från Öhlunds Brygga. Provodlat och handpackat vid Stugan i Hälsingland (Zon 5).",
 };
 
 export default function RootLayout({

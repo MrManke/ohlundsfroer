@@ -47,6 +47,7 @@ export interface Product {
   plantPassport?: PlantPassport;
   imageUrl: string;
   backImageUrl?: string;
+  matureImageUrl?: string;
   packetStyle?: 'kraft' | 'cream_botanical' | 'technical_label';
   bundleComponentIds?: string[];
 }
@@ -73,6 +74,7 @@ export const PRODUCTS: Product[] = [
     },
     imageUrl: '/assets/packets/slojsilja_kraft.jpg',
     backImageUrl: '/assets/packets/packet_backside_qr.jpg',
+    matureImageUrl: '/assets/blooms/slojsilja_bloom.jpg',
     packetStyle: 'kraft',
     specs: {
       sowMonths: [4, 5],
@@ -108,6 +110,7 @@ export const PRODUCTS: Product[] = [
     },
     imageUrl: '/assets/packets/zinnia_kraft.jpg',
     backImageUrl: '/assets/packets/packet_backside_qr.jpg',
+    matureImageUrl: '/assets/blooms/zinnia_bloom.jpg',
     packetStyle: 'kraft',
     specs: {
       sowMonths: [3, 4],
@@ -143,6 +146,7 @@ export const PRODUCTS: Product[] = [
     },
     imageUrl: '/assets/packets/pionvallmo_kraft.jpg',
     backImageUrl: '/assets/packets/packet_backside_qr.jpg',
+    matureImageUrl: '/assets/blooms/pionvallmo_bloom.jpg',
     packetStyle: 'kraft',
     specs: {
       sowMonths: [4, 5],
@@ -178,6 +182,7 @@ export const PRODUCTS: Product[] = [
     },
     imageUrl: '/assets/packets/rosenskara_kraft.jpg',
     backImageUrl: '/assets/packets/packet_backside_qr.jpg',
+    matureImageUrl: '/assets/blooms/rosenskara_bloom.jpg',
     packetStyle: 'kraft',
     specs: {
       sowMonths: [3, 4, 5],
@@ -213,6 +218,7 @@ export const PRODUCTS: Product[] = [
     },
     imageUrl: '/assets/packets/luktart_kraft.jpg',
     backImageUrl: '/assets/packets/packet_backside_qr.jpg',
+    matureImageUrl: '/assets/blooms/luktart_bloom.jpg',
     packetStyle: 'kraft',
     specs: {
       sowMonths: [2, 3, 4],
@@ -248,6 +254,7 @@ export const PRODUCTS: Product[] = [
     },
     imageUrl: '/assets/packets/korsbarstomat_kraft_packet.jpg',
     backImageUrl: '/assets/packets/packet_backside_qr.jpg',
+    matureImageUrl: '/assets/blooms/tomat_plant.jpg',
     packetStyle: 'kraft',
     specs: {
       sowMonths: [2, 3],
@@ -282,6 +289,7 @@ export const PRODUCTS: Product[] = [
     stockQty: 0,
     lotNumber: 'LOT-2026-DA07',
     imageUrl: '/assets/dahlia_tuber.jpg',
+    matureImageUrl: '/assets/blooms/dahlia_bloom.jpg',
     specs: {
       sowMonths: [3, 4],
       zones: [1, 2, 3, 4, 5],
@@ -335,7 +343,7 @@ export const PRODUCTS: Product[] = [
     description: 'Ett beprövat snittblomsrecept framtaget vid Öhlunds Brygga. Innehåller Slöjsilja, Zinnia Ölandslängtan, Rosenskära Pastel Pink och Luktärt Morgonbris. Ger buketter från juli till september!',
     inStock: true,
     stockQty: 50,
-    imageUrl: '/assets/sensommardrom_bukett_1791312135766.jpg',
+    imageUrl: '/assets/sensommardrom_bukett.jpg',
     bundleComponentIds: [
       'slojsilja-ammi-majus',
       'zinnia-elandslangtan',

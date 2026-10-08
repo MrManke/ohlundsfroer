@@ -4,8 +4,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Om oss – Öhlundsfröer & Öhlunds Brygga",
-  description: "Möt familjen bakom Öhlundsfröer vid Ljusnans strand i Ljusdal. Ville Öhlund (VD & Logistik), Jessica Öhlund (Visionär & Ekoodlare) och Magnus Öhlund (IT-arkitekt & Byggare).",
+  title: "Om oss – Öhlunds Brygga vid Ljusnan",
+  description: "Möt familjen bakom Öhlunds Brygga vid Ljusnans strand i Ljusdal. Ville Öhlund (VD & Logistik), Jessica Öhlund (Visionär & Ekoodlare) och Magnus Öhlund (IT-arkitekt & Byggare).",
 };
 
 export default function OmOssPage() {
@@ -30,7 +30,7 @@ export default function OmOssPage() {
       originalGardenPhoto: "/assets/team/jessica_original_garden.jpg",
       quote: "Det finns en magi i att så ett litet frö och se det blomma ut i en explosion av dahlior och snittblommor vid Ljusnans strand. Den glädjen vill jag ge till fler.",
       bio: [
-        "Jessica är hjärtat och den kreativa motorn i Öhlundsfröer. Med en lång och gedigen bakgrund som ledare inom IKEA – där hon bland annat verkat som varuhuschef och i flera nationella och internationella chefsroller – besitter hon ett unikt driv och djup förståelse för kundupplevelse och sortiment.",
+        "Jessica är hjärtat och den kreativa motorn i Öhlunds Brygga. Med en lång och gedigen bakgrund som ledare inom IKEA – där hon bland annat verkat som varuhuschef och i flera nationella och internationella chefsroller – besitter hon ett unikt driv och djup förståelse för kundupplevelse och sortiment.",
         "Idag driver hon Öhlunds Strategi och Interim, men hennes största passion brinner vid odlingsbäddarna på Öhlunds Brygga. Som certifierad visionär och hängiven ekoodlare provodlar hon ett hav av dahlior, vallmo och snittblommor. Hon komponerar våra unika bukettrecept och ser till att alla sorter klarar det nordiska klimatet och är 100 % giftfria.",
       ],
       skills: ["Ekologisk odling", "Dahlia-specialist", "Strategiskt ledarskap", "Bukettkomposition"],
@@ -42,7 +42,7 @@ export default function OmOssPage() {
       image: "/assets/team/magnus_ohlund.jpg",
       quote: "Att designa robust mjukvaruarkitektur i molnet och att bygga drivhus och upphöjda blombäddar i furu längs älven kräver samma sak: precision, tålamod och hållbarhet över tid.",
       bio: [
-        "Magnus är den erfarne IT-arkitekten som ser till att den digitala motorn i Öhlundsfröer snurrar felfritt dygnet runt. Med mångårig erfarenhet av komplexa distribuerade system, molnarkitektur och realtidsplattformar har han byggt systemet som hanterar allt från lagersaldo och transaktioner till automatiska odlingsguider via QR-koder.",
+        "Magnus är den erfarne IT-arkitekten som ser till att den digitala motorn i Öhlunds Brygga snurrar felfritt dygnet runt. Med mångårig erfarenhet av komplexa distribuerade system, molnarkitektur och realtidsplattformar har han byggt systemet som hanterar allt från lagersaldo och transaktioner till automatiska odlingsguider via QR-koder.",
         "Men när tangentbordet vilar tar Magnus på sig snickarbältet. Det är han som ritar och bygger stugans drivhus, upphöjda odlingsbäddar, bevattningslösningar och den charmiga blomsterkiosken vid Öhlunds Brygga. En perfekt symbios mellan high-tech och traditionellt hantverk.",
       ],
       skills: ["Molnarkitektur & IT", "E-handelssystem", "Drivhuskonstruktion", "Automation & Drift"],
@@ -69,10 +69,10 @@ export default function OmOssPage() {
             </div>
             <div className="min-w-0">
               <span className="font-serif text-lg sm:text-2xl font-semibold tracking-tight text-pine block leading-tight pt-1">
-                ÖHLUNDS FRÖER
+                ÖHLUNDS BRYGGA
               </span>
               <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-sans font-semibold text-terracotta block truncate">
-                Öhlunds Brygga • Ljusdal
+                Ljusdal • Hälsingland
               </span>
             </div>
           </Link>
@@ -208,7 +208,7 @@ export default function OmOssPage() {
             De som driver bolaget
           </span>
           <h2 className="font-serif text-3xl sm:text-5xl font-normal text-pine mb-4">
-            Teamet bakom Öhlundsfröer
+            Teamet bakom Öhlunds Brygga
           </h2>
           <p className="text-bark/70 text-base font-sans">
             Tre kompletterande perspektiv som tillsammans skapar Sveriges mest genomtänkta och fraktsmarta trädgårdsupplevelse.
@@ -327,7 +327,7 @@ export default function OmOssPage() {
       <footer className="bg-bark text-sand py-12 border-t border-sand/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs space-y-4 font-sans">
           <p className="text-sand/80">
-            © 2026 Öhlundsfröer / Öhlunds Brygga. All rights reserved. Ljusdal, Hälsingland.
+            © 2026 Öhlunds Brygga. All rights reserved. Ljusdal, Hälsingland.
           </p>
           <div className="flex justify-center gap-6 text-sand/60">
             <Link href="/" className="hover:text-sand">
