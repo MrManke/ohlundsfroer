@@ -24,20 +24,28 @@
 * **Bokföring:** Poster i `finance_entries` är oföränderliga (immutable). Korrigering sker uteslutande via motbokning.
 * **Ingen kod utan tester:** Varje ny metod eller fix ska ha tester. Befintliga tester får aldrig inaktiveras (`test.skip`) eller sänkas.
 
----
+## 3. Agentic Workflow & Samarbetsregler
 
-## 3. Deterministisk Verifieringsloop
-
-Innan en uppgift markeras som klar MÅSTE verifieringssviten köras i terminalen och visa noll fel:
-1. `npm run typecheck` (strikt typkontroll utan fel)
-2. `npm run lint` (eslint-plugin-boundaries för modulgränser)
-3. `npm run test` (isolerade enhetstester)
-4. `npm run test:emu` (integrationstester mot Firebase Emulator Suite)
-5. `npm run test:e2e` (Playwright på Desktop 1280×800 samt Mobile 375×667 & 390×844)
+* **Filbaserad handoff (.antigravity/task.md):** Alla sessioner och subagenter använder `.antigravity/task.md` som delat arbetsminne (Single Source of Truth). Uppdatera alltid checklistan där efter slutförd uppgift.
+* **Skriv direkt till källfiler:** Agenter modifierar alltid kodfiler direkt på disk via verktygen. Dumpa aldrig tusentals rader kodförslag i chatten.
+* **Typerna är gränssnittet:** Vid arbete i en modul eller app ska agenten endast konsultera målets Zod-scheman och publika `src/index.ts`. Intern kod (`internal/**`) är privat.
+* **Dämpad terminaloutput vid verifiering:** Kör alltid verifieringskommandon i tyst läge (t.ex. `pnpm turbo test --silent` eller `tsc --noEmit`). Vid fel styrs felloggen till en tillfällig fil (`.tmp/error.log`) så att endast de relevanta felraderna granskas.
+* **Rollstyrning (Orchestrator vs Specialist):** Orchestratorn bryter ner faser till mikrouppgifter i `.antigravity/task.md` och delegerar. Specialistagenter har lasersikte på en mikrouppgift, verifierar tyst, uppdaterar `task.md` och avslutar.
 
 ---
 
-## 4. Hierarkisk kontext & Fördjupning
+## 4. Deterministisk Verifieringsloop
+
+Innan en uppgift markeras som klar i `.antigravity/task.md` MÅSTE verifieringssviten köras och visa noll fel:
+1. `pnpm turbo typecheck --silent` (strikt typkontroll utan fel)
+2. `pnpm turbo lint --silent` (eslint-plugin-boundaries för modulgränser)
+3. `pnpm turbo test --silent` (isolerade enhetstester)
+4. `pnpm test:emu` (integrationstester mot Firebase Emulator Suite)
+5. `pnpm test:e2e` (Playwright på Desktop 1280×800 samt Mobile 375×667 & 390×844)
+
+---
+
+## 5. Hierarkisk kontext & Fördjupning
 
 För detaljerade riktlinjer inom specifika områden ska agenten konsultera följande filer:
 * **Frontend & Mobil UI:** [prototype-sandbox/AGENTS.md](file:///c:/temp/Antigravity/Öhlundsfröer/prototype-sandbox/AGENTS.md) (eller `apps/web/AGENTS.md`)
