@@ -207,16 +207,31 @@ export default function StorefrontPage() {
   const FREE_SHIPPING_LIMIT = 350;
   const isFreeShipping = (cartSubtotal >= FREE_SHIPPING_LIMIT || appliedPromo?.type === "FREE_SHIPPING") && !hasBulkyParcel;
 
+  // Bundle discount in cart:
+  // If all 4 items from the bundle are in cart, an automatic bundle discount of 23 kr applies (145 kr bundle price vs 168 kr regular price)
+  const bundleDiscountMultiplier = useMemo(() => {
+    const quantities = bundleComponentIds.map((id) => {
+      const found = cart.find((it) => it.product.id === id);
+      return found ? found.qty : 0;
+    });
+    return Math.min(...quantities);
+  }, [cart, bundleComponentIds]);
+
+  const bundleDiscountAmount = bundleDiscountMultiplier * 23; // 168 kr ordinarie - 145 kr paketpris = 23 kr rabatt per komplett set
+
   const discountAmount = useMemo(() => {
     if (!appliedPromo) return 0;
+    const baseForPromo = Math.max(0, cartSubtotal - bundleDiscountAmount);
     if (appliedPromo.type === "PERCENT") {
-      return Math.round((cartSubtotal * appliedPromo.value) / 100);
+      return Math.round((baseForPromo * appliedPromo.value) / 100);
     }
     if (appliedPromo.type === "FIXED") {
-      return Math.min(cartSubtotal, appliedPromo.value);
+      return Math.min(baseForPromo, appliedPromo.value);
     }
     return 0;
-  }, [appliedPromo, cartSubtotal]);
+  }, [appliedPromo, cartSubtotal, bundleDiscountAmount]);
+
+  const totalDiscount = bundleDiscountAmount + discountAmount;
 
   const shippingCost = useMemo(() => {
     if (cart.length === 0) return 0;
@@ -224,7 +239,7 @@ export default function StorefrontPage() {
     return isFreeShipping ? 0 : 29;
   }, [cart, hasBulkyParcel, isFreeShipping]);
 
-  const cartTotal = Math.max(0, cartSubtotal - discountAmount + shippingCost);
+  const cartTotal = Math.max(0, cartSubtotal - totalDiscount + shippingCost);
 
   // Filtered products
   const filteredProducts = useMemo(() => {
@@ -1235,9 +1250,15 @@ export default function StorefrontPage() {
                   <span>Delsumma</span>
                   <span>{cartSubtotal} kr</span>
                 </div>
+                {bundleDiscountAmount > 0 && (
+                  <div className="flex justify-between text-xs text-pine font-medium bg-pine/5 px-2 py-1 rounded-md">
+                    <span>🌸 Paketprisrabatt (Sensommardröm{bundleDiscountMultiplier > 1 ? ` x${bundleDiscountMultiplier}` : ""})</span>
+                    <span className="font-bold">-{bundleDiscountAmount} kr</span>
+                  </div>
+                )}
                 {appliedPromo && discountAmount > 0 && (
                   <div className="flex justify-between text-xs text-pine font-medium">
-                    <span>Rabatt ({appliedPromo.code})</span>
+                    <span>Rabattkod ({appliedPromo.code})</span>
                     <span className="font-bold">-{discountAmount} kr</span>
                   </div>
                 )}
