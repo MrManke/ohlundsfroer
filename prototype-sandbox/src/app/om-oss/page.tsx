@@ -51,7 +51,7 @@ export default function OmOssPage() {
       name: "Smilla Öhlund",
       role: "Art Director & Content Creator",
       titleNote: "Samhällsvetare • Blivande Polis • Visuellt Kreativ",
-      image: "/assets/team/smilla_ohlund.jpg",
+      image: "/assets/team/smilla_brygga_veranda.jpg",
       quote: "Att fånga känslan i händerna – vare sig det är vid drejskivan, med penseln på duken eller genom kameran till TikTok – är det som ger Öhlunds Brygga dess levande själ.",
       bio: [
         "Smilla är den kreativa själen och blicken bakom Öhlunds Bryggas visuella identitet, formspråk och digitala närvaro. Hon studerar samhällsvetenskapsprogrammet med siktet stadigt inställt på Polishögskolan och yrket som polis – en bana som speglar hennes starka engagemang, empati och ansvarskänsla.",
