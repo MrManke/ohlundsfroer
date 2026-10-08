@@ -855,34 +855,44 @@ export default function StorefrontPage() {
           </p>
 
           {/* Quick Team Preview Avatars */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto mb-10 text-left">
-            <a href="/om-oss" className="group bg-white p-4 rounded-2xl border border-sand hover:border-terracotta transition-all shadow-xs flex items-center gap-3.5">
-              <div className="w-14 h-14 relative rounded-full overflow-hidden flex-shrink-0 border-2 border-pine/20">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-5xl mx-auto mb-10 text-left">
+            <a href="/om-oss" className="group bg-white p-3.5 rounded-2xl border border-sand hover:border-terracotta transition-all shadow-xs flex items-center gap-3">
+              <div className="w-13 h-13 relative rounded-full overflow-hidden flex-shrink-0 border-2 border-pine/20">
                 <Image src="/assets/team/ville_ohlund.jpg" alt="Ville Öhlund" fill className="object-cover group-hover:scale-105 transition-transform" />
               </div>
-              <div>
-                <strong className="text-sm font-serif text-pine block group-hover:text-terracotta">Ville Öhlund</strong>
-                <span className="text-[11px] text-bark/60 block">VD & Logistik</span>
+              <div className="min-w-0">
+                <strong className="text-sm font-serif text-pine block group-hover:text-terracotta truncate">Ville Öhlund</strong>
+                <span className="text-[11px] text-bark/60 block truncate">VD & Logistik</span>
               </div>
             </a>
 
-            <a href="/om-oss" className="group bg-white p-4 rounded-2xl border border-sand hover:border-terracotta transition-all shadow-xs flex items-center gap-3.5">
-              <div className="w-14 h-14 relative rounded-full overflow-hidden flex-shrink-0 border-2 border-pine/20">
+            <a href="/om-oss" className="group bg-white p-3.5 rounded-2xl border border-sand hover:border-terracotta transition-all shadow-xs flex items-center gap-3">
+              <div className="w-13 h-13 relative rounded-full overflow-hidden flex-shrink-0 border-2 border-pine/20">
                 <Image src="/assets/team/jessica_ohlund.jpg" alt="Jessica Öhlund" fill className="object-cover group-hover:scale-105 transition-transform" />
               </div>
-              <div>
-                <strong className="text-sm font-serif text-pine block group-hover:text-terracotta">Jessica Öhlund</strong>
-                <span className="text-[11px] text-bark/60 block">Visionär & Ekoodlare</span>
+              <div className="min-w-0">
+                <strong className="text-sm font-serif text-pine block group-hover:text-terracotta truncate">Jessica Öhlund</strong>
+                <span className="text-[11px] text-bark/60 block truncate">Visionär & Ekoodlare</span>
               </div>
             </a>
 
-            <a href="/om-oss" className="group bg-white p-4 rounded-2xl border border-sand hover:border-terracotta transition-all shadow-xs flex items-center gap-3.5">
-              <div className="w-14 h-14 relative rounded-full overflow-hidden flex-shrink-0 border-2 border-pine/20">
+            <a href="/om-oss" className="group bg-white p-3.5 rounded-2xl border border-sand hover:border-terracotta transition-all shadow-xs flex items-center gap-3">
+              <div className="w-13 h-13 relative rounded-full overflow-hidden flex-shrink-0 border-2 border-pine/20">
                 <Image src="/assets/team/magnus_ohlund.jpg" alt="Magnus Öhlund" fill className="object-cover group-hover:scale-105 transition-transform" />
               </div>
-              <div>
-                <strong className="text-sm font-serif text-pine block group-hover:text-terracotta">Magnus Öhlund</strong>
-                <span className="text-[11px] text-bark/60 block">IT-arkitekt & Byggare</span>
+              <div className="min-w-0">
+                <strong className="text-sm font-serif text-pine block group-hover:text-terracotta truncate">Magnus Öhlund</strong>
+                <span className="text-[11px] text-bark/60 block truncate">IT-arkitekt & Byggare</span>
+              </div>
+            </a>
+
+            <a href="/om-oss" className="group bg-white p-3.5 rounded-2xl border border-sand hover:border-terracotta transition-all shadow-xs flex items-center gap-3">
+              <div className="w-13 h-13 relative rounded-full overflow-hidden flex-shrink-0 border-2 border-pine/20">
+                <Image src="/assets/team/smilla_ohlund.jpg" alt="Smilla Öhlund" fill className="object-cover group-hover:scale-105 transition-transform" />
+              </div>
+              <div className="min-w-0">
+                <strong className="text-sm font-serif text-pine block group-hover:text-terracotta truncate">Smilla Öhlund</strong>
+                <span className="text-[11px] text-bark/60 block truncate">Art Director & Content</span>
               </div>
             </a>
           </div>

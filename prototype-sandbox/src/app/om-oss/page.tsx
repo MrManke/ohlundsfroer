@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Om oss – Öhlunds Brygga vid Ljusnan",
-  description: "Möt familjen bakom Öhlunds Brygga vid Ljusnans strand i Ljusdal. Ville Öhlund (VD & Logistik), Jessica Öhlund (Visionär & Ekoodlare) och Magnus Öhlund (IT-arkitekt & Byggare).",
+  description: "Möt familjen bakom Öhlunds Brygga vid Ljusnans strand i Ljusdal. Ville Öhlund (VD & Logistik), Jessica Öhlund (Visionär & Ekoodlare), Magnus Öhlund (IT-arkitekt & Byggare) och Smilla Öhlund (Art Director & Content Creator).",
 };
 
 export default function OmOssPage() {
@@ -46,6 +46,18 @@ export default function OmOssPage() {
         "Men när tangentbordet vilar tar Magnus på sig snickarbältet. Det är han som ritar och bygger stugans drivhus, upphöjda odlingsbäddar, bevattningslösningar och den charmiga blomsterkiosken vid Öhlunds Brygga. En perfekt symbios mellan high-tech och traditionellt hantverk.",
       ],
       skills: ["Molnarkitektur & IT", "E-handelssystem", "Drivhuskonstruktion", "Automation & Drift"],
+    },
+    {
+      name: "Smilla Öhlund",
+      role: "Art Director & Content Creator",
+      titleNote: "Samhällsvetare • Blivande Polis • Serviceprofil (Furuvik & JYSK)",
+      image: "/assets/team/smilla_ohlund.jpg",
+      quote: "Att skapa inspirerande innehåll och ge Öhlunds Brygga ett visuellt formspråk som berör människor och förmedlar glädjen i trädgården är det bästa jag vet.",
+      bio: [
+        "Smilla är den kreativa blicken bakom Öhlunds Bryggas visuella identitet, bildspråk och sociala medier. Hon studerar samhällsvetenskapsprogrammet med siktet stadigt inställt på Polishögskolan och yrket som polis – ett mål som präglas av hennes starka driv, rättvisepatos och ansvarskänsla.",
+        "Parallellt med studierna kombinerar hon arbete inom service och gästupplevelse på både Furuvik och JYSK, vilket gett henne en enastående fingertoppskänsla för bemötande, detaljer och kunddialog. På Öhlunds Brygga förvandlar hon blomsterbäddarna till engagerande content och ser till att varumärkets själ lyser igenom i varje kanal.",
+      ],
+      skills: ["Content Creation", "Art Direction", "Visuell Storytelling", "Kundbemötande & Service"],
     },
   ];
 
@@ -215,7 +227,7 @@ export default function OmOssPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {teamMembers.map((member) => (
             <div
               key={member.name}
