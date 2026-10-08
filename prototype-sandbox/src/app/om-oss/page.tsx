@@ -50,14 +50,14 @@ export default function OmOssPage() {
     {
       name: "Smilla Öhlund",
       role: "Art Director & Content Creator",
-      titleNote: "Samhällsvetare • Blivande Polis • Serviceprofil (Furuvik & JYSK)",
+      titleNote: "Samhällsvetare • Blivande Polis • Visuellt Kreativ",
       image: "/assets/team/smilla_ohlund.jpg",
-      quote: "Att skapa inspirerande innehåll och ge Öhlunds Brygga ett visuellt formspråk som berör människor och förmedlar glädjen i trädgården är det bästa jag vet.",
+      quote: "Att fånga känslan i händerna – vare sig det är vid drejskivan, med penseln på duken eller genom kameran till TikTok – är det som ger Öhlunds Brygga dess levande själ.",
       bio: [
-        "Smilla är den kreativa blicken bakom Öhlunds Bryggas visuella identitet, bildspråk och sociala medier. Hon studerar samhällsvetenskapsprogrammet med siktet stadigt inställt på Polishögskolan och yrket som polis – ett mål som präglas av hennes starka driv, rättvisepatos och ansvarskänsla.",
-        "Parallellt med studierna kombinerar hon arbete inom service och gästupplevelse på både Furuvik och JYSK, vilket gett henne en enastående fingertoppskänsla för bemötande, detaljer och kunddialog. På Öhlunds Brygga förvandlar hon blomsterbäddarna till engagerande content och ser till att varumärkets själ lyser igenom i varje kanal.",
+        "Smilla är den kreativa själen och blicken bakom Öhlunds Bryggas visuella identitet, formspråk och digitala närvaro. Hon studerar samhällsvetenskapsprogrammet med siktet stadigt inställt på Polishögskolan och yrket som polis – en bana som speglar hennes starka engagemang, empati och ansvarskänsla.",
+        "Kreativiteten har alltid varit en röd tråd: hon har drejat keramik, målar egna tavlor och har länge experimenterat med videoproduktion och visuella trender på TikTok. Parallellt har hon skaffat gedigen erfarenhet från Furuvik och JYSK, vilket gett henne en naturlig fingertoppskänsla för service och kundmöten. På Öhlunds Brygga förvandlar hon trädgårdens färger, blomsterbäddarna och fröpåsarna till inspirerande content som berör.",
       ],
-      skills: ["Content Creation", "Art Direction", "Visuell Storytelling", "Kundbemötande & Service"],
+      skills: ["Visuell Kreativitet", "Keramik & Måleri", "TikTok & Video Content", "Samhällsengagemang & Service"],
     },
   ];
 
